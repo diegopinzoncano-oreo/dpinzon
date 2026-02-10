@@ -1,0 +1,100 @@
+*{
+margin:0;    
+padding: 0;
+box-sizing: border-box;
+
+}
+body{
+  font-family: "Cabin", sans-serif;;
+  background-color: #f7f8fc;
+  
+}
+#menu{
+    padding: 4em 6em ;
+    width: 100%;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+}
+ul{
+    display: flex;
+    width: 30%;
+    justify-content: space-between;
+    align-items: center;
+
+}
+li{
+    list-style: none;
+}
+button{
+    background-color: #372765;
+    color: white;
+    padding: 1em;
+    border-radius: 5px;
+    border: none;
+}
+#banner{
+    padding: 4em 6em ;
+    align-items: center;
+    display: flex;
+    width: 100%;}
+
+    .caja-izq{
+        
+        flex:50;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5em;           
+    }
+
+    .tit{
+        padding: 0.5em 0;
+        width: 65% !important;
+      background-color: #372765;
+      color: white;  
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .caja-izq p{
+    font-size: 20px;
+    width: 80%;
+   }
+    .caja-izq h1{
+        font-size: 52px;
+     
+        flex: 50;
+        width: 70%;
+    }
+    
+
+    
+    figure{
+        text-align: center;
+        
+        flex: 50;
+       
+    }
+
+.imagen1{
+        width: 70%;}
+        
+        input{
+            text-align: center;
+            width: 30%;
+            height: 48px;
+            color: gray;
+            border: solid gray 1px;
+            border-radius: 5px;
+            justify-content: center;
+           
+        }
+        #pie{
+             padding: 4em 6em ;
+        }
+
+        a{
+            color: white;
+        }
