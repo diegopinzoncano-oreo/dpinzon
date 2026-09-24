@@ -11,16 +11,17 @@
     == 4. Menú superior
     == 5. Inicio
     == 6. Problemática
-    == 7. Proceso y por qué el denim
-    == 8. Merch
-    == 9. Ventanas emergentes
-    == 10. Redes sociales
-    == 11. Equipo
-    == 12. Participa (formularios)
-    == 13. Pie de página
-    == 14. Fotos y videos pendientes
-    == 15. Animaciones de aparición
-    == 16. Personas que prefieren menos movimiento
+    == 7. ODS 12 (franja con foto grande)
+    == 8. Proceso y por qué el denim
+    == 9. Merch
+    == 10. Ventanas emergentes
+    == 11. Redes sociales
+    == 12. Equipo
+    == 13. Participa (formularios)
+    == 14. Pie de página
+    == 15. Fotos y videos pendientes
+    == 16. Animaciones de aparición
+    == 17. Personas que prefieren menos movimiento
 
   CÓMO LEER UNA REGLA
     .boton {            ← a qué elementos aplica (clase "boton")
@@ -57,6 +58,8 @@
   --tan-text: #8A6A35;    /* café dorado: etiquetas pequeñas */
   --olive: #68744C;       /* verde oliva: mensajes de "gracias" */
   --red: #C1663E;         /* terracota: barras de "alerta" */
+  --ods: #BF8B2E;         /* dorado del ODS 12 */
+  --ods-light: #E9C27A;   /* dorado claro para textos sobre azul */
 
   /* Líneas y bordes */
   --line: rgba(30, 24, 16, 0.12);
@@ -889,28 +892,155 @@ header.scrolled .brand-badge {
   color: var(--ink-faint);
 }
 
-/* Recuadro de cierre "Por eso existe Up Style" */
-.impact-bridge {
-  margin-top: 72px;
-  padding: 40px 24px;
+/* Frase de cierre "Por eso existe Up Style" */
+.impact-close {
+  max-width: 36ch;
+  margin: 80px auto 0;
   text-align: center;
-  background: color-mix(in srgb, var(--card) 70%, transparent);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-l);
-}
-.impact-bridge p {
-  max-width: 52ch;
-  margin: 0 auto;
-  font-size: 1.12rem;
-  font-weight: 500;
-}
-.impact-bridge .btn {
-  margin-top: 22px;
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.4vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.3;
 }
 
 
 /* ================================================================
-   == 7. PROCESO Y POR QUÉ EL DENIM
+   == 7. ODS 12 (franja con foto grande)
+   ================================================================ */
+.ods-band {
+  position: relative;
+  overflow: hidden;
+  padding: 140px 0;
+  color: #fff;
+  background: var(--denim-deep);
+}
+@media (max-width: 700px) {
+  .ods-band { padding: 90px 0; }
+}
+/* Foto de fondo con efecto parallax (script.js la mueve al bajar) */
+.ods-bg {
+  position: absolute;
+  inset: -15% 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+}
+/* Capa azul oscura encima de la foto para que el texto se lea */
+.ods-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(20, 28, 46, 0.94) 0%, rgba(20, 28, 46, 0.82) 45%, rgba(20, 28, 46, 0.55) 100%);
+}
+.ods-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 72px;
+  align-items: center;
+}
+@media (max-width: 860px) {
+  .ods-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* Sello ODS 12: cuadro dorado con el infinito que se dibuja */
+.ods-mark {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 1 / 1;
+  padding: 28px;
+  background: var(--ods);
+  border-radius: var(--radius-l);
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.6);
+}
+@media (max-width: 860px) {
+  .ods-mark { max-width: 200px; padding: 20px; }
+}
+.ods-number {
+  order: -1; /* el número va arriba */
+  font-family: var(--font-condensed);
+  font-stretch: 75%;
+  font-size: clamp(4rem, 9vw, 6.5rem);
+  font-weight: 800;
+  line-height: 0.85;
+}
+.ods-label {
+  position: absolute;
+  top: 30px;
+  right: 28px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+.ods-infinity {
+  width: 100%;
+  overflow: visible;
+}
+.ods-infinity path {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-dasharray: 300;          /* largo de la línea */
+  stroke-dashoffset: 300;         /* empieza "sin dibujar" */
+  transition: stroke-dashoffset 2.2s var(--ease-out) .3s;
+}
+html:not(.js) .ods-infinity path,
+.ods-mark.in-view .ods-infinity path {
+  stroke-dashoffset: 0;           /* al aparecer, se dibuja completa */
+}
+
+.ods-copy h2 {
+  font-family: var(--font-condensed);
+  font-stretch: 75%;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+.ods-copy .lede {
+  max-width: 58ch;
+  margin-top: 18px;
+  color: rgba(255, 255, 255, 0.8);
+}
+.ods-points {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin: 36px 0;
+  padding: 0;
+  list-style: none;
+}
+@media (max-width: 700px) {
+  .ods-points { grid-template-columns: 1fr; gap: 16px; }
+}
+.ods-points li {
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+.ods-points b {
+  display: block;
+  font-family: var(--font-condensed);
+  font-stretch: 75%;
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--ods-light);
+}
+.ods-points span {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+
+/* ================================================================
+   == 8. PROCESO Y POR QUÉ EL DENIM
    ================================================================ */
 
 /* ---------- Pasos del proceso (estilo editorial) ----------
@@ -1091,7 +1221,7 @@ header.scrolled .brand-badge {
 
 
 /* ================================================================
-   == 8. MERCH
+   == 9. MERCH
    ================================================================ */
 .merch-band {
   background: var(--bg-2);
@@ -1197,7 +1327,7 @@ header.scrolled .brand-badge {
 
 
 /* ================================================================
-   == 9. VENTANAS EMERGENTES (merch y equipo)
+   == 10. VENTANAS EMERGENTES (merch y equipo)
    ================================================================ */
 
 /* Fondo oscuro que cubre la página */
@@ -1223,13 +1353,15 @@ header.scrolled .brand-badge {
   transition: opacity .3s ease;
 }
 
-/* La ventana blanca */
+/* La ventana: foto a la izquierda e información a la derecha */
 .modal {
   position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   width: 100%;
-  max-width: 420px;
-  max-height: 88vh;
-  overflow-y: auto;
+  max-width: 880px;
+  max-height: 90vh;
+  overflow: hidden;
   background: var(--card);
   border-radius: var(--radius-l);
   box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6);
@@ -1239,27 +1371,38 @@ header.scrolled .brand-badge {
 .modal-backdrop.open .modal {
   transform: none; /* sube suavemente al abrir */
 }
-.modal-photo {
+.modal-media {
+  background: var(--bg-2);
+  max-height: 90vh;
+}
+.modal-media img {
   width: 100%;
-  aspect-ratio: 8 / 11;
+  height: 100%;
   object-fit: cover;
 }
-.modal-photo-contain {
-  aspect-ratio: auto;
-  max-height: 60vh;
-  object-fit: contain;
-  background: var(--bg-2);
+.modal-media-contain img {
+  object-fit: contain; /* productos: se ven completos */
+}
+/* En celular: foto arriba e información abajo */
+@media (max-width: 700px) {
+  .modal {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+  .modal-media {
+    height: 52vh;
+  }
 }
 .modal-close {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 14px;
+  right: 14px;
   z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border: none;
   border-radius: 50%;
   background: rgba(15, 18, 28, 0.65);
@@ -1272,62 +1415,112 @@ header.scrolled .brand-badge {
   transform: rotate(90deg);
 }
 .modal-body {
-  padding: 22px 24px 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 44px 36px;
+  overflow-y: auto;
+}
+@media (max-width: 700px) {
+  .modal-body { padding: 26px 22px 30px; overflow: visible; }
 }
 .modal-body .name {
   padding-right: 40px;
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 700;
+  font-family: var(--font-condensed);
+  font-stretch: 75%;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 800;
+  line-height: 0.95;
+  text-transform: uppercase;
 }
 .modal-body .role,
 .modal-body .price {
-  margin-top: 2px;
-  font-size: 0.9rem;
+  margin-top: 8px;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--tan-text);
 }
 .modal-body .bio,
 .modal-body .features {
-  margin-top: 14px;
-  font-size: 0.92rem;
-  line-height: 1.6;
+  margin-top: 18px;
+  font-size: 0.95rem;
+  line-height: 1.65;
   color: var(--ink-soft);
   white-space: pre-line; /* respeta los saltos de línea (&#10;) */
 }
+.socials-title {
+  margin-top: 28px;
+  padding-top: 18px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  border-top: 1px solid var(--line);
+}
+/* Botones de redes sociales: grandes para que cada integrante se destaque */
 .modal-socials {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+@media (max-width: 380px) {
+  .modal-socials { grid-template-columns: 1fr; }
 }
 .modal-socials a {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 12px;
+  min-width: 0;
+  padding: 12px 14px;
+  text-decoration: none;
+  color: var(--ink);
   background: var(--bg);
   border: 1px solid var(--line);
-  border-radius: var(--radius-s);
-  font-size: 0.88rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: border-color .2s ease, transform .2s ease;
+  border-radius: var(--radius-m);
+  transition: background .25s ease, color .25s ease, border-color .25s ease, transform .3s var(--ease-out);
 }
 .modal-socials a:hover {
+  color: #fff;
+  background: var(--denim);
   border-color: var(--denim);
-  transform: translateX(4px);
+  transform: translateY(-2px);
 }
 .modal-socials svg {
   flex: none;
-  width: 18px;
-  height: 18px;
-  color: var(--denim);
+  width: 22px;
+  height: 22px;
+}
+.modal-socials .red {
+  display: block;
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.modal-socials .usuario {
+  display: block;
+  overflow: hidden;
+  font-size: 0.74rem;
+  opacity: 0.7;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .modal-socials .empty {
-  font-size: 0.84rem;
+  grid-column: 1 / -1;
+  font-size: 0.86rem;
   color: var(--ink-faint);
 }
+
+/* Ventana sin foto: solo el texto, más angosta */
+.modal-sin-foto {
+  grid-template-columns: 1fr;
+  max-width: 480px;
+}
+.modal-sin-foto .modal-media {
+  display: none;
+}
+
 /* Mientras hay una ventana abierta, la página de atrás no se mueve */
 body.modal-open {
   overflow: hidden;
@@ -1335,7 +1528,7 @@ body.modal-open {
 
 
 /* ================================================================
-   == 10. REDES SOCIALES
+   == 11. REDES SOCIALES
    ================================================================ */
 .social-band {
   overflow: hidden;
@@ -1449,6 +1642,26 @@ body.modal-open {
   background: #000;
 }
 
+/* Video horizontal: usa class="video-wide" en vez de class="phone" */
+.video-wide {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-l);
+  box-shadow: 0 40px 70px -30px rgba(0, 0, 0, 0.8);
+}
+.video-wide .video-slot,
+.video-wide .slot-video,
+.video-wide iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+  background: #000;
+}
+.video-wide .media-placeholder {
+  border-radius: var(--radius-l);
+}
+
 /* Recuadro "Aquí va el video" */
 .media-placeholder {
   display: flex;
@@ -1504,22 +1717,26 @@ body.modal-open {
 
 
 /* ================================================================
-   == 11. EQUIPO
+   == 12. EQUIPO
    ================================================================ */
 .team-band {
   background: var(--bg);
 }
+/* 3 personas por fila en computador y 2 en celular.
+   Las filas incompletas quedan centradas. */
 .team-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 personas por fila */
-  gap: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px;
   margin-top: 48px;
 }
-@media (max-width: 1000px) {
-  .team-grid { grid-template-columns: repeat(3, 1fr); }
+.team-grid .member-card {
+  flex: 0 1 calc((100% - 56px) / 3); /* ancho de 1/3 menos los espacios */
 }
-@media (max-width: 600px) {
-  .team-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+@media (max-width: 760px) {
+  .team-grid { gap: 14px; }
+  .team-grid .member-card { flex-basis: calc((100% - 14px) / 2); }
 }
 
 .member-card {
@@ -1531,26 +1748,55 @@ body.modal-open {
   overflow: hidden;
   background: var(--bg-2);
   border: none;
-  border-radius: var(--radius-m);
+  border-radius: var(--radius-l);
   cursor: pointer;
-  transition: transform .4s var(--ease-out), box-shadow .4s ease;
+  box-shadow: 0 18px 40px -28px rgba(31, 45, 72, 0.6);
+  transition: transform .5s var(--ease-out), box-shadow .5s ease;
 }
 .member-card:hover {
-  transform: translateY(-6px) rotate(-0.6deg);
-  box-shadow: 0 24px 40px -22px rgba(31, 45, 72, 0.55);
-}
-/* Las tarjetas pares se inclinan hacia el otro lado: se ve más natural */
-.member-card:nth-child(even):hover {
-  transform: translateY(-6px) rotate(0.6deg);
+  transform: translateY(-8px);
+  box-shadow: 0 34px 60px -30px rgba(31, 45, 72, 0.7);
 }
 .member-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform .8s var(--ease-out);
+  transition: transform .9s var(--ease-out);
 }
 .member-card:hover img {
-  transform: scale(1.05);
+  transform: scale(1.04);
+}
+/* Etiqueta "Ver perfil" que aparece abajo al pasar el mouse */
+.member-card::after {
+  content: "Ver perfil y redes";
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  padding: 9px 16px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--denim);
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 100px;
+  opacity: 0;
+  transform: translate(-50%, 10px);
+  transition: opacity .3s ease, transform .4s var(--ease-out);
+}
+.member-card:hover::after,
+.member-card:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.member-card.sin-foto::after {
+  display: none;
+}
+.member-card .click-hint {
+  display: none; /* en el equipo usamos la etiqueta "Ver perfil" */
+}
+@media (hover: none) {
+  .member-card::after { display: none; }
+  .member-card .click-hint { display: flex; }
 }
 
 /* Foto grupal */
@@ -1575,7 +1821,7 @@ body.modal-open {
 
 
 /* ================================================================
-   == 12. PARTICIPA (formularios)
+   == 13. PARTICIPA (formularios)
    ================================================================ */
 #participa {
   background: var(--bg-2);
@@ -1707,7 +1953,7 @@ body.modal-open {
 
 
 /* ================================================================
-   == 13. PIE DE PÁGINA
+   == 14. PIE DE PÁGINA
    ================================================================ */
 footer {
   position: relative;
@@ -1796,7 +2042,7 @@ footer {
 
 
 /* ================================================================
-   == 14. FOTOS Y VIDEOS PENDIENTES
+   == 15. FOTOS Y VIDEOS PENDIENTES
    script.js pone estas clases cuando falta un archivo:
      .sin-foto  → la foto no existe todavía
      .ready     → el video sí existe y ya cargó
@@ -1870,7 +2116,7 @@ footer {
 
 
 /* ================================================================
-   == 15. ANIMACIONES DE APARICIÓN
+   == 16. ANIMACIONES DE APARICIÓN
    Lo que tiene la clase "reveal" empieza invisible y un poco más
    abajo. Cuando entra en pantalla, script.js le pone "in-view" y
    sube suavemente. .reveal-1, -2, -3... lo retrasan para que
@@ -1902,7 +2148,7 @@ footer {
 
 
 /* ================================================================
-   == 16. PERSONAS QUE PREFIEREN MENOS MOVIMIENTO
+   == 17. PERSONAS QUE PREFIEREN MENOS MOVIMIENTO
    Si alguien activó "reducir movimiento" en su dispositivo,
    apagamos todas las animaciones y mostramos todo de una vez.
    ================================================================ */
@@ -1913,6 +2159,9 @@ footer {
   *, *::before, *::after {
     animation: none !important;
     transition: none !important;
+  }
+  .ods-infinity path {
+    stroke-dashoffset: 0 !important;
   }
   .hero-in,
   .js .reveal {

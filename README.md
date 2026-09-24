@@ -21,22 +21,38 @@ Cada archivo empieza con un índice y explicaciones en español.
 
 ## Subir fotos y videos (sin tocar código)
 
-Copia el archivo en la carpeta indicada **con el nombre exacto**:
+Copia el archivo en la carpeta indicada **con el nombre exacto**.
+Para cambiar una foto que ya existe, reemplázala con el mismo nombre.
 
-| Qué | Dónde y con qué nombre |
-|---|---|
-| Foto del integrante 5 | `img/equipo/integrante-5.jpg` |
-| Video de introducción | `video/intro.mp4` |
-| Video del proceso (opcional) | `video/proceso.mp4` |
-| Cambiar cualquier foto | Reemplaza el archivo en `img/` con el mismo nombre |
+| Sección | Archivo | Recomendación |
+|---|---|---|
+| Inicio (fondo) | `img/equipo/equipo-completo.jpg` | Horizontal, mínimo 1920 × 1080 px. Personas a la derecha: el texto va a la izquierda. |
+| Problemática (fondo suave) | `img/fondo-problematica.jpg` | Ropa acumulada, contenedores de ropa, relleno sanitario. Se ve muy clara, casi transparente. |
+| **ODS 12 (franja grande)** | `img/secciones/ods12.jpg` | Horizontal, mínimo 1600 px de ancho. Montaña de jeans, manos separando prendas o el punto Renovamoda de Chía. Se oscurece sola. |
+| Proceso | `img/proceso/midiendo-denim.jpg`, `img/proceso/herramientas.jpg` | Horizontales 4:3 (1200 × 900 px). Fotos reales del taller: corte, costura, clasificación. |
+| Video del proceso (opcional) | `video/proceso.mp4` | Horizontal 16:9, corto (10 a 20 s), sin sonido. Se repite solo. |
+| Merch | `img/merch/gorra.jpg` … | Cuadradas 1:1 (1000 × 1000 px), fondo de denim o liso. |
+| Historia de Up Style | `video/intro.mp4` | Vertical 9:16 (como un reel). Se reproduce sola al llegar a la sección. Si es horizontal, ver el comentario en `index.html`. |
+| Equipo | `img/equipo/diego-pinzon.jpg` … `integrante-5.jpg` | Verticales 8:11 (800 × 1100 px). Todas con el mismo fondo y encuadre. |
+| Foto grupal | `img/equipo/equipo-completo.jpg` | Horizontal 2:1. |
 
 Mientras falte un archivo, la página muestra un recuadro que dice cuál falta.
+Consejo: que cada foto pese menos de 500 KB y cada video menos de 20 MB
+(puedes comprimirlas en squoosh.app y los videos en handbrake.fr).
+
+## Redes sociales de cada integrante
+
+En `index.html`, sección 6 (Equipo), cada integrante tiene:
+`data-ig`, `data-tiktok`, `data-yt`, `data-behance`, `data-linkedin`, `data-web`.
+Pega el enlace completo entre las comillas. Las que queden vacías no aparecen.
+En la ventana se muestra el botón de la red con el @usuario.
 
 ## Lo que falta completar
 
 - Precios y características de cada producto de merch.
 - Enlaces reales de Instagram y YouTube.
 - Biografía y redes de cada integrante; nombre, rol y foto del integrante 5.
+- Video de la historia de Up Style y foto para la franja del ODS 12.
 - Correo real de contacto (en `index.html` y en `script.js` → `CORREO_DE_CONTACTO`).
 
 ## Extensiones de VS Code recomendadas

@@ -11,7 +11,7 @@
     3. Contadores y barras
     4. Aparición de elementos al bajar
     5. Pestañas Colombia / Bogotá / Chía
-    6. Fotos y videos que faltan
+    6. Fotos y videos (los que faltan y el video que suena al bajar)
     7. Formularios (abren un correo)
     8. Ventanas emergentes (merch y equipo)
 
@@ -78,12 +78,14 @@ document.addEventListener('click', function (evento) {
      - la barra dorada de progreso de arriba
      - el menú se hace más delgado
      - se subraya la sección en la que estás
-     - la foto del inicio se mueve más lento (efecto "parallax")
+     - la foto del inicio y la del ODS 12 se mueven más lento
+       (efecto "parallax")
    ================================================================ */
 
 const encabezado = document.getElementById('siteHeader');
 const barraProgreso = document.getElementById('scrollProgress');
 const fotoInicio = document.querySelector('.hero-bg');
+const fotoOds = document.querySelector('.ods-bg');
 
 // Enlaces del menú y las secciones a las que apuntan
 const enlacesMenu = document.querySelectorAll('.navlinks a');
@@ -118,6 +120,12 @@ function alBajar() {
   // Parallax: la foto del inicio baja al 30% de la velocidad
   if (bajado < window.innerHeight * 1.2) {
     fotoInicio.style.transform = 'translateY(' + bajado * 0.3 + 'px)';
+  }
+
+  // Parallax del ODS 12: la foto se desplaza según dónde esté la franja
+  const cajaOds = fotoOds.parentElement.getBoundingClientRect();
+  if (cajaOds.bottom > 0 && cajaOds.top < window.innerHeight) {
+    fotoOds.style.transform = 'translateY(' + cajaOds.top * -0.15 + 'px)';
   }
 }
 
@@ -302,6 +310,8 @@ document.fonts.ready.then(moverPildora);
      que hay que subir.
    - VIDEOS: el <video class="slot-video"> solo se muestra cuando
      el archivo existe. Mientras tanto se ve el recuadro de espera.
+   - Los videos con data-play-on-scroll se reproducen solos (sin
+     sonido) cuando aparecen en pantalla y se pausan al salir.
    ================================================================ */
 
 function marcarFotoPendiente(foto) {
@@ -332,6 +342,25 @@ document.querySelectorAll('.slot-video').forEach(function (video) {
   video.addEventListener('loadedmetadata', videoListo);
   if (video.readyState >= 1) videoListo(); // ya había cargado
 });
+
+// Vigilante de videos: play cuando se ve al menos la mitad, pausa al salir
+const vigilanteVideos = new IntersectionObserver(function (entradas) {
+  entradas.forEach(function (entrada) {
+    const video = entrada.target;
+    if (entrada.isIntersecting) {
+      // play() puede fallar si el navegador lo bloquea: no pasa nada
+      video.play().catch(function () {});
+    } else {
+      video.pause();
+    }
+  });
+}, { threshold: 0.5 });
+
+if (!reducirMovimiento) {
+  document.querySelectorAll('video[data-play-on-scroll]').forEach(function (video) {
+    vigilanteVideos.observe(video);
+  });
+}
 
 
 /* ================================================================
@@ -420,17 +449,23 @@ document.addEventListener('keydown', function (evento) {
   }
 });
 
+// Pone la foto de la tarjeta en la ventana. Si la tarjeta no tiene
+// foto, la ventana se muestra solo con el texto (una columna).
+function ponerFoto(ventana, idFoto, tarjeta) {
+  const foto = tarjeta.querySelector('img');
+  const hayFoto = !tarjeta.classList.contains('sin-foto');
+  const fotoVentana = document.getElementById(idFoto);
+  fotoVentana.src = hayFoto ? foto.src : 'data:,';
+  fotoVentana.alt = foto.alt;
+  ventana.querySelector('.modal').classList.toggle('modal-sin-foto', !hayFoto);
+}
+
 // ---------- Ventana de producto ----------
 const ventanaMerch = document.getElementById('merchModal');
 
 document.querySelectorAll('.merch-card').forEach(function (tarjeta) {
   tarjeta.addEventListener('click', function () {
-    const foto = tarjeta.querySelector('img');
-    const hayFoto = !tarjeta.classList.contains('sin-foto');
-    const fotoVentana = document.getElementById('merchModalPhoto');
-    fotoVentana.hidden = !hayFoto;
-    fotoVentana.src = hayFoto ? foto.src : 'data:,';
-    fotoVentana.alt = foto.alt;
+    ponerFoto(ventanaMerch, 'merchModalPhoto', tarjeta);
     document.getElementById('merchModalName').textContent = tarjeta.dataset.name || '';
     document.getElementById('merchModalPrice').textContent = tarjeta.dataset.price || '';
     document.getElementById('merchModalFeatures').textContent = tarjeta.dataset.features || '';
@@ -442,40 +477,58 @@ document.querySelectorAll('.merch-card').forEach(function (tarjeta) {
 const ventanaEquipo = document.getElementById('memberModal');
 const cajaRedes = document.getElementById('memberModalSocials');
 
-// Dibujos (íconos) de cada red social
-const iconosRedes = {
-  ig: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>',
-  tiktok: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M16 3c.5 3 2.5 5 6 5.5"/></svg>',
-  yt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m10 9 5 3-5 3V9Z"/><rect x="2" y="5" width="20" height="14" rx="3"/></svg>'
-};
-const nombresRedes = { ig: 'Instagram', tiktok: 'TikTok', yt: 'YouTube' };
+// Redes sociales que se pueden mostrar. El orden de esta lista es el
+// orden en que aparecen. Cada una tiene su nombre y su dibujo (ícono).
+// Para agregar una red nueva: copia una línea, cambia la clave (que es
+// la misma que va en el HTML como data-clave) el nombre y el ícono.
+const redesSociales = [
+  { clave: 'ig', nombre: 'Instagram',
+    icono: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>' },
+  { clave: 'tiktok', nombre: 'TikTok',
+    icono: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M16 3c.5 3 2.5 5 6 5.5"/></svg>' },
+  { clave: 'yt', nombre: 'YouTube',
+    icono: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m10 9 5 3-5 3V9Z"/><rect x="2" y="5" width="20" height="14" rx="3"/></svg>' },
+  { clave: 'behance', nombre: 'Behance',
+    icono: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h5.5a3 3 0 0 1 0 6H3zM3 12h6a3 3 0 0 1 0 6H3zM14 14h7a3.5 3.5 0 1 0-1 2.5M15 7h5"/></svg>' },
+  { clave: 'linkedin', nombre: 'LinkedIn',
+    icono: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg>' },
+  { clave: 'web', nombre: 'Portafolio',
+    icono: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>' }
+];
+
+// Saca el nombre de usuario de un enlace, para mostrarlo en el botón.
+// Ejemplo: "https://www.instagram.com/upstyle/" → "@upstyle"
+function sacarUsuario(enlace) {
+  const partes = enlace.split('?')[0].split('/').filter(function (parte) { return parte; });
+  const ultima = partes[partes.length - 1] || '';
+  if (partes.length <= 2) return ultima; // es solo un dominio, ej: "miweb.com"
+  return ultima.startsWith('@') ? ultima : '@' + ultima;
+}
 
 document.querySelectorAll('.member-card').forEach(function (tarjeta) {
   tarjeta.addEventListener('click', function () {
-    const foto = tarjeta.querySelector('img');
-    const hayFoto = !tarjeta.classList.contains('sin-foto');
-    const fotoVentana = document.getElementById('memberModalPhoto');
-    fotoVentana.hidden = !hayFoto;
-    fotoVentana.src = hayFoto ? foto.src : 'data:,';
-    fotoVentana.alt = foto.alt;
+    ponerFoto(ventanaEquipo, 'memberModalPhoto', tarjeta);
     document.getElementById('memberModalName').textContent = tarjeta.dataset.name || '';
     document.getElementById('memberModalRole').textContent = tarjeta.dataset.role || '';
     document.getElementById('memberModalBio').textContent = tarjeta.dataset.bio || '';
 
     // Creamos un botón por cada red social que tenga enlace
     cajaRedes.innerHTML = '';
-    ['ig', 'tiktok', 'yt'].forEach(function (red) {
-      const enlace = tarjeta.dataset[red];
+    redesSociales.forEach(function (red) {
+      const enlace = tarjeta.dataset[red.clave];
       if (!enlace) return; // si está vacío, no se muestra
       const a = document.createElement('a');
       a.href = enlace;
       a.target = '_blank';
       a.rel = 'noopener';
-      a.innerHTML = iconosRedes[red] + '<span>' + nombresRedes[red] + '</span>';
+      a.innerHTML = red.icono +
+        '<span><span class="red">' + red.nombre + '</span>' +
+        '<span class="usuario"></span></span>';
+      a.querySelector('.usuario').textContent = sacarUsuario(enlace);
       cajaRedes.appendChild(a);
     });
     if (!cajaRedes.children.length) {
-      cajaRedes.innerHTML = '<p class="empty">Aún no se han agregado redes sociales.</p>';
+      cajaRedes.innerHTML = '<p class="empty">Pronto encontrarás aquí sus redes sociales.</p>';
     }
 
     abrirVentana(ventanaEquipo, tarjeta);

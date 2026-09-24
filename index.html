@@ -28,6 +28,7 @@
     0. Menú superior
     1. Inicio
     2. Problemática
+       ODS 12 (franja con foto grande)
     3. Proceso y por qué el denim
     4. Merch
     5. Redes sociales
@@ -280,9 +281,47 @@
     </div>
 
     <!-- EDITABLE (texto): mensaje de cierre de la sección -->
-    <div class="impact-bridge reveal">
-      <p>Por eso existe Up Style: para que una parte de ese denim tenga una segunda oportunidad en la Sabana Norte, en lugar de terminar en un relleno sanitario.</p>
-      <a href="#proceso" class="btn btn-denim">Conoce cómo lo hacemos
+    <p class="impact-close reveal">Por eso existe Up Style: para que una parte de ese denim tenga una segunda oportunidad en la Sabana Norte, en lugar de terminar en un relleno sanitario.</p>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     ODS 12 · PRODUCCIÓN Y CONSUMO RESPONSABLES
+     Franja con foto grande que conecta el problema con nuestra
+     solución. El símbolo de infinito se dibuja solo al aparecer.
+     ============================================================ -->
+<section class="ods-band" id="ods12">
+
+  <!-- EDITABLE (foto): foto grande de fondo → img/secciones/ods12.jpg
+       Recomendada: foto horizontal (mínimo 1600 px de ancho) de montañas de
+       ropa, jeans apilados o manos separando prendas. Se oscurece sola
+       para que el texto se lea. -->
+  <div class="ods-bg" style="background-image:url('img/secciones/ods12.jpg');"></div>
+
+  <div class="wrap ods-grid">
+    <!-- Sello ODS 12 (dibujado con código, no es una imagen) -->
+    <div class="ods-mark reveal" aria-hidden="true">
+      <svg viewBox="0 0 120 60" class="ods-infinity">
+        <path d="M60 30 C 48 12, 18 12, 18 30 C 18 48, 48 48, 60 30 C 72 12, 102 12, 102 30 C 102 48, 72 48, 60 30 Z"/>
+      </svg>
+      <span class="ods-number">12</span>
+      <span class="ods-label">ODS</span>
+    </div>
+
+    <div class="ods-copy reveal reveal-2">
+      <!-- EDITABLE (texto): todo este bloque -->
+      <p class="eyebrow eyebrow-light">Objetivo de Desarrollo Sostenible 12</p>
+      <h2>Producción y consumo responsables</h2>
+      <p class="lede">Up Style aporta a la meta 12.5 de la ONU: reducir considerablemente la generación de desechos mediante la prevención, la reducción, el reciclaje y la reutilización de aquí a 2030.</p>
+
+      <ul class="ods-points">
+        <li><b>Prevenir</b><span>que el denim en buen estado llegue al relleno sanitario.</span></li>
+        <li><b>Reutilizar</b><span>tela, botones, remaches e hilos de cada prenda.</span></li>
+        <li><b>Recuperar</b><span>el valor del textil con nuevos productos hechos en Chía.</span></li>
+      </ul>
+
+      <a href="#proceso" class="btn btn-primary">Conoce cómo lo hacemos
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
       </a>
     </div>
@@ -356,7 +395,7 @@
            Cuando exista, aparece solo (a todo el ancho), sin sonido y en bucle. -->
       <figure class="real-photo video-slot video-optional reveal">
         <div class="photo-frame">
-          <video class="slot-video" src="video/proceso.mp4" autoplay muted loop playsinline preload="metadata"></video>
+          <video class="slot-video" src="video/proceso.mp4" data-play-on-scroll muted loop playsinline preload="metadata"></video>
         </div>
         <!-- EDITABLE (texto): pie del video -->
         <figcaption>El proceso en video</figcaption>
@@ -502,18 +541,21 @@
       </div>
     </div>
 
-    <!-- EDITABLE (video): video de introducción → video/intro.mp4
-         Ideal en formato vertical (como un reel). Solo pon el archivo en
-         la carpeta video/ con ese nombre: el recuadro se cambia por el video.
-         Si prefieres un video de YouTube, borra el <video> y pon ahí el
-         <iframe> que da YouTube en "Compartir → Insertar". -->
+    <!-- EDITABLE (video): la historia de Up Style → video/intro.mp4
+         Solo pon el archivo en la carpeta video/ con ese nombre.
+         - Empieza a reproducirse SOLO (sin sonido) cuando la persona baja
+           hasta aquí, y se pausa cuando sigue bajando. Eso lo hace
+           data-play-on-scroll. Con los controles puede activar el sonido.
+         - Si tu video es VERTICAL (como un reel) deja class="phone".
+           Si es HORIZONTAL, cambia class="phone" por class="video-wide".
+         - Imagen que se ve antes de que cargue: poster="..." -->
     <div class="reveal reveal-2">
       <div class="phone">
         <div class="video-slot">
-          <video class="slot-video" src="video/intro.mp4" controls playsinline preload="metadata"></video>
+          <video class="slot-video" src="video/intro.mp4" poster="img/equipo/equipo-completo.jpg" data-play-on-scroll muted controls playsinline preload="metadata"></video>
           <div class="media-placeholder">
             <span class="play-ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7v10l8-5z" fill="currentColor"/></svg></span>
-            Aquí va el video de introducción
+            Aquí va la historia de Up Style
             <small>Guárdalo como video/intro.mp4</small>
           </div>
         </div>
@@ -530,9 +572,16 @@
        data-name    → nombre
        data-role    → rol
        data-bio     → texto sobre la persona
-       data-ig      → enlace completo de Instagram (o vacío "")
-       data-tiktok  → enlace completo de TikTok (o vacío "")
-       data-yt      → enlace completo de YouTube (o vacío "")
+       REDES SOCIALES: pega el enlace COMPLETO entre las comillas.
+       Las que dejes vacías ("") no aparecen.
+       data-ig       → Instagram   ej: https://www.instagram.com/usuario
+       data-tiktok   → TikTok      ej: https://www.tiktok.com/@usuario
+       data-yt       → YouTube     ej: https://www.youtube.com/@canal
+       data-behance  → Behance     ej: https://www.behance.net/usuario
+       data-linkedin → LinkedIn    ej: https://www.linkedin.com/in/usuario
+       data-web      → Página web o portafolio personal
+     CAMBIAR UNA FOTO: reemplaza el archivo en img/equipo/ con el mismo
+     nombre. Recomendado: foto vertical de 800 × 1100 px.
      Si la foto todavía no existe, se muestra "Foto pendiente".
      ============================================================ -->
 <section class="team-band" id="equipo">
@@ -541,7 +590,7 @@
     <div class="section-head reveal">
       <p class="eyebrow">05 · Equipo</p>
       <h2>Nuestro equipo</h2>
-      <p class="lede">Las 5 personas detrás de Up Style. Toca una foto para conocer a cada integrante.</p>
+      <p class="lede">Las 5 personas detrás de Up Style. Toca una foto para conocer a cada integrante y sus redes.</p>
     </div>
 
     <div class="team-grid">
@@ -554,7 +603,10 @@
         data-bio="Información personal de Diego Pinzón. Escríbela aquí."
         data-ig=""
         data-tiktok=""
-        data-yt="">
+        data-yt=""
+        data-behance=""
+        data-linkedin=""
+        data-web="">
         <img src="img/equipo/diego-pinzon.jpg" alt="Diego Pinzón, Director" loading="lazy">
         <span class="click-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
       </button>
@@ -567,7 +619,10 @@
         data-bio="Información personal de Jean Diego. Escríbela aquí."
         data-ig=""
         data-tiktok=""
-        data-yt="">
+        data-yt=""
+        data-behance=""
+        data-linkedin=""
+        data-web="">
         <img src="img/equipo/jean-diego.jpg" alt="Jean Diego, Fotografía e iluminación" loading="lazy">
         <span class="click-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
       </button>
@@ -580,7 +635,10 @@
         data-bio="Información personal de Isabella García. Escríbela aquí."
         data-ig=""
         data-tiktok=""
-        data-yt="">
+        data-yt=""
+        data-behance=""
+        data-linkedin=""
+        data-web="">
         <img src="img/equipo/isabella-garcia.jpg" alt="Isabella García, Productora" loading="lazy">
         <span class="click-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
       </button>
@@ -593,7 +651,10 @@
         data-bio="Información personal de Guillermo Hudson. Escríbela aquí."
         data-ig=""
         data-tiktok=""
-        data-yt="">
+        data-yt=""
+        data-behance=""
+        data-linkedin=""
+        data-web="">
         <img src="img/equipo/guillermo-hudson.jpg" alt="Guillermo Hudson, Director de arte y vestuario" loading="lazy">
         <span class="click-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
       </button>
@@ -608,7 +669,10 @@
         data-bio="Información personal. Escríbela aquí."
         data-ig=""
         data-tiktok=""
-        data-yt="">
+        data-yt=""
+        data-behance=""
+        data-linkedin=""
+        data-web="">
         <img src="img/equipo/integrante-5.jpg" alt="Nombre Apellido, Rol en el proyecto" loading="lazy">
         <span class="click-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
       </button>
@@ -719,7 +783,7 @@
     <button type="button" class="modal-close" aria-label="Cerrar">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M18 6 6 18M6 6l12 12"/></svg>
     </button>
-    <img class="modal-photo modal-photo-contain" id="merchModalPhoto" src="data:," alt="">
+    <div class="modal-media modal-media-contain"><img id="merchModalPhoto" src="data:," alt=""></div>
     <div class="modal-body">
       <div class="name" id="merchModalName"></div>
       <div class="price" id="merchModalPrice"></div>
@@ -734,11 +798,12 @@
     <button type="button" class="modal-close" aria-label="Cerrar">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M18 6 6 18M6 6l12 12"/></svg>
     </button>
-    <img class="modal-photo" id="memberModalPhoto" src="data:," alt="">
+    <div class="modal-media"><img id="memberModalPhoto" src="data:," alt=""></div>
     <div class="modal-body">
       <div class="name" id="memberModalName"></div>
       <div class="role" id="memberModalRole"></div>
       <p class="bio" id="memberModalBio"></p>
+      <p class="socials-title">Sígueme en</p>
       <div class="modal-socials" id="memberModalSocials"></div>
     </div>
   </div>
