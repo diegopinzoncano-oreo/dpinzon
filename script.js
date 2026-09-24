@@ -79,15 +79,11 @@ document.addEventListener('click', function (evento) {
      - el menú se hace más delgado
      - se subraya la sección en la que estás
      - la foto del inicio se mueve más lento (efecto "parallax")
-     - la costura del proceso se va "cosiendo"
    ================================================================ */
 
 const encabezado = document.getElementById('siteHeader');
 const barraProgreso = document.getElementById('scrollProgress');
 const fotoInicio = document.querySelector('.hero-bg');
-const listaProceso = document.getElementById('processList');
-const costuraProceso = document.querySelector('.process-line-fill');
-const pasosProceso = document.querySelectorAll('.process-item');
 
 // Enlaces del menú y las secciones a las que apuntan
 const enlacesMenu = document.querySelectorAll('.navlinks a');
@@ -123,18 +119,6 @@ function alBajar() {
   if (bajado < window.innerHeight * 1.2) {
     fotoInicio.style.transform = 'translateY(' + bajado * 0.3 + 'px)';
   }
-
-  // Costura del proceso: se llena según cuánto de la lista ya pasó
-  const caja = listaProceso.getBoundingClientRect();
-  const linea = window.innerHeight * 0.6; // línea imaginaria al 60% de la pantalla
-  let avance = (linea - caja.top) / caja.height;
-  avance = Math.min(Math.max(avance, 0), 1); // lo dejamos entre 0 y 1
-  costuraProceso.style.transform = 'scaleY(' + avance + ')';
-
-  // Cada círculo numerado se pinta de azul cuando la costura lo alcanza
-  pasosProceso.forEach(function (paso) {
-    paso.classList.toggle('passed', paso.getBoundingClientRect().top + 24 < linea);
-  });
 }
 
 // requestAnimationFrame hace que el efecto se calcule una sola vez por
@@ -151,12 +135,6 @@ window.addEventListener('scroll', function () {
 
 window.addEventListener('resize', alBajar);
 alBajar();
-
-// Sin animaciones: dejamos la costura completa desde el principio
-if (reducirMovimiento) {
-  costuraProceso.style.transform = 'scaleY(1)';
-  pasosProceso.forEach(function (paso) { paso.classList.add('passed'); });
-}
 
 
 /* ================================================================

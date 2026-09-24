@@ -27,7 +27,6 @@
   ORDEN DE LAS SECCIONES
     0. Menú superior
     1. Inicio
-       Cinta animada
     2. Problemática
     3. Proceso y por qué el denim
     4. Merch
@@ -54,7 +53,7 @@
   <!-- Fuentes (tipos de letra) de Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&family=Beau+Rivage&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Baloo+2:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&family=Beau+Rivage&display=swap" rel="stylesheet">
 
   <!-- Conecta la hoja de estilos (el diseño) -->
   <link rel="stylesheet" href="style.css">
@@ -115,9 +114,6 @@
 
   <div class="wrap">
     <div class="hero-copy">
-      <!-- EDITABLE (texto): la frase pequeña de arriba -->
-      <p class="eyebrow hero-in" style="--d:0">Proyecto SENA · Chía, Cundinamarca</p>
-
       <!-- EDITABLE (texto): título principal.
            Cada <span class="line"> es un renglón que aparece con animación.
            style="--d:1", "--d:2"... es el orden en que aparecen.
@@ -151,24 +147,6 @@
     <span>personas construyendo esta marca circular desde Chía</span>
   </div>
 </section>
-
-
-<!-- ============================================================
-     CINTA ANIMADA (franja azul con palabras que se mueven)
-     EDITABLE (texto): las palabras. Están repetidas 2 veces a
-     propósito para que la cinta nunca se vea vacía. Si cambias una,
-     cámbiala en los dos grupos.
-     ============================================================ -->
-<div class="stitch-band" aria-hidden="true">
-  <div class="marquee">
-    <div class="marquee-track">
-      <!-- Grupo 1 -->
-      <span>Recolectar</span><i></i><span>Clasificar</span><i></i><span>Diseñar</span><i></i><span>Cortar</span><i></i><span>Confeccionar</span><i></i><span>Reutilizar</span><i></i>
-      <!-- Grupo 2 (igual al 1) -->
-      <span>Recolectar</span><i></i><span>Clasificar</span><i></i><span>Diseñar</span><i></i><span>Cortar</span><i></i><span>Confeccionar</span><i></i><span>Reutilizar</span><i></i>
-    </div>
-  </div>
-</div>
 
 
 <!-- ============================================================
@@ -324,77 +302,65 @@
       <p class="lede">Así transformamos una prenda de denim en desuso, y esto es lo que investigamos sobre por qué el denim es la tela ideal para reutilizar.</p>
     </div>
 
-    <div class="process-layout">
+    <!-- Lista de pasos, estilo editorial: número pequeño, título grande
+         y texto a la derecha. La línea de arriba de cada paso se dibuja
+         sola cuando aparece en pantalla.
+         EDITABLE (texto): título <h3> y texto <p> de cada paso.
+         Para AGREGAR un paso: copia un <li> completo y cambia el número. -->
+    <ol class="steps">
+      <li class="step reveal">
+        <span class="step-num">01</span>
+        <h3 class="step-title">Recolección</h3>
+        <p class="step-text">Recibimos prendas de denim en desuso donadas por estudiantes, docentes y la comunidad cercana al proyecto, y nos apoyamos en puntos como los de Renovamoda en Chía.</p>
+      </li>
+      <li class="step reveal">
+        <span class="step-num">02</span>
+        <h3 class="step-title">Clasificación</h3>
+        <p class="step-text">Revisamos cada prenda: color, grosor, estado de la tela y piezas aprovechables (bolsillos, costuras, botones).</p>
+      </li>
+      <li class="step reveal">
+        <span class="step-num">03</span>
+        <h3 class="step-title">Diseño</h3>
+        <p class="step-text">Definimos qué producto tiene más sentido para cada prenda, según su tamaño y las piezas disponibles.</p>
+      </li>
+      <li class="step reveal">
+        <span class="step-num">04</span>
+        <h3 class="step-title">Corte y confección</h3>
+        <p class="step-text">Cortamos y confeccionamos el nuevo producto, reutilizando también hilos, botones y remaches originales cuando es posible.</p>
+      </li>
+      <li class="step reveal">
+        <span class="step-num">05</span>
+        <h3 class="step-title">Resultado final</h3>
+        <p class="step-text">El producto terminado se documenta, se fotografía y se comparte en el catálogo y en redes sociales.</p>
+      </li>
+    </ol>
 
-      <!-- Lista de pasos. La línea punteada de la izquierda se "cose"
-           sola al bajar. EDITABLE (texto): título <h3> y texto <p> de cada paso -->
-      <ol class="process-list" id="processList">
-        <li class="process-line" aria-hidden="true"><span class="process-line-fill"></span></li>
+    <!-- Fotos del proceso (dos, una al lado de la otra) -->
+    <div class="process-media">
 
-        <li class="process-item reveal">
-          <span class="process-num">01</span>
-          <div>
-            <h3>Recolección</h3>
-            <p>Recibimos prendas de denim en desuso donadas por estudiantes, docentes y la comunidad cercana al proyecto, y nos apoyamos en puntos como los de Renovamoda en Chía.</p>
-          </div>
-        </li>
-        <li class="process-item reveal">
-          <span class="process-num">02</span>
-          <div>
-            <h3>Clasificación y selección</h3>
-            <p>Revisamos cada prenda: color, grosor, estado de la tela y piezas aprovechables (bolsillos, costuras, botones).</p>
-          </div>
-        </li>
-        <li class="process-item reveal">
-          <span class="process-num">03</span>
-          <div>
-            <h3>Diseño</h3>
-            <p>Definimos qué producto tiene más sentido para cada prenda, según su tamaño y las piezas disponibles.</p>
-          </div>
-        </li>
-        <li class="process-item reveal">
-          <span class="process-num">04</span>
-          <div>
-            <h3>Corte y confección</h3>
-            <p>Cortamos y confeccionamos el nuevo producto, reutilizando también hilos, botones y remaches originales cuando es posible.</p>
-          </div>
-        </li>
-        <li class="process-item reveal">
-          <span class="process-num">05</span>
-          <div>
-            <h3>Resultado final</h3>
-            <p>El producto terminado se documenta, se fotografía y se comparte en el catálogo y en redes sociales.</p>
-          </div>
-        </li>
-      </ol>
+      <!-- EDITABLE (foto): img/proceso/midiendo-denim.jpg -->
+      <figure class="real-photo reveal">
+        <div class="photo-frame"><img src="img/proceso/midiendo-denim.jpg" alt="Marcando y midiendo una prenda de denim antes de transformarla" loading="lazy"></div>
+        <!-- EDITABLE (texto): pie de foto -->
+        <figcaption>Midiendo y marcando el denim antes del corte</figcaption>
+      </figure>
 
-      <!-- Fotos del proceso (a la derecha en computador) -->
-      <div class="process-media">
+      <!-- EDITABLE (foto): img/proceso/herramientas.jpg -->
+      <figure class="real-photo reveal reveal-2">
+        <div class="photo-frame"><img src="img/proceso/herramientas.jpg" alt="Herramientas de costura y corte sobre denim reutilizado" loading="lazy"></div>
+        <figcaption>Herramientas de corte y costura, listas para transformar</figcaption>
+      </figure>
 
-        <!-- EDITABLE (foto): img/proceso/midiendo-denim.jpg -->
-        <figure class="real-photo reveal">
-          <div class="photo-frame"><img src="img/proceso/midiendo-denim.jpg" alt="Marcando y midiendo una prenda de denim antes de transformarla" loading="lazy"></div>
-          <!-- EDITABLE (texto): pie de foto -->
-          <figcaption>Midiendo y marcando el denim antes del corte</figcaption>
-        </figure>
-
-        <!-- EDITABLE (foto): img/proceso/herramientas.jpg -->
-        <figure class="real-photo reveal reveal-2">
-          <div class="photo-frame"><img src="img/proceso/herramientas.jpg" alt="Herramientas de costura y corte sobre denim reutilizado" loading="lazy"></div>
-          <figcaption>Herramientas de corte y costura, listas para transformar</figcaption>
-        </figure>
-
-        <!-- EDITABLE (video): video corto del proceso → video/proceso.mp4
-             Este espacio está OCULTO hasta que pongas ese archivo en la carpeta video/.
-             Cuando exista, aparece solo, se reproduce en silencio y se repite. -->
-        <figure class="real-photo video-slot video-optional reveal">
-          <div class="photo-frame">
-            <video class="slot-video" src="video/proceso.mp4" autoplay muted loop playsinline preload="metadata"></video>
-          </div>
-          <!-- EDITABLE (texto): pie del video -->
-          <figcaption>El proceso en video</figcaption>
-        </figure>
-      </div>
+      <!-- EDITABLE (video): video corto del proceso → video/proceso.mp4
+           Este espacio está OCULTO hasta que pongas ese archivo en la carpeta video/.
+           Cuando exista, aparece solo (a todo el ancho), sin sonido y en bucle. -->
+      <figure class="real-photo video-slot video-optional reveal">
+        <div class="photo-frame">
+          <video class="slot-video" src="video/proceso.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        </div>
+        <!-- EDITABLE (texto): pie del video -->
+        <figcaption>El proceso en video</figcaption>
+      </figure>
     </div>
 
     <!-- ---------- ¿Por qué el denim? ---------- -->
