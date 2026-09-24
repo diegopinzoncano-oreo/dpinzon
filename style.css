@@ -297,11 +297,13 @@ p {
 
 /* ================================================================
    == 4. MENÚ SUPERIOR
-   El menú tiene 3 "estados" que pone script.js:
-     .sobre-inicio → está encima de la foto del inicio: transparente
-                     y con letras blancas.
-     .scrolled     → ya bajaste: fondo beige con vidrio esmerilado.
+   El menú siempre es oscuro y traslúcido (efecto vidrio) con letras
+   blancas, en todas las secciones. script.js le pone estos "estados":
+     .sobre-inicio → encima de la foto del inicio: aún más transparente.
+     .scrolled     → ya bajaste: el menú se hace más delgado.
      .menu-abierto → en celular, el menú de pantalla completa está abierto.
+   Para cambiar qué tan oscuro/transparente es, cambia el último número
+   de rgba(24, 36, 62, 0.72): 0 = invisible, 1 = sólido.
    ================================================================ */
 header {
   position: fixed; /* se queda arriba aunque bajes */
@@ -310,11 +312,11 @@ header {
   right: 0;
   z-index: 50;
   padding: 16px 0;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(14px) saturate(1.4);   /* desenfoca lo que pasa por detrás */
-  -webkit-backdrop-filter: blur(14px) saturate(1.4);
-  border-bottom: 1px solid var(--line);
-  box-shadow: 0 10px 30px -18px rgba(31, 45, 72, 0.35);
+  background: rgba(24, 36, 62, 0.72);           /* azul denim traslúcido */
+  backdrop-filter: blur(16px) saturate(1.5);   /* desenfoca lo que pasa por detrás */
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 30px -18px rgba(10, 14, 24, 0.5);
   transition: padding .4s var(--ease-out), background .4s ease, border-color .4s ease, box-shadow .4s ease;
   animation: bajarMenu .9s var(--ease-out) backwards; /* entra desde arriba al cargar */
 }
@@ -325,7 +327,7 @@ header {
 header.scrolled {
   padding: 9px 0;
 }
-/* Encima de la foto del inicio: transparente, con degradado oscuro suave */
+/* Encima de la foto del inicio: más transparente, con degradado suave */
 header.sobre-inicio {
   background: linear-gradient(180deg, rgba(12, 16, 28, 0.55), rgba(12, 16, 28, 0));
   backdrop-filter: none;
@@ -388,7 +390,7 @@ header.scrolled .brand-badge {
   white-space: nowrap;
   transition: color .4s ease;
 }
-header.sobre-inicio .brand-name,
+header .brand-name,
 header.menu-abierto .brand-name { color: #fff; }
 
 /* ---------- Enlaces (computador) ---------- */
@@ -407,7 +409,7 @@ header.menu-abierto .brand-name { color: #fff; }
   border-radius: 100px;
   transition: background .4s ease, border-color .4s ease;
 }
-header.sobre-inicio .navlinks {
+header .navlinks {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.18);
 }
@@ -433,9 +435,9 @@ header.sobre-inicio .navlinks {
 .navlinks a.active {
   color: var(--ink);
 }
-header.sobre-inicio .navlinks a { color: rgba(255, 255, 255, 0.8); }
-header.sobre-inicio .navlinks a:hover,
-header.sobre-inicio .navlinks a.active { color: #fff; }
+header .navlinks a { color: rgba(255, 255, 255, 0.8); }
+header .navlinks a:hover,
+header .navlinks a.active { color: #fff; }
 
 /* Píldora que se desliza detrás del enlace (la mueve script.js).
    Se escribe ".navlinks .nav-pill" para que gane sobre ".navlinks li":
@@ -454,7 +456,7 @@ header.sobre-inicio .navlinks a.active { color: #fff; }
   pointer-events: none;
   transition: transform .45s var(--ease-out), width .45s var(--ease-out), opacity .3s ease, background .4s ease;
 }
-header.sobre-inicio .navlinks .nav-pill {
+header .navlinks .nav-pill {
   background: rgba(255, 255, 255, 0.18);
   box-shadow: none;
 }
@@ -490,7 +492,7 @@ header.sobre-inicio .navlinks .nav-pill {
 .btn-brillo:hover::before {
   left: 130%;
 }
-header.sobre-inicio .nav-cta {
+header .nav-cta {
   background: #fff;
   color: var(--denim);
 }
@@ -525,12 +527,12 @@ header.sobre-inicio .nav-cta {
 .navtoggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
 .navtoggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .navtoggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-header.sobre-inicio .navtoggle,
+header .navtoggle,
 header.menu-abierto .navtoggle {
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.3);
 }
-header.sobre-inicio .navtoggle span,
+header .navtoggle span,
 header.menu-abierto .navtoggle span {
   background: #fff;
 }
@@ -568,7 +570,7 @@ header.menu-abierto .navtoggle span {
     visibility: visible;
     transition: clip-path .7s var(--ease-out);
   }
-  header.sobre-inicio .navlinks {
+  header .navlinks {
     background: var(--denim-deep);
   }
   .navlinks .nav-pill {
@@ -587,7 +589,7 @@ header.menu-abierto .navtoggle span {
     transition-delay: calc(var(--i, 0) * 0.06s + 0.15s);
   }
   .navlinks a,
-  header.sobre-inicio .navlinks a {
+  header .navlinks a {
     display: flex;
     align-items: baseline;
     gap: 14px;
@@ -604,7 +606,7 @@ header.menu-abierto .navtoggle span {
   }
   .navlinks a:hover,
   .navlinks a.active,
-  header.sobre-inicio .navlinks a.active {
+  header .navlinks a.active {
     color: var(--tan);
   }
   .nav-num {
@@ -619,7 +621,7 @@ header.menu-abierto .navtoggle span {
     margin-top: 28px;
   }
   .nav-mobile-cta a.btn,
-  header.sobre-inicio .nav-mobile-cta a.btn {
+  header .nav-mobile-cta a.btn {
     display: inline-flex;
     padding: 15px 28px;
     border: none;
