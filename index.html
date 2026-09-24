@@ -1,56 +1,564 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="style.css">
-     <link rel="preconnect" href="https://fonts.googleapis.com">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Up Style · Moda circular en Chía</title>
+<meta name="description" content="Up Style es un proyecto de moda circular de la Sabana Norte de Cundinamarca que le da una segunda vida al denim que ya no se usa.">
+<meta name="theme-color" content="#1F2D48">
+<link rel="icon" type="image/png" href="img/logo-upstyle.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
-
-    <title>ejercicio</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&family=Beau+Rivage&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
- 
-  <nav id="menu">
-    <img src="img/logo.svg" alt="">
-    <ul class="">
-        <li>Features</li>
-        <li>Affiliates</li>
-        <li>Pricing</li>
-        <li>Communities</li>
-        <button>Join Waitlist</button>
 
+<!-- ============================================================
+     UP STYLE · Proyecto SENA
+     Secciones:
+     1) Inicio  2) Problemática (Colombia / Bogotá / Chía)
+     3) Proceso y por qué el denim  4) Merch  5) Redes sociales
+     6) Equipo  7) Preguntas + dona tus jeans.
+
+     Las fotos están en la carpeta img/ (equipo, merch, proceso).
+     Busca "EDITABLE" en este archivo para encontrar lo que falta
+     por completar: fotos, videos, enlaces, precios y correo.
+     ============================================================ -->
+
+<div id="scrollProgress" aria-hidden="true"></div>
+
+<header id="siteHeader">
+  <nav class="nav" aria-label="Principal">
+    <a href="#inicio" class="brand" aria-label="Up Style, volver al inicio">
+      <img class="brand-badge" src="img/logo-upstyle.png" alt="" width="52" height="52">
+      <span class="brand-name">Up Style</span>
+    </a>
+    <ul class="navlinks" id="navlinks">
+      <li><a href="#problematica">Problemática</a></li>
+      <li><a href="#proceso">Proceso</a></li>
+      <li><a href="#merch">Merch</a></li>
+      <li><a href="#redes">Redes</a></li>
+      <li><a href="#equipo">Equipo</a></li>
+      <li><a href="#participa">Participa</a></li>
     </ul>
-  </nav>  
-
-  <header id="banner">
-    <div class="caja-izq">
-    <p class="tit">We are now allowing early-access for users. &emsp;<a target="_blank" href="https://accounts.google.com/v3/signin/identifier?continue=https://accounts.google.com/signin/chrome/sync/finish?est%3DAEmG5eBAq0Ee0Rqsx1mc0-vGQsPt4C_q3-QnrOLjOO1PsQAK_TFkNTMFUtKkS00dMl9wNYRCrmzdCjg5jqylKWA%26continue%3Dhttps://www.google.com/&ssp=1&theme=mn&flowName=GlifDesktopChromeSync&dsh=S622768261:1770733367786884">Learn more.</a> </p>
-    <h1>Build a highly engaged community with no effort.</h1>
-    <p>Commune offers the tools you need to build a highly engaged community with little to no effort. 
-     Simply setup your Commune workspace, and manage everything from members to content from one central dashboard.</p>
-    <div class="cajita">
-    <input type="text" name="" id=""  value="Enter your e-mail address">
-    <button>Join Waitlist</button>
-    </div> 
+    <div class="nav-actions">
+      <a href="#participa" class="btn btn-denim btn-sm nav-cta">Dona tus jeans</a>
+      <button class="navtoggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navlinks">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    <figure class="cajaderecha">
-      <img class="imagen1" src="img/illustration.png" alt="">
+  </nav>
+</header>
+
+<main>
+
+<!-- 1. INICIO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg" style="background-image:url('img/equipo/equipo-completo.jpg');"></div>
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="eyebrow hero-in" style="--d:0">Proyecto SENA · Chía, Cundinamarca</p>
+      <!-- EDITABLE: titular y descripción -->
+      <h1>
+        <span class="line hero-in" style="--d:1">Le damos una</span>
+        <span class="line hero-in" style="--d:2"><em>segunda vida</em> al</span>
+        <span class="line hero-in" style="--d:3">denim que Chía</span>
+        <span class="line hero-in" style="--d:4">ya no usa.</span>
+      </h1>
+      <p class="lede hero-in" style="--d:5">Up Style es un proyecto de moda circular hecho en la Sabana Norte de Cundinamarca, como respuesta al problema de los residuos textiles en Bogotá.</p>
+      <div class="cta-row hero-in" style="--d:6">
+        <a href="#problematica" class="btn btn-primary">Ver la problemática</a>
+        <a href="#proceso" class="btn btn-outline-light">Conoce el proceso</a>
+      </div>
+    </div>
+
+    <a href="#problematica" class="scroll-cue hero-in" style="--d:7">
+      <span class="scroll-mouse" aria-hidden="true"><span></span></span>
+      Desliza para conocer el problema
+    </a>
+  </div>
+
+  <div class="hero-float-chip hero-in" style="--d:6">
+    <b>5</b>
+    <span>personas construyendo esta marca circular desde Chía</span>
+  </div>
+</section>
+
+<!-- Cinta animada con los pasos del proceso -->
+<div class="stitch-band" aria-hidden="true">
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>Recolectar</span><i></i><span>Clasificar</span><i></i><span>Diseñar</span><i></i><span>Cortar</span><i></i><span>Confeccionar</span><i></i><span>Reutilizar</span><i></i>
+      <span>Recolectar</span><i></i><span>Clasificar</span><i></i><span>Diseñar</span><i></i><span>Cortar</span><i></i><span>Confeccionar</span><i></i><span>Reutilizar</span><i></i>
+    </div>
+  </div>
+</div>
+
+<!-- 2. PROBLEMÁTICA -->
+<section id="problematica">
+  <div class="section-bg-photo" style="background-image:url('img/fondo-problematica.jpg');"></div>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">01 · La problemática</p>
+      <h2>Lo que dejamos de ver cuando botamos ropa</h2>
+      <p class="lede">Del mundo a Colombia, y de Colombia a nuestra propia Sabana Norte: así se ve el problema de los residuos textiles.</p>
+    </div>
+
+    <div class="world-strip">
+      <div class="world-chip reveal reveal-1"><b><span class="counter" data-target="92">92</span> millones de ton.</b><span>de desechos textiles al año en el mundo. Fashion Revolution</span></div>
+      <div class="world-chip reveal reveal-2"><b><span class="counter" data-target="73" data-suffix="%">73%</span></b><span>de la ropa producida termina en vertederos. Cumbre de la Moda, Copenhague 2019</span></div>
+      <div class="world-chip reveal reveal-3"><b>+<span class="counter" data-target="7500" data-suffix=" L">7.500 L</span></b><span>de agua para fabricar un solo jean. Fundación Ellen MacArthur</span></div>
+    </div>
+
+    <div class="tabs-group reveal">
+      <div class="tabs-row" data-tabgroup="impacto" role="tablist" aria-label="Zona geográfica">
+        <button class="tab-btn active" data-tab="colombia" role="tab" aria-selected="true">Colombia</button>
+        <button class="tab-btn" data-tab="bogota" role="tab" aria-selected="false">Bogotá</button>
+        <button class="tab-btn" data-tab="chia" role="tab" aria-selected="false">Sabana Norte · Chía</button>
+        <div class="tab-indicator"></div>
+      </div>
+
+      <div class="tab-panel active" data-panel="colombia" data-tabgroup="impacto" role="tabpanel">
+        <div class="impact-panel">
+          <div class="bars-col">
+            <div class="stat-bar-row">
+              <div class="top-row"><b>Residuos textiles que se reciclan en Colombia</b><span>5%</span></div>
+              <div class="bar-track"><div class="bar-fill tone-warn" data-width="5"></div></div>
+              <span class="bar-source">Revista Semana</span>
+            </div>
+            <div class="stat-bar-row">
+              <div class="top-row"><b>Lo que no se recicla</b><span>95%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-width="95"></div></div>
+              <span class="bar-source">Revista Semana</span>
+            </div>
+          </div>
+          <div class="callout-col">
+            <div class="callout-card">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              <div><span class="cap cap-lg">En promedio, una prenda se usa apenas 3,3 años antes de desecharse.</span><span class="src">WRAP (Reino Unido), vía revista Semana</span></div>
+            </div>
+            <div class="callout-card">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+              <div><span class="cap cap-lg">Cada prenda de denim que reutilizamos en Up Style evita fabricar una nueva desde cero.</span><span class="src">Up Style</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" data-panel="bogota" data-tabgroup="impacto" role="tabpanel">
+        <div class="impact-panel">
+          <div class="bars-col">
+            <div class="stat-bar-row">
+              <div class="top-row"><b>De lo enterrado en Doña Juana es textil</b><span>6,1%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-width="6.1"></div></div>
+              <span class="bar-source">UAESP, 2021</span>
+            </div>
+            <div class="stat-bar-row">
+              <div class="top-row"><b>De los residuos textiles diarios sería aprovechable</b><span>97%</span></div>
+              <div class="bar-track"><div class="bar-fill tone-warn" data-width="97"></div></div>
+              <span class="bar-source">Revista Semana</span>
+            </div>
+          </div>
+          <div class="callout-col">
+            <div class="callout-card">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+              <div><span class="counter" data-target="147767" data-suffix=" ton.">147.767 ton.</span><span class="cap">de residuos textiles llegaron al relleno sanitario Doña Juana solo en 2021.</span><span class="src">UAESP</span></div>
+            </div>
+            <div class="callout-card">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7V8Z"/><circle cx="5.5" cy="18.5" r="1.8"/><circle cx="18.5" cy="18.5" r="1.8"/></svg>
+              <div><span class="counter" data-target="318" data-suffix=" ton./día">318 ton./día</span><span class="cap">de residuos textiles se generan en promedio cada día en Bogotá.</span><span class="src">Revista Semana</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" data-panel="chia" data-tabgroup="impacto" role="tabpanel">
+        <div class="impact-panel">
+          <div class="bars-col">
+            <div class="stat-bar-row">
+              <div class="top-row"><b>Toneladas de residuos textiles evitadas en rellenos por la red circular de la CAR</b><span>+38 ton.</span></div>
+              <div class="bar-track"><div class="bar-fill" data-width="38" data-max="147767"></div></div>
+              <span class="bar-source">CAR Cundinamarca, programa ReModa · la barra se compara con las 147.767 ton. que llegaron a Doña Juana en 2021</span>
+            </div>
+          </div>
+          <div class="callout-col">
+            <div class="callout-card">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <div><span class="cap cap-lg">Desde mayo de 2025, Centro Chía tiene contenedores del proyecto "Renovamoda" (CAR + Cooperación Alemana GIZ) para recolectar ropa en buen estado, gestionada por Recupera CO.</span><span class="src">El Tiempo / CAR Cundinamarca</span></div>
+            </div>
+            <div class="callout-card">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m3 12 2-2 4 4L19 4l2 2-12 12z"/></svg>
+              <div><span class="cap cap-lg">Todavía no existe una cifra pública consolidada de residuos textiles solo para Chía. Por eso Up Style también busca documentar el dato local.</span><span class="src">Vacío de información identificado por Up Style</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="impact-bridge reveal">
+      <p>Por eso existe Up Style: para que una parte de ese denim tenga una segunda oportunidad en la Sabana Norte, en lugar de terminar en un relleno sanitario.</p>
+      <a href="#proceso" class="btn btn-denim">Conoce cómo lo hacemos
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 3. PROCESO Y POR QUÉ EL DENIM -->
+<section id="proceso">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">02 · El proceso</p>
+      <h2>Del jean descartado al producto Up Style</h2>
+      <p class="lede">Así transformamos una prenda de denim en desuso, y esto es lo que investigamos sobre por qué el denim es la tela ideal para reutilizar.</p>
+    </div>
+
+    <div class="process-layout">
+      <ol class="process-list" id="processList">
+        <li class="process-line" aria-hidden="true"><span class="process-line-fill"></span></li>
+        <li class="process-item reveal">
+          <span class="process-num">01</span>
+          <div><h3>Recolección</h3><p>Recibimos prendas de denim en desuso donadas por estudiantes, docentes y la comunidad cercana al proyecto, y nos apoyamos en puntos como los de Renovamoda en Chía.</p></div>
+        </li>
+        <li class="process-item reveal">
+          <span class="process-num">02</span>
+          <div><h3>Clasificación y selección</h3><p>Revisamos cada prenda: color, grosor, estado de la tela y piezas aprovechables (bolsillos, costuras, botones).</p></div>
+        </li>
+        <li class="process-item reveal">
+          <span class="process-num">03</span>
+          <div><h3>Diseño</h3><p>Definimos qué producto tiene más sentido para cada prenda, según su tamaño y las piezas disponibles.</p></div>
+        </li>
+        <li class="process-item reveal">
+          <span class="process-num">04</span>
+          <div><h3>Corte y confección</h3><p>Cortamos y confeccionamos el nuevo producto, reutilizando también hilos, botones y remaches originales cuando es posible.</p></div>
+        </li>
+        <li class="process-item reveal">
+          <span class="process-num">05</span>
+          <div><h3>Resultado final</h3><p>El producto terminado se documenta, se fotografía y se comparte en el catálogo y en redes sociales.</p></div>
+        </li>
+      </ol>
+
+      <div class="process-media">
+        <figure class="real-photo reveal">
+          <div class="photo-frame"><img src="img/proceso/midiendo-denim.jpg" alt="Marcando y midiendo una prenda de denim antes de transformarla" loading="lazy" width="1200" height="900"></div>
+          <figcaption>Midiendo y marcando el denim antes del corte</figcaption>
+        </figure>
+        <figure class="real-photo reveal reveal-2">
+          <div class="photo-frame"><img src="img/proceso/herramientas.jpg" alt="Herramientas de costura y corte sobre denim reutilizado" loading="lazy" width="1200" height="900"></div>
+          <figcaption>Herramientas de corte y costura, listas para transformar</figcaption>
+        </figure>
+        <!-- EDITABLE: si consigues un video corto del proceso, puedes reemplazar cualquiera de las dos
+             <div class="photo-frame">…</div> de arriba por:
+             <div class="photo-frame"><video autoplay muted loop playsinline><source src="video/proceso.mp4" type="video/mp4"></video></div> -->
+      </div>
+    </div>
+
+    <div class="section-head reveal denim-head">
+      <p class="eyebrow">¿Por qué el denim?</p>
+      <h2>Una tela que merece otra oportunidad</h2>
+      <p class="lede">Investigamos qué hace del jean la tela ideal para un proyecto de reutilización textil.</p>
+    </div>
+    <div class="identity-grid">
+      <article class="identity-card reveal reveal-1">
+        <div class="idx"><span>01</span> Resistencia</div>
+        <h3>Una tela hecha para durar</h3>
+        <p>El denim es una de las telas más resistentes que existen: después de años de uso sigue siendo lo bastante fuerte para convertirse en algo nuevo, sin perder calidad.</p>
+      </article>
+      <article class="identity-card reveal reveal-2">
+        <div class="idx"><span>02</span> Volumen</div>
+        <h3>Es el textil que más se desecha</h3>
+        <p>El jean es una de las prendas más comunes en el armario promedio, lo que también significa que es una de las que más termina descartada, y con más potencial de reutilización.</p>
+      </article>
+      <article class="identity-card reveal reveal-3">
+        <div class="idx"><span>03</span> Impacto</div>
+        <h3>El más costoso de fabricar</h3>
+        <p>Producir un solo jean puede gastar más de 7.500 litros de agua. Reutilizar uno existente evita ese gasto desde el primer corte.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 4. MERCH -->
+<section id="merch" class="merch-band">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">03 · Merch</p>
+      <h2>Lleva la marca contigo</h2>
+      <p class="lede">Productos oficiales de Up Style, cada uno con nuestro logo. Toca un producto para ver sus detalles.</p>
+    </div>
+    <!-- EDITABLE: cambia nombre, precio y data-features de cada producto.
+         Para cambiar la foto, reemplaza el archivo en img/merch/ con el mismo nombre. -->
+    <div class="merch-grid">
+      <button type="button" class="merch-card has-photo reveal reveal-1"
+        data-name="Gorra Up Style" data-price="$ 00.000"
+        data-features="Material: por definir&#10;Tallas / tamaño: por definir&#10;Escribe aquí las características reales del producto.">
+        <span class="merch-photo">
+          <img src="img/merch/gorra.jpg" alt="Gorra Up Style" loading="lazy">
+          <span class="click-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+        </span>
+        <span class="merch-body"><span class="name">Gorra Up Style</span><span class="price">$ 00.000</span></span>
+      </button>
+      <button type="button" class="merch-card has-photo reveal reveal-2"
+        data-name="Libreta Up Style" data-price="$ 00.000"
+        data-features="Material: por definir&#10;Tallas / tamaño: por definir&#10;Escribe aquí las características reales del producto.">
+        <span class="merch-photo">
+          <img src="img/merch/libreta.jpg" alt="Libreta Up Style" loading="lazy">
+          <span class="click-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+        </span>
+        <span class="merch-body"><span class="name">Libreta Up Style</span><span class="price">$ 00.000</span></span>
+      </button>
+      <button type="button" class="merch-card has-photo reveal reveal-3"
+        data-name="Esfero Up Style" data-price="$ 00.000"
+        data-features="Material: por definir&#10;Tallas / tamaño: por definir&#10;Escribe aquí las características reales del producto.">
+        <span class="merch-photo">
+          <img src="img/merch/esfero.jpg" alt="Esfero Up Style" loading="lazy">
+          <span class="click-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+        </span>
+        <span class="merch-body"><span class="name">Esfero Up Style</span><span class="price">$ 00.000</span></span>
+      </button>
+      <button type="button" class="merch-card has-photo reveal reveal-4"
+        data-name="Llavero Up Style" data-price="$ 00.000"
+        data-features="Material: por definir&#10;Tallas / tamaño: por definir&#10;Escribe aquí las características reales del producto.">
+        <span class="merch-photo">
+          <img src="img/merch/llavero.jpg" alt="Llavero Up Style" loading="lazy">
+          <span class="click-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+        </span>
+        <span class="merch-body"><span class="name">Llavero Up Style</span><span class="price">$ 00.000</span></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- 5. REDES SOCIALES -->
+<section class="social-band" id="redes">
+  <div class="wrap social-grid">
+    <div class="reveal">
+      <p class="eyebrow eyebrow-light">04 · Redes</p>
+      <h2>La historia sigue en redes.</h2>
+      <p class="lede">Aquí va el resumen. El proceso completo, los productos y las historias de donación están en Instagram y YouTube.</p>
+      <div class="social-links">
+        <!-- EDITABLE: reemplaza los href="#" por los enlaces reales -->
+        <a class="social-link-card" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+          <span><b>Instagram</b><span>@upstyle · fotos, reels y avances</span></span>
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+        </a>
+        <a class="social-link-card" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m10 9 5 3-5 3V9Z"/><rect x="2" y="5" width="20" height="14" rx="3"/></svg>
+          <span><b>YouTube</b><span>Up Style · videos del proceso completo</span></span>
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="reveal reveal-2">
+      <!-- EDITABLE: reemplaza el <div class="media-placeholder …"> por el video de introducción, por ejemplo:
+           <video class="phone-video" controls playsinline poster="img/equipo/equipo-completo.jpg"><source src="video/intro.mp4" type="video/mp4"></video>
+           o por un <iframe> de YouTube Shorts. -->
+      <div class="phone">
+        <div class="media-placeholder video">
+          <span class="play-ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7v10l8-5z" fill="currentColor"/></svg></span>
+          Aquí va el video de introducción
+          <small>Formato vertical 9:16</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. EQUIPO -->
+<section class="team-band" id="equipo">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">05 · Equipo</p>
+      <h2>Nuestro equipo</h2>
+      <p class="lede">Las 5 personas detrás de Up Style. Toca una foto para conocer a cada integrante.</p>
+    </div>
+    <!-- EDITABLE: cambia foto, nombre y rol de cada integrante -->
+    <div class="team-grid">
+      <!-- EDITABLE: llena data-bio, data-ig, data-tiktok, data-yt con la info y redes reales de cada quien
+           (los enlaces completos, por ejemplo data-ig="https://instagram.com/usuario") -->
+      <button type="button" class="member-card has-photo reveal reveal-1"
+        data-name="Diego Pinzón" data-role="Director"
+        data-bio="Información personal de Diego Pinzón. Escríbela aquí."
+        data-ig="" data-tiktok="" data-yt="">
+        <img src="img/equipo/diego-pinzon.jpg" alt="Diego Pinzón, Director" loading="lazy">
+        <span class="click-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+      </button>
+      <button type="button" class="member-card has-photo reveal reveal-2"
+        data-name="Jean Diego" data-role="Fotografía e iluminación"
+        data-bio="Información personal de Jean Diego. Escríbela aquí."
+        data-ig="" data-tiktok="" data-yt="">
+        <img src="img/equipo/jean-diego.jpg" alt="Jean Diego, Fotografía e iluminación" loading="lazy">
+        <span class="click-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+      </button>
+      <button type="button" class="member-card has-photo reveal reveal-3"
+        data-name="Isabella García" data-role="Productora"
+        data-bio="Información personal de Isabella García. Escríbela aquí."
+        data-ig="" data-tiktok="" data-yt="">
+        <img src="img/equipo/isabella-garcia.jpg" alt="Isabella García, Productora" loading="lazy">
+        <span class="click-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+      </button>
+      <button type="button" class="member-card has-photo reveal reveal-4"
+        data-name="Guillermo Hudson" data-role="Director de arte y vestuario"
+        data-bio="Información personal de Guillermo Hudson. Escríbela aquí."
+        data-ig="" data-tiktok="" data-yt="">
+        <img src="img/equipo/guillermo-hudson.jpg" alt="Guillermo Hudson, Director de arte y vestuario" loading="lazy">
+        <span class="click-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+      </button>
+      <!-- EDITABLE: falta esta foto por tomar. Cuando la tengas, copia uno de los <button class="member-card has-photo"> de arriba,
+           cambia los datos y apunta el src a img/equipo/nombre-apellido.jpg; luego borra este bloque. -->
+      <div class="member-card member-pending reveal reveal-5">
+        <div class="member-photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+          Foto pendiente
+        </div>
+        <div class="member-body"><div class="name">Nombre Apellido</div><div class="role">Rol en el proyecto</div></div>
+      </div>
+    </div>
+
+    <figure class="group-photo-wrap reveal">
+      <div class="group-photo">
+        <img src="img/equipo/equipo-completo.jpg" alt="Equipo completo de Up Style" loading="lazy">
+      </div>
     </figure>
-    
-    </header>
+  </div>
+</section>
 
-  <footer id="pie">
-    <p>Used by these companies:</p>
-    <img src="img/atlassian-icon.svg" alt="">
-    <img src="img/behance-icon.svg" alt="">
-    <img src="img/bing-icon.svg" alt="">
-    <img src="img/bitbucket-icon.svg" alt="">
-    <img src="img/dropbox-icon.svg" alt="">
-    <img src="img/twitch-icon.svg" alt="">
-    <img src="img/twitter-icon.svg" alt="">
-  </footer>
+<!-- 7. PARTICIPA: preguntas + dona tus jeans -->
+<section id="participa">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">06 · Participa</p>
+      <h2>Pregunta lo que quieras o dona tus jeans.</h2>
+      <p class="lede">Los dos formularios abren un correo ya escrito hacia Up Style. Solo tienes que enviarlo.</p>
+    </div>
 
+    <div class="faq-grid">
+      <div class="interact-card reveal reveal-1">
+        <h3>
+          <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5M12 15.5h.01"/></svg></span>
+          Urna de preguntas
+        </h3>
+        <p class="hint">¿Tienes una duda sobre el proyecto, el proceso o cómo donar? Pregúntanos.</p>
+        <form id="questionForm">
+          <div class="field">
+            <label for="qName">Tu nombre</label>
+            <input type="text" id="qName" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="qText">Tu pregunta</label>
+            <textarea id="qText" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-denim form-submit">Enviar pregunta</button>
+        </form>
+        <div class="form-success" id="qSuccess" role="status">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg>
+          ¡Gracias! Se abrió un correo con tu pregunta lista para enviar.
+        </div>
+      </div>
+
+      <div class="interact-card reveal reveal-2">
+        <h3>
+          <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h12l1 20h-5.5L12 9l-1.5 13H5z"/><path d="M6 6h12"/></svg></span>
+          Dona tus jeans
+        </h3>
+        <p class="hint">Cuéntanos cuántas prendas tienes y te contactamos para coordinar la entrega.</p>
+        <form id="donateForm">
+          <div class="field">
+            <label for="dName">Tu nombre</label>
+            <input type="text" id="dName" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="dContact">Correo o celular</label>
+            <input type="text" id="dContact" required>
+          </div>
+          <div class="field">
+            <label for="dQty">¿Cuántas prendas quieres donar?</label>
+            <select id="dQty">
+              <option>1 a 2 prendas</option>
+              <option>3 a 5 prendas</option>
+              <option>Más de 5 prendas</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-denim form-submit">Quiero donar</button>
+        </form>
+        <div class="form-success" id="dSuccess" role="status">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg>
+          ¡Gracias! Se abrió un correo con tu donación lista para enviar.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- Modal de producto: se llena con JS a partir de los data-* de cada botón -->
+<div class="member-modal-backdrop" id="merchModalBackdrop">
+  <div class="member-modal" role="dialog" aria-modal="true" aria-labelledby="merchModalName">
+    <button type="button" class="member-modal-close" id="merchModalClose" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <img class="merch-modal-photo" id="merchModalPhoto" src="data:," alt="">
+    <div class="merch-modal-body">
+      <div class="name" id="merchModalName"></div>
+      <div class="price" id="merchModalPrice"></div>
+      <p class="features" id="merchModalFeatures"></p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de integrante: se llena con JS a partir de los data-* de cada botón -->
+<div class="member-modal-backdrop" id="memberModalBackdrop">
+  <div class="member-modal" role="dialog" aria-modal="true" aria-labelledby="memberModalName">
+    <button type="button" class="member-modal-close" id="memberModalClose" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <img class="member-modal-photo" id="memberModalPhoto" src="data:," alt="">
+    <div class="member-modal-body">
+      <div class="name" id="memberModalName"></div>
+      <div class="role" id="memberModalRole"></div>
+      <p class="bio" id="memberModalBio"></p>
+      <div class="member-modal-socials" id="memberModalSocials"></div>
+    </div>
+  </div>
+</div>
+
+<footer id="contacto">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">
+          <img class="brand-badge" src="img/logo-upstyle.png" alt="Logo Up Style" width="40" height="40">
+          <span class="brand-name">Up Style</span>
+        </div>
+        <p class="foot-tagline">Moda circular hecha en la Sabana Norte de Cundinamarca, frente al problema de los residuos textiles.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Navegación</h4>
+        <a href="#problematica">Problemática</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#merch">Merch</a>
+        <a href="#redes">Redes</a>
+        <a href="#equipo">Equipo</a>
+        <a href="#participa">Participa</a>
+      </div>
+      <div class="foot-col">
+        <h4>Contacto</h4>
+        <!-- EDITABLE: correo real (cámbialo también en script.js, variable CONTACT_EMAIL) -->
+        <a href="mailto:hola@upstyle.com">hola@upstyle.com</a>
+        <p class="foot-note">Proyecto formativo SENA<br>Chía, Cundinamarca</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© Up Style 2026 · Chía, Cundinamarca</span>
+      <span>Datos de impacto: ONU, UAESP, CAR Cundinamarca, revista Semana, El Tiempo</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
