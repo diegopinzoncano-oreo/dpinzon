@@ -1,0 +1,9 @@
+{
+  // Ajustes de VS Code solo para este proyecto
+  "editor.wordWrap": "on",
+  "editor.tabSize": 2,
+  "editor.formatOnSave": false,
+  "files.autoSave": "afterDelay",
+  "liveServer.settings.donotShowInfoMsg": true,
+  "cSpell.language": "es,en"
+}

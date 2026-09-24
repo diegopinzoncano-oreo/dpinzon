@@ -1,0 +1,15 @@
+{
+  // Extensiones recomendadas para editar la página en VS Code.
+  // Al abrir esta carpeta, VS Code te ofrece instalarlas.
+  "recommendations": [
+    "ritwickdey.LiveServer",
+    "esbenp.prettier-vscode",
+    "formulahendry.auto-rename-tag",
+    "ecmel.vscode-html-css",
+    "pranaygp.vscode-css-peek",
+    "naumovs.color-highlight",
+    "streetsidesoftware.code-spell-checker",
+    "streetsidesoftware.code-spell-checker-spanish",
+    "MS-CEINTL.vscode-language-pack-es"
+  ]
+}

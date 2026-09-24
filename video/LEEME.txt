@@ -1,0 +1,15 @@
+CARPETA DE VIDEOS
+=================
+
+Pon aquí los videos con estos nombres exactos:
+
+  intro.mp4    → video de introducción (sección Redes).
+                 Mejor en formato vertical, como un reel.
+
+  proceso.mp4  → video corto del proceso (sección Proceso).
+                 Se reproduce solo, sin sonido y en bucle.
+                 Mientras no exista, ese espacio no aparece.
+
+Consejo: que cada video pese menos de 20 MB (GitHub no deja subir
+archivos de más de 100 MB). Puedes comprimirlos en handbrake.fr
+o en cualquier app de edición exportando en 720p.
