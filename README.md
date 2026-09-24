@@ -33,7 +33,7 @@ Para cambiar una foto que ya existe, reemplázala con el mismo nombre.
 | Video del proceso (opcional) | `video/proceso.mp4` | Horizontal 16:9, corto (10 a 20 s), sin sonido. Se repite solo. |
 | Merch | `img/merch/gorra.jpg` … | Cuadradas 1:1 (1000 × 1000 px), fondo de denim o liso. |
 | Historia de Up Style | `video/intro.mp4` | Vertical 9:16 (como un reel). Se reproduce sola al llegar a la sección. Si es horizontal, ver el comentario en `index.html`. |
-| Equipo | `img/equipo/diego-pinzon.jpg` … `integrante-5.jpg` | Verticales 8:11 (800 × 1100 px). Todas con el mismo fondo y encuadre. |
+| Equipo | `img/equipo/diego-pinzon.jpg`, `jean-diego.jpg`, `isabella-garcia.jpg`, `guillermo-hudson.jpg`, `diego-mendez.jpg` | Verticales 8:11 (800 × 1100 px). Todas con el mismo fondo y encuadre. |
 | Foto grupal | `img/equipo/equipo-completo.jpg` | Horizontal 2:1. |
 
 Mientras falte un archivo, la página muestra un recuadro que dice cuál falta.
@@ -51,7 +51,7 @@ En la ventana se muestra el botón de la red con el @usuario.
 
 - Precios y características de cada producto de merch.
 - Enlaces reales de Instagram y YouTube.
-- Biografía y redes de cada integrante; nombre, rol y foto del integrante 5.
+- Biografía y redes de cada integrante.
 - Video de la historia de Up Style y foto para la franja del ODS 12.
 - Correo real de contacto (en `index.html` y en `script.js` → `CORREO_DE_CONTACTO`).
 
