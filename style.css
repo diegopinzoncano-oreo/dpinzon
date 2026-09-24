@@ -380,11 +380,6 @@ header.scrolled .brand-badge {
   transform: rotate(-12deg) scale(1.06);
   box-shadow: 0 0 0 3px var(--thread), 0 14px 28px -8px rgba(15, 20, 35, 0.6);
 }
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-}
 .brand-name {
   font-family: var(--font-display);
   font-size: 1.4rem;
@@ -393,21 +388,8 @@ header.scrolled .brand-badge {
   white-space: nowrap;
   transition: color .4s ease;
 }
-/* Frase pequeña debajo del nombre */
-.brand-tag {
-  margin-top: 4px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--tan-text);
-  white-space: nowrap;
-  transition: color .4s ease;
-}
 header.sobre-inicio .brand-name,
 header.menu-abierto .brand-name { color: #fff; }
-header.sobre-inicio .brand-tag,
-header.menu-abierto .brand-tag { color: var(--tan); }
 
 /* ---------- Enlaces (computador) ---------- */
 .navlinks {
@@ -455,8 +437,10 @@ header.sobre-inicio .navlinks a { color: rgba(255, 255, 255, 0.8); }
 header.sobre-inicio .navlinks a:hover,
 header.sobre-inicio .navlinks a.active { color: #fff; }
 
-/* Píldora que se desliza detrás del enlace (la mueve script.js) */
-.nav-pill {
+/* Píldora que se desliza detrás del enlace (la mueve script.js).
+   Se escribe ".navlinks .nav-pill" para que gane sobre ".navlinks li":
+   así queda flotando y no ocupa espacio en el menú. */
+.navlinks .nav-pill {
   position: absolute;
   z-index: 0;
   top: 5px;
@@ -470,7 +454,7 @@ header.sobre-inicio .navlinks a.active { color: #fff; }
   pointer-events: none;
   transition: transform .45s var(--ease-out), width .45s var(--ease-out), opacity .3s ease, background .4s ease;
 }
-header.sobre-inicio .nav-pill {
+header.sobre-inicio .navlinks .nav-pill {
   background: rgba(255, 255, 255, 0.18);
   box-shadow: none;
 }
@@ -587,7 +571,7 @@ header.menu-abierto .navtoggle span {
   header.sobre-inicio .navlinks {
     background: var(--denim-deep);
   }
-  .nav-pill {
+  .navlinks .nav-pill {
     display: none;
   }
   /* Cada enlace sube y aparece, uno detrás de otro */
@@ -787,37 +771,6 @@ body.menu-open {
 }
 @keyframes aparecerInicio {
   to { opacity: 1; transform: none; }
-}
-
-/* Recuadro flotante "5 personas" */
-.hero-float-chip {
-  position: absolute;
-  right: 40px;
-  bottom: 110px;
-  z-index: 1;
-  max-width: 220px;
-  padding: 16px 20px;
-  background: rgba(20, 25, 38, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: var(--radius-m);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-.hero-float-chip b {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 2rem;
-  line-height: 1;
-  color: #fff;
-}
-.hero-float-chip span {
-  display: block;
-  margin-top: 6px;
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.78);
-}
-@media (max-width: 760px) {
-  .hero-float-chip { display: none; }
 }
 
 /* "Desliza para conocer el problema" con el ratoncito */
