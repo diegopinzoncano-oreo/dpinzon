@@ -26,7 +26,7 @@ Para cambiar una foto que ya existe, reemplázala con el mismo nombre.
 
 | Sección | Archivo | Recomendación |
 |---|---|---|
-| Inicio (fondo) | `img/equipo/equipo-completo.jpg` | Horizontal, mínimo 1920 × 1080 px. Personas a la derecha: el texto va a la izquierda. |
+| Inicio (modelos) | `img/inicio/modelos.jpg` | Horizontal, mínimo 2000 px de ancho, modelos en el centro. En computador la foto va a la derecha; en celular arriba. |
 | Problemática (fondo suave) | `img/fondo-problematica.jpg` | Ropa acumulada, contenedores de ropa, relleno sanitario. Se ve muy clara, casi transparente. |
 | **ODS 12 (franja grande)** | `img/secciones/ods12.jpg` | Horizontal, mínimo 1600 px de ancho. Montaña de jeans, manos separando prendas o el punto Renovamoda de Chía. Se oscurece sola. |
 | Proceso | `img/proceso/midiendo-denim.jpg`, `img/proceso/herramientas.jpg` | Horizontales 4:3 (1200 × 900 px). Fotos reales del taller: corte, costura, clasificación. |
