@@ -1,0 +1,19 @@
+BIBLIOTECA DE IMÁGENES
+======================
+
+Aquí van todas las fotos del proyecto que todavía no están en la página
+(fotos del taller, del equipo, de prendas, de referencias, etc.).
+
+Sugerencia para organizarlas en subcarpetas:
+  taller/       → corte, costura, clasificación, herramientas
+  prendas/      → jeans antes y después, detalles de bolsillos, botones
+  equipo/       → fotos editadas de cada integrante
+  eventos/      → recolección, puntos Renovamoda, presentaciones
+  referencias/  → capturas de páginas que nos gustan
+
+Nombres de archivo: en minúscula, sin tildes ni espacios.
+  Bien:  corte-denim-01.jpg
+  Mal:   Corte Denim (1).JPG
+
+Cuando una foto se use en la página, se copia a la carpeta de su
+sección (img/equipo/, img/proceso/, img/merch/, img/secciones/).

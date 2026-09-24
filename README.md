@@ -76,4 +76,5 @@ Están en `.vscode/extensions.json`:
 
 ## Otros
 
+- `img/biblioteca/`: biblioteca de imágenes del proyecto (fotos que aún no están en la página).
 - `ejercicio-commune/`: ejercicio anterior (landing "Commune").

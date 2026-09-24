@@ -49,6 +49,8 @@ const listaMenu = document.getElementById('navlinks');
 
 function abrirOCerrarMenu(abrir) {
   listaMenu.classList.toggle('open', abrir);
+  document.getElementById('siteHeader').classList.toggle('menu-abierto', abrir);
+  document.body.classList.toggle('menu-open', abrir); // la página de atrás no se mueve
   botonMenu.setAttribute('aria-expanded', abrir ? 'true' : 'false');
   botonMenu.setAttribute('aria-label', abrir ? 'Cerrar menú' : 'Abrir menú');
 }
@@ -87,8 +89,35 @@ const barraProgreso = document.getElementById('scrollProgress');
 const fotoInicio = document.querySelector('.hero-bg');
 const fotoOds = document.querySelector('.ods-bg');
 
-// Enlaces del menú y las secciones a las que apuntan
-const enlacesMenu = document.querySelectorAll('.navlinks a');
+// Enlaces del menú (menos el botón de celular) y la píldora que se desliza
+const enlacesMenu = document.querySelectorAll('.navlinks li:not(.nav-mobile-cta) a');
+const pildoraMenu = document.querySelector('.nav-pill');
+const seccionInicio = document.getElementById('inicio');
+let mouseEnMenu = false;
+
+// Mueve la píldora detrás de un enlace (o la esconde si no hay enlace)
+function moverPildoraMenu(enlace) {
+  if (!enlace) {
+    pildoraMenu.style.opacity = '0';
+    return;
+  }
+  pildoraMenu.style.opacity = '1';
+  pildoraMenu.style.width = enlace.offsetWidth + 'px';
+  pildoraMenu.style.transform = 'translateX(' + enlace.parentElement.offsetLeft + 'px)';
+}
+
+// Al pasar el mouse por un enlace, la píldora va hacia él.
+// Al salir del menú, vuelve al enlace de la sección actual.
+enlacesMenu.forEach(function (enlace) {
+  enlace.addEventListener('mouseenter', function () {
+    mouseEnMenu = true;
+    moverPildoraMenu(enlace);
+  });
+});
+listaMenu.addEventListener('mouseleave', function () {
+  mouseEnMenu = false;
+  moverPildoraMenu(document.querySelector('.navlinks a.active'));
+});
 
 function resaltarSeccionActual() {
   // Punto de referencia: un poco más arriba de la mitad de la pantalla
@@ -100,6 +129,7 @@ function resaltarSeccionActual() {
     const termina = empieza + seccion.offsetHeight;
     enlace.classList.toggle('active', referencia >= empieza && referencia < termina);
   });
+  if (!mouseEnMenu) moverPildoraMenu(document.querySelector('.navlinks a.active'));
 }
 
 function alBajar() {
@@ -112,6 +142,10 @@ function alBajar() {
 
   // Menú más delgado después de bajar 40 píxeles
   encabezado.classList.toggle('scrolled', bajado > 40);
+
+  // Menú transparente mientras está encima de la foto del inicio
+  const finDelInicio = seccionInicio.offsetHeight - encabezado.offsetHeight;
+  encabezado.classList.toggle('sobre-inicio', bajado < finDelInicio);
 
   resaltarSeccionActual();
 
@@ -143,6 +177,8 @@ window.addEventListener('scroll', function () {
 
 window.addEventListener('resize', alBajar);
 alBajar();
+// Cuando cargan las fuentes cambian los anchos: recolocamos la píldora
+document.fonts.ready.then(alBajar);
 
 
 /* ================================================================

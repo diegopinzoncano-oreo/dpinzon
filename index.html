@@ -71,29 +71,39 @@
 <!-- ============================================================
      0. MENÚ SUPERIOR
      ============================================================ -->
-<header id="siteHeader">
+<header id="siteHeader" class="sobre-inicio">
   <nav class="nav" aria-label="Principal">
 
     <!-- Logo + nombre. Al hacer clic vuelve al inicio -->
     <a href="#inicio" class="brand" aria-label="Up Style, volver al inicio">
-      <!-- EDITABLE (foto): el logo está en img/logo-upstyle.png -->
-      <img class="brand-badge" src="img/logo-upstyle.png" alt="" width="52" height="52">
-      <span class="brand-name">Up Style</span>
+      <!-- EDITABLE (foto): el logo está en img/logo-upstyle.png (cuadrado, fondo del color del logo) -->
+      <span class="brand-logo"><img class="brand-badge" src="img/logo-upstyle.png" alt="" width="60" height="60"></span>
+      <span class="brand-text">
+        <span class="brand-name">Up Style</span>
+        <!-- EDITABLE (texto): frase pequeña debajo del nombre -->
+        <span class="brand-tag">Moda circular · Chía</span>
+      </span>
     </a>
 
-    <!-- Enlaces del menú. El href="#..." lleva a la sección con ese id -->
+    <!-- Enlaces del menú. El href="#..." lleva a la sección con ese id.
+         style="--i:1", "--i:2"... es el orden en que aparecen con animación.
+         <span class="nav-num"> es el número que solo se ve en el menú de celular.
+         Para agregar un enlace: copia un <li> completo y cambia los datos. -->
     <ul class="navlinks" id="navlinks">
-      <li><a href="#problematica">Problemática</a></li>
-      <li><a href="#proceso">Proceso</a></li>
-      <li><a href="#merch">Merch</a></li>
-      <li><a href="#redes">Redes</a></li>
-      <li><a href="#equipo">Equipo</a></li>
-      <li><a href="#participa">Participa</a></li>
+      <li class="nav-pill" aria-hidden="true"></li>
+      <li style="--i:1"><a href="#problematica"><span class="nav-num">01</span>Problemática</a></li>
+      <li style="--i:2"><a href="#proceso"><span class="nav-num">02</span>Proceso</a></li>
+      <li style="--i:3"><a href="#merch"><span class="nav-num">03</span>Merch</a></li>
+      <li style="--i:4"><a href="#redes"><span class="nav-num">04</span>Redes</a></li>
+      <li style="--i:5"><a href="#equipo"><span class="nav-num">05</span>Equipo</a></li>
+      <li style="--i:6"><a href="#participa"><span class="nav-num">06</span>Participa</a></li>
+      <!-- Botón que solo aparece dentro del menú de celular -->
+      <li class="nav-mobile-cta" style="--i:7"><a href="#participa" class="btn btn-primary">Dona tus jeans</a></li>
     </ul>
 
     <div class="nav-actions">
-      <a href="#participa" class="btn btn-denim btn-sm nav-cta">Dona tus jeans</a>
-      <!-- Botón de 3 rayitas que solo aparece en celular -->
+      <a href="#participa" class="btn btn-denim btn-sm btn-brillo nav-cta">Dona tus jeans</a>
+      <!-- Botón de 3 rayitas que solo aparece en tablet y celular -->
       <button class="navtoggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navlinks">
         <span></span><span></span><span></span>
       </button>
