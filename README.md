@@ -9,9 +9,10 @@ Página web del proyecto Up Style.
 | `index.html` | El **contenido**: textos, fotos, videos, enlaces | Para cambiar palabras, precios, enlaces |
 | `style.css` | El **diseño**: colores, tamaños, animaciones | Para cambiar colores o espacios |
 | `script.js` | El **comportamiento**: menú, contadores, ventanas, formularios | Para cambiar el correo de contacto |
-| `animaciones.js` | Animaciones extra con la librería **Motion** (motion.dev), que se carga desde internet en `index.html` | Para ajustar velocidades de las animaciones |
+| `animaciones.js` | Animaciones extra con la librería **Motion** (motion.dev) | Para ajustar velocidades de las animaciones |
+| `motion.js` | La librería **Motion** (versión 13.4.4), guardada dentro del proyecto para que funcione sin internet | Nunca: **no se edita** |
 
-Si no hay internet y Motion no carga, la página funciona igual con sus animaciones normales.
+Si Motion no carga, la página funciona igual con sus animaciones normales.
 
 Cada archivo empieza con un índice y explicaciones en español.
 

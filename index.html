@@ -10,6 +10,7 @@
     style.css   → el DISEÑO (colores, tamaños, animaciones).
     script.js   → el COMPORTAMIENTO (menú, contadores, ventanas...).
     animaciones.js → animaciones extra con la librería Motion.
+    motion.js   → la librería Motion (versión 13.4.4). No se edita.
 
   ¿CÓMO EDITAR?
   Busca con Ctrl + F la palabra  EDITABLE  y verás todos los lugares
@@ -855,11 +856,11 @@
   </div>
 </footer>
 
-<!-- Librería MOTION (motion.dev): animaciones suaves tipo "premium".
-     Se descarga de internet (jsDelivr). La versión va fija (13.4.4) para
-     que la página no cambie sola si sale una versión nueva.
-     Si no hay internet, la página funciona igual, con sus animaciones normales. -->
-<script src="https://cdn.jsdelivr.net/npm/motion@13.4.4/dist/motion.js"></script>
+<!-- Librería MOTION (motion.dev), versión 13.4.4: animaciones suaves tipo "premium".
+     Está guardada dentro del proyecto (motion.js), así que funciona sin internet
+     y no hace esperar al resto de la página.
+     No edites motion.js: es la librería tal cual. Los ajustes van en animaciones.js. -->
+<script src="motion.js"></script>
 
 <!-- Conecta el JavaScript. Va al final para que la página cargue primero -->
 <script src="script.js"></script>

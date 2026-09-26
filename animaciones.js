@@ -2,11 +2,12 @@
   ================================================================
   UP STYLE · animaciones.js
   Aquí están las animaciones "premium" hechas con la librería
-  MOTION (motion.dev). La librería se carga en index.html, justo
-  antes de script.js, y queda guardada en window.Motion.
+  MOTION (motion.dev). La librería está guardada dentro del
+  proyecto en motion.js (funciona sin internet). Se carga en
+  index.html, justo antes de script.js, y queda en window.Motion.
 
   IMPORTANTE: este archivo es un EXTRA.
-  - Si no hay internet y Motion no carga, o si la persona pidió
+  - Si Motion no carga (por ejemplo, si falta motion.js), o si la persona pidió
     "reducir movimiento" en su dispositivo, este archivo NO hace
     nada y la página sigue con sus animaciones normales (las de
     style.css y script.js).
@@ -50,7 +51,7 @@ function iniciarAnimacionesMotion() {
   // ¿La persona pidió "reducir movimiento" en su dispositivo?
   const pideMenosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Si Motion no cargó (sin internet) o pidió menos movimiento: no hacemos nada.
+  // Si Motion no cargó (falta motion.js) o pidió menos movimiento: no hacemos nada.
   if (!window.Motion || pideMenosMovimiento) return;
 
   // Sacamos de Motion las herramientas que vamos a usar
@@ -91,9 +92,14 @@ function iniciarAnimacionesMotion() {
   // el elemento. Así vuelven a funcionar los efectos de style.css al
   // pasar el mouse (por ejemplo, la tarjeta que sube un poquito).
   function soltarEstilos(elementos) {
-    elementos.forEach(function (elemento) {
-      elemento.style.opacity = '';
-      elemento.style.transform = '';
+    // Esperamos un cuadro (frame): Motion escribe su último valor justo
+    // después de avisar que terminó. Si borráramos antes, ese último
+    // valor quedaría pegado y taparía los efectos de style.css.
+    requestAnimationFrame(function () {
+      elementos.forEach(function (elemento) {
+        elemento.style.opacity = '';
+        elemento.style.transform = '';
+      });
     });
   }
 
@@ -196,8 +202,9 @@ function iniciarAnimacionesMotion() {
   /* ==============================================================
      5. PASOS DEL PROCESO
      El número y el título entran deslizándose desde la izquierda,
-     y luego aparece el texto. La línea de arriba de cada paso se
-     sigue dibujando con style.css (clase "in-view").
+     y luego aparece el texto. La línea de arriba de cada paso la
+     sigue dibujando style.css cuando script.js le pone la clase
+     "in-view" (como antes).
      ============================================================== */
 
   const pasos = document.querySelectorAll('.step');
@@ -206,7 +213,6 @@ function iniciarAnimacionesMotion() {
     const numerosYTitulos = [];
     const textos = [];
     tanda.forEach(function (paso) {
-      paso.classList.add('in-view'); // dibuja la línea de arriba (style.css)
       numerosYTitulos.push(paso.querySelector('.step-num'), paso.querySelector('.step-title'));
       textos.push(paso.querySelector('.step-text'));
     });
