@@ -5,10 +5,11 @@
   UP STYLE · Moda circular en Chía · Proyecto SENA
   ================================================================
 
-  La página está hecha con 3 archivos:
+  La página está hecha con estos archivos:
     index.html  → el CONTENIDO (textos, fotos, videos). Este archivo.
     style.css   → el DISEÑO (colores, tamaños, animaciones).
     script.js   → el COMPORTAMIENTO (menú, contadores, ventanas...).
+    animaciones.js → animaciones extra con la librería Motion.
 
   ¿CÓMO EDITAR?
   Busca con Ctrl + F la palabra  EDITABLE  y verás todos los lugares
@@ -854,7 +855,16 @@
   </div>
 </footer>
 
+<!-- Librería MOTION (motion.dev): animaciones suaves tipo "premium".
+     Se descarga de internet (jsDelivr). La versión va fija (13.4.4) para
+     que la página no cambie sola si sale una versión nueva.
+     Si no hay internet, la página funciona igual, con sus animaciones normales. -->
+<script src="https://cdn.jsdelivr.net/npm/motion@13.4.4/dist/motion.js"></script>
+
 <!-- Conecta el JavaScript. Va al final para que la página cargue primero -->
 <script src="script.js"></script>
+
+<!-- Animaciones hechas con Motion (títulos, tarjetas, parallax, botones) -->
+<script src="animaciones.js"></script>
 </body>
 </html>

@@ -24,6 +24,7 @@ empezando a programar y edita la página en clase con VS Code.
 - `index.html`: contenido de la página.
 - `style.css`: diseño.
 - `script.js`: comportamiento.
+- `animaciones.js`: animaciones con la librería Motion (cargada desde jsDelivr en `index.html`).
 - `README.md`: explica cómo editar la página.
 - `img/`: imágenes, organizadas en `equipo/`, `merch/`, `proceso/`, `inicio/`, `secciones/` y `biblioteca/`.
 - `video/`: aquí van `intro.mp4` y `proceso.mp4`.

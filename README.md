@@ -2,13 +2,16 @@
 
 Página web del proyecto Up Style.
 
-## Los 3 archivos
+## Los archivos principales
 
 | Archivo | Qué tiene | Cuándo lo abres |
 |---|---|---|
 | `index.html` | El **contenido**: textos, fotos, videos, enlaces | Para cambiar palabras, precios, enlaces |
 | `style.css` | El **diseño**: colores, tamaños, animaciones | Para cambiar colores o espacios |
 | `script.js` | El **comportamiento**: menú, contadores, ventanas, formularios | Para cambiar el correo de contacto |
+| `animaciones.js` | Animaciones extra con la librería **Motion** (motion.dev), que se carga desde internet en `index.html` | Para ajustar velocidades de las animaciones |
+
+Si no hay internet y Motion no carga, la página funciona igual con sus animaciones normales.
 
 Cada archivo empieza con un índice y explicaciones en español.
 

@@ -22,6 +22,7 @@
     == 15. Fotos y videos pendientes
     == 16. Animaciones de aparición
     == 17. Personas que prefieren menos movimiento
+    == 18. Animaciones con Motion (animaciones.js)
 
   CÓMO LEER UNA REGLA
     .boton {            ← a qué elementos aplica (clase "boton")
@@ -2353,4 +2354,45 @@ footer {
     opacity: 1 !important;
     transform: none !important;
   }
+}
+
+
+/* ================================================================
+   == 18. ANIMACIONES CON MOTION (animaciones.js)
+   Estas reglas solo aplican cuando la librería Motion cargó bien:
+   animaciones.js le pone la clase "motion-on" a <html>.
+   Si Motion no carga, nada de esto se usa y la página queda con
+   las animaciones de la sección 16.
+   ================================================================ */
+
+/* Títulos palabra por palabra.
+   .m-mascara es la "ventanita" que esconde la palabra mientras sube.
+   El padding con margen negativo deja espacio para tildes y letras
+   como la "g" sin cambiar el alto de la línea. */
+.m-mascara {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0.14em 0 0.12em;
+  margin: -0.14em 0 -0.12em;
+}
+.m-palabra {
+  display: inline-block;
+}
+/* Antes de aparecer, cada palabra está escondida debajo de su máscara */
+.motion-on .m-titulo .m-palabra {
+  transform: translateY(110%);
+}
+/* Apagamos el efecto de letras "apretándose" de la sección 16
+   para que Motion sea el único que anima estos títulos */
+.motion-on .section-head.reveal h2.m-titulo {
+  letter-spacing: -0.01em;
+  transition: none;
+}
+
+/* Fotos con parallax: un 12% más grandes para que al moverse
+   no se vean los bordes. animaciones.js cambia --m-mover al bajar. */
+.motion-on .m-parallax {
+  scale: 1.12;
+  translate: 0 var(--m-mover, 0%);
 }
