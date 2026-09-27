@@ -23,7 +23,7 @@
     4. Tarjetas en cascada (merch, equipo y "¿Por qué el denim?")
     5. Pasos del proceso: número y título desde la izquierda
     6. Fotos con parallax suave al bajar
-    7. Sello del ODS 12 que se mueve al bajar
+    7. Sello del ODS 12 que crece un poquito al bajar (siempre derecho)
     8. Botones "magnéticos" al pasar el mouse
 
   Palabras de Motion que vas a ver:
@@ -263,8 +263,9 @@ function iniciarAnimacionesMotion() {
   /* ==============================================================
      7. SELLO DEL ODS 12
      Mientras la franja azul cruza la pantalla, el sello crece un
-     poquito y gira unos grados. Usamos "scale" y "rotate" aparte
-     para no chocar con la aparición de style.css (que usa transform).
+     poquito y luego vuelve a su tamaño. NO lo giramos: el sello
+     siempre queda derecho. Usamos "scale" aparte para no chocar
+     con la aparición de style.css (que usa transform).
      ============================================================== */
 
   const sello = document.querySelector('.ods-mark');
@@ -272,11 +273,9 @@ function iniciarAnimacionesMotion() {
 
   if (sello && franjaOds) {
     scroll(function (progreso) {
-      // Math.sin hace una "loma": pequeño al entrar, más grande en la mitad, pequeño al salir
-      const escala = 0.94 + 0.08 * Math.sin(progreso * Math.PI);
-      const giro = (0.5 - progreso) * 10; // de 5 grados a -5 grados
+      // Math.sin hace una "loma": 0.97 al entrar, 1 (tamaño real) en la mitad, 0.97 al salir
+      const escala = 0.97 + 0.03 * Math.sin(progreso * Math.PI);
       sello.style.scale = escala.toFixed(3);
-      sello.style.rotate = giro.toFixed(2) + 'deg';
     }, {
       target: franjaOds,
       offset: ['start end', 'end start']

@@ -1129,12 +1129,17 @@ body.menu-open {
   .ods-grid { grid-template-columns: 1fr; gap: 40px; }
 }
 
-/* Sello ODS 12: cuadro dorado con el infinito que se dibuja */
+/* Sello ODS 12: cuadro dorado con el infinito que se dibuja.
+   Es una cuadrícula (grid) de 2 columnas y 2 filas:
+     fila 1:  "12" a la izquierda  |  "ODS" a la derecha
+     fila 2:  el infinito, ocupando todo el ancho y centrado
+   El sello siempre queda derecho: no tiene ningún giro. */
 .ods-mark {
+  --ods-tam-numero: clamp(4rem, 9vw, 6.5rem); /* tamaño del "12" */
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto 1fr;
   width: 100%;
   max-width: 300px;
   aspect-ratio: 1 / 1;
@@ -1147,22 +1152,30 @@ body.menu-open {
   .ods-mark { max-width: 200px; padding: 20px; }
 }
 .ods-number {
-  order: -1; /* el número va arriba */
+  grid-column: 1;
+  grid-row: 1;
   font-family: var(--font-condensed);
   font-stretch: 75%;
-  font-size: clamp(4rem, 9vw, 6.5rem);
+  font-size: var(--ods-tam-numero);
   font-weight: 800;
   line-height: 0.85;
 }
 .ods-label {
-  position: absolute;
-  top: 30px;
-  right: 28px;
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  /* Bajamos "ODS" lo justo para que su borde de arriba
+     quede a la misma altura que la parte de arriba del "12" */
+  margin-top: calc(var(--ods-tam-numero) * 0.04);
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.12em;
+  line-height: 1;
 }
 .ods-infinity {
+  grid-column: 1 / -1;   /* ocupa las dos columnas */
+  grid-row: 2;
+  align-self: end;       /* pegado abajo del cuadro */
   width: 100%;
   overflow: visible;
 }
