@@ -1469,6 +1469,11 @@ html:not(.js) .ods-infinity path,
   object-fit: cover;
   transition: transform .8s var(--ease-out);
 }
+/* Foto del esfero: se corre un poco a la izquierda para que el esfero
+   se vea completo dentro del cuadro */
+.merch-photo img[src$="esfero.jpg"] {
+  object-position: 39% center;
+}
 .merch-card:hover .merch-photo img {
   transform: scale(1.07);
 }
