@@ -34,8 +34,11 @@ empezando a programar y edita la página en clase con VS Code.
 
 ## Convenciones que deben mantenerse
 
-- Comentarios en español y fáciles de entender para principiantes.
-- Marcas `EDITABLE (texto|foto|video|enlace)` en el HTML para señalar lo que se puede cambiar.
+- Código con aspecto de producción: comentarios breves y profesionales en español
+  (encabezados de sección y notas sobre lo no obvio), sin tono de tutorial ni instrucciones al lector.
+- Sin marcas de edición en el HTML.
+- Sin textos de relleno ni instrucciones visibles en la página (rutas de archivos, "escribe aquí",
+  precios de ejemplo). Si falta un dato, usar un texto neutro y terminado ("Precio por confirmar").
 - Nombres claros y en español en `script.js`.
 - CSS ordenado por secciones numeradas `== N.` con un índice al inicio del archivo.
 - Estilo visual limpio y editorial, tipo Nike/Adidas.

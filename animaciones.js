@@ -1,100 +1,64 @@
 /*
-  ================================================================
-  UP STYLE · animaciones.js
-  Aquí están las animaciones "premium" hechas con la librería
-  MOTION (motion.dev). La librería está guardada dentro del
-  proyecto en motion.js (funciona sin internet). Se carga en
-  index.html, justo antes de script.js, y queda en window.Motion.
+  Up Style · animaciones.js
+  Animaciones con Motion 13.4.4 (motion.js, disponible en window.Motion).
+  Es una mejora progresiva: sin Motion o con prefers-reduced-motion,
+  la página conserva las animaciones de style.css y script.js.
 
-  IMPORTANTE: este archivo es un EXTRA.
-  - Si Motion no carga (por ejemplo, si falta motion.js), o si la persona pidió
-    "reducir movimiento" en su dispositivo, este archivo NO hace
-    nada y la página sigue con sus animaciones normales (las de
-    style.css y script.js).
-  - Cuando Motion sí carga, le ponemos la clase "motion-on" a la
-    etiqueta <html>. Así style.css sabe que Motion está activo
-    (ver style.css → "== 18.").
-
-  ÍNDICE
-    0. Arranque: revisamos si Motion está disponible
-    1. Ajustes (velocidades y curvas de movimiento)
-    2. Herramientas pequeñas que usamos varias veces
-    3. Títulos de sección: palabra por palabra
-    4. Tarjetas en cascada (merch, equipo y "¿Por qué el denim?")
-    5. Pasos del proceso: número y título desde la izquierda
-    6. Fotos con parallax suave al bajar
-    7. Sello del ODS 12 que crece un poquito al bajar (siempre derecho)
-    8. Botones "magnéticos" al pasar el mouse
-
-  Palabras de Motion que vas a ver:
-    animate(elemento, { propiedad: [desde, hasta] }, { opciones })
-        → mueve un elemento de un valor a otro.
-    inView(elemento, funcion)
-        → ejecuta la función cuando el elemento entra en pantalla.
-    scroll(funcion, { target: elemento })
-        → ejecuta la función cada vez que bajas, con un número de
-          0 a 1 que dice cuánto del recorrido del elemento llevas.
-    stagger(0.08)
-        → "cascada": cada elemento arranca 0.08 segundos después
-          del anterior.
-  ================================================================
+  Índice
+    0. Arranque
+    1. Ajustes
+    2. Utilidades
+    3. Títulos de sección palabra por palabra
+    4. Tarjetas en cascada
+    5. Pasos del proceso
+    6. Parallax de fotos
+    7. Sello del ODS 12
+    8. Botones magnéticos
 */
 
-// Todo va dentro de esta función para que los nombres de aquí no
-// choquen con los de script.js. Al final del archivo la llamamos.
+// Encapsulado para no compartir nombres con script.js
 function iniciarAnimacionesMotion() {
 
   /* ==============================================================
      0. ARRANQUE
      ============================================================== */
 
-  // ¿La persona pidió "reducir movimiento" en su dispositivo?
   const pideMenosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Si Motion no cargó (falta motion.js) o pidió menos movimiento: no hacemos nada.
+  // Sin Motion o con movimiento reducido quedan las animaciones de CSS
   if (!window.Motion || pideMenosMovimiento) return;
 
-  // Sacamos de Motion las herramientas que vamos a usar
   const { animate, inView, scroll, stagger, motionValue } = window.Motion;
 
-  // Avisamos a style.css que Motion está activo
+  // Activa las reglas de la sección 18 de style.css
   document.documentElement.classList.add('motion-on');
 
 
   /* ==============================================================
      1. AJUSTES
-     Si quieres que todo sea más lento o más rápido, cambia aquí.
      ============================================================== */
 
-  // Curva de movimiento: arranca rápido y frena muy suave (estilo Apple)
   const curvaSuave = [0.22, 1, 0.36, 1];
-
-  // "Resorte" para los botones: vuelve a su lugar con muy poco rebote
   const resorteBoton = { type: 'spring', stiffness: 220, damping: 16, mass: 0.6 };
 
-  const DURACION_TITULO = 0.9;    // segundos que tarda cada palabra en subir
-  const DURACION_TARJETA = 0.8;   // segundos que tarda cada tarjeta en aparecer
-  const CASCADA = 0.08;           // segundos entre un elemento y el siguiente
+  const DURACION_TITULO = 0.9;    // s por palabra
+  const DURACION_TARJETA = 0.8;   // s por tarjeta
+  const CASCADA = 0.08;           // s entre elementos
 
 
   /* ==============================================================
-     2. HERRAMIENTAS PEQUEÑAS
+     2. UTILIDADES
      ============================================================== */
 
-  // Le quitamos a un elemento la animación de aparición de style.css
-  // (clases "reveal" y "reveal-1", "reveal-2"...) para que Motion
-  // sea el único que lo anima. Así no se animan dos veces a la vez.
+  // Evita que .reveal (CSS) y Motion animen el mismo elemento
   function quitarAparicionCSS(elemento) {
     elemento.classList.remove('reveal', 'reveal-1', 'reveal-2', 'reveal-3', 'reveal-4', 'reveal-5');
   }
 
-  // Cuando Motion termina, borramos los estilos que dejó escritos en
-  // el elemento. Así vuelven a funcionar los efectos de style.css al
-  // pasar el mouse (por ejemplo, la tarjeta que sube un poquito).
+  // Limpia los estilos en línea al terminar para que vuelvan a aplicar
+  // los :hover de style.css. Se espera un cuadro porque Motion escribe
+  // su último valor justo después de resolver la promesa.
   function soltarEstilos(elementos) {
-    // Esperamos un cuadro (frame): Motion escribe su último valor justo
-    // después de avisar que terminó. Si borráramos antes, ese último
-    // valor quedaría pegado y taparía los efectos de style.css.
     requestAnimationFrame(function () {
       elementos.forEach(function (elemento) {
         elemento.style.opacity = '';
@@ -103,19 +67,18 @@ function iniciarAnimacionesMotion() {
     });
   }
 
-  // Junta los elementos que entran en pantalla al mismo tiempo en una
-  // "tanda", para animarlos en cascada (uno detrás de otro).
-  // "animarTanda" es la función que recibe la lista de la tanda.
+  // Agrupa en una tanda los elementos que entran en pantalla en el
+  // mismo cuadro, para animarlos en cascada.
   function crearTanda(animarTanda) {
     let enEspera = [];
     return function agregar(elemento) {
       enEspera.push(elemento);
       if (enEspera.length === 1) {
-        // Esperamos un cuadro (frame) para recoger a todos los que llegan juntos
+        // Un cuadro de espera agrupa los elementos que entran juntos
         requestAnimationFrame(function () {
           const tanda = enEspera;
           enEspera = [];
-          // Los ordenamos como están en la página (de arriba a abajo)
+          // Orden del documento
           tanda.sort(function (a, b) {
             return a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
           });
@@ -127,22 +90,18 @@ function iniciarAnimacionesMotion() {
 
 
   /* ==============================================================
-     3. TÍTULOS DE SECCIÓN: PALABRA POR PALABRA
-     Partimos el texto del título en palabras. Cada palabra queda
-     dentro de una "máscara" (un span que esconde lo que se sale) y
-     sube desde abajo, una detrás de otra.
-     El HTML no cambia: esto lo hace JavaScript al cargar la página.
+     3. TÍTULOS DE SECCIÓN PALABRA POR PALABRA
+     Cada palabra se envuelve en una máscara y sube en cascada.
      ============================================================== */
 
   document.querySelectorAll('.section-head h2').forEach(function (titulo) {
-    // Si el título tiene etiquetas adentro (negrita, enlaces...), lo
-    // dejamos quieto para no dañarlo.
+    // Títulos con marcado interno se dejan intactos
     if (titulo.children.length > 0) return;
 
     const texto = titulo.textContent.trim();
     const palabras = texto.split(/\s+/);
 
-    // Los lectores de pantalla leen la frase completa, no palabra por palabra
+    // Los lectores de pantalla leen la frase completa
     titulo.setAttribute('aria-label', texto);
     titulo.textContent = '';
 
@@ -158,28 +117,26 @@ function iniciarAnimacionesMotion() {
       mascara.appendChild(pedazo);
       titulo.appendChild(mascara);
 
-      // Espacio normal entre palabras (para que el título pueda bajar de línea)
+      // Espacio real entre palabras para permitir el salto de línea
       if (numero < palabras.length - 1) titulo.appendChild(document.createTextNode(' '));
     });
 
-    // Con esta clase, style.css esconde las palabras debajo de su máscara
+    // style.css oculta las palabras bajo su máscara
     titulo.classList.add('m-titulo');
 
-    // Cuando el título entra en pantalla, las palabras suben en cascada
     inView(titulo, function () {
       animate(
         titulo.querySelectorAll('.m-palabra'),
         { transform: ['translateY(110%)', 'translateY(0%)'] },
         { duration: DURACION_TITULO, ease: curvaSuave, delay: stagger(0.06) }
       );
-    }, { amount: 0.5 }); // cuando se ve la mitad del título
+    }, { amount: 0.5 });
   });
 
 
   /* ==============================================================
      4. TARJETAS EN CASCADA
-     Merch, integrantes del equipo y "¿Por qué el denim?".
-     Aparecen de la transparencia y crecen un poquito (94% → 100%).
+     Merch, equipo y "¿Por qué el denim?": opacidad y escala 0.94 → 1.
      ============================================================== */
 
   const tarjetas = document.querySelectorAll('.merch-card, .member-card, .identity-card');
@@ -194,17 +151,15 @@ function iniciarAnimacionesMotion() {
 
   tarjetas.forEach(function (tarjeta) {
     quitarAparicionCSS(tarjeta);
-    tarjeta.style.opacity = '0'; // escondida hasta que entre en pantalla
+    tarjeta.style.opacity = '0';
     inView(tarjeta, function () { animarTarjetas(tarjeta); }, { amount: 0.2 });
   });
 
 
   /* ==============================================================
      5. PASOS DEL PROCESO
-     El número y el título entran deslizándose desde la izquierda,
-     y luego aparece el texto. La línea de arriba de cada paso la
-     sigue dibujando style.css cuando script.js le pone la clase
-     "in-view" (como antes).
+     Número y título entran desde la izquierda, luego el texto.
+     La línea superior la sigue dibujando style.css (.in-view).
      ============================================================== */
 
   const pasos = document.querySelectorAll('.step');
@@ -233,39 +188,36 @@ function iniciarAnimacionesMotion() {
   pasos.forEach(function (paso) {
     quitarAparicionCSS(paso);
     paso.querySelectorAll('.step-num, .step-title, .step-text').forEach(function (parte) {
-      parte.style.opacity = '0'; // escondidos hasta que el paso entre en pantalla
+      parte.style.opacity = '0';
     });
     inView(paso, function () { animarPasos(paso); }, { amount: 0.3 });
   });
 
 
   /* ==============================================================
-     6. FOTOS CON PARALLAX SUAVE
-     Mientras bajas, la foto se mueve un poquito más lento que la
-     página (de -5% a 5%). La foto está un 12% más grande (style.css)
-     para que nunca se vean sus bordes.
+     6. PARALLAX DE FOTOS
+     Desplazamiento de -5% a 5%; la imagen está ampliada al 112%
+     en style.css para que no se vean los bordes.
      ============================================================== */
 
   document.querySelectorAll('.process-media .photo-frame img, .group-photo img').forEach(function (foto) {
     foto.classList.add('m-parallax');
 
     scroll(function (progreso) {
-      // progreso va de 0 (la foto asoma abajo) a 1 (la foto sale por arriba)
+      // 0: la foto asoma por abajo · 1: sale por arriba
       const mover = (progreso - 0.5) * 10;
       foto.style.setProperty('--m-mover', mover.toFixed(2) + '%');
     }, {
-      target: foto.parentElement,          // el marco de la foto
-      offset: ['start end', 'end start']   // desde que asoma hasta que se va
+      target: foto.parentElement,
+      offset: ['start end', 'end start']
     });
   });
 
 
   /* ==============================================================
      7. SELLO DEL ODS 12
-     Mientras la franja azul cruza la pantalla, el sello crece un
-     poquito y luego vuelve a su tamaño. NO lo giramos: el sello
-     siempre queda derecho. Usamos "scale" aparte para no chocar
-     con la aparición de style.css (que usa transform).
+     Escala sutil durante el recorrido, sin rotación. Se usa la
+     propiedad "scale" para no chocar con el transform de .reveal.
      ============================================================== */
 
   const sello = document.querySelector('.ods-mark');
@@ -273,7 +225,7 @@ function iniciarAnimacionesMotion() {
 
   if (sello && franjaOds) {
     scroll(function (progreso) {
-      // Math.sin hace una "loma": 0.97 al entrar, 1 (tamaño real) en la mitad, 0.97 al salir
+      // Curva senoidal: 0.97 → 1 → 0.97 durante el recorrido
       const escala = 0.97 + 0.03 * Math.sin(progreso * Math.PI);
       sello.style.scale = escala.toFixed(3);
     }, {
@@ -284,25 +236,21 @@ function iniciarAnimacionesMotion() {
 
 
   /* ==============================================================
-     8. BOTONES "MAGNÉTICOS"
-     Al pasar el mouse, el botón se acerca un poquito al puntero.
-     Al salir, vuelve a su lugar con un resorte suave.
-     Solo en computadores (en celular no hay mouse).
-     Los botones del menú no se tocan: el menú tiene su propia animación.
+     8. BOTONES MAGNÉTICOS
+     Solo con puntero fino (mouse); se excluyen los del menú.
      ============================================================== */
 
   const tieneMouse = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   if (tieneMouse) {
     document.querySelectorAll('.btn-primary, .btn-denim').forEach(function (boton) {
-      if (boton.closest('#siteHeader')) return; // botones del menú: no
+      if (boton.closest('#siteHeader')) return; // el menú tiene su propia animación
 
-      // Dos "valores de Motion": cuánto se corre el botón en x y en y
+      // Desplazamiento en x e y
       const corrimientoX = motionValue(0);
       const corrimientoY = motionValue(0);
 
-      // Cada vez que cambian, movemos el botón con la propiedad "translate"
-      // (así no chocamos con el "transform" que usa style.css al pasar el mouse)
+      // "translate" evita conflictos con el transform de :hover en style.css
       function pintarBoton() {
         boton.style.translate = corrimientoX.get().toFixed(2) + 'px ' + corrimientoY.get().toFixed(2) + 'px';
       }
@@ -311,10 +259,10 @@ function iniciarAnimacionesMotion() {
 
       boton.addEventListener('pointermove', function (evento) {
         const caja = boton.getBoundingClientRect();
-        // Centro del botón (restamos lo que ya se movió para medir bien)
+        // Centro sin el desplazamiento actual
         const centroX = caja.left + caja.width / 2 - corrimientoX.get();
         const centroY = caja.top + caja.height / 2 - corrimientoY.get();
-        // El botón sigue al puntero, pero solo una parte (máximo unos 8 px)
+        // Seguimiento parcial del puntero, limitado a unos 8 px
         const haciaX = Math.max(-8, Math.min(8, (evento.clientX - centroX) * 0.2));
         const haciaY = Math.max(-6, Math.min(6, (evento.clientY - centroY) * 0.3));
         animate(corrimientoX, haciaX, resorteBoton);
@@ -329,8 +277,7 @@ function iniciarAnimacionesMotion() {
   }
 }
 
-// Llamamos la función. Si algo falla, mostramos todo para que nada
-// quede escondido y la página siga funcionando sin Motion.
+// Si la inicialización falla, se restaura la visibilidad de todo lo animado
 try {
   iniciarAnimacionesMotion();
 } catch (error) {

@@ -1,29 +1,17 @@
 /*
-  ================================================================
-  UP STYLE · script.js
-  Aquí está el COMPORTAMIENTO de la página: lo que se mueve o
-  reacciona cuando la persona hace algo (bajar, tocar, escribir).
+  Up Style · script.js
+  Comportamiento de la página.
 
-  ÍNDICE
-    0. Ajustes (lo único que normalmente necesitas cambiar)
+  Índice
+    0. Ajustes
     1. Menú en celular
-    2. Efectos al bajar por la página (scroll)
+    2. Efectos de scroll
     3. Contadores y barras
-    4. Aparición de elementos al bajar
+    4. Aparición de elementos
     5. Pestañas Colombia / Bogotá / Chía
-    6. Fotos y videos (los que faltan y el video que suena al bajar)
-    7. Formularios (abren un correo)
+    6. Fotos y videos
+    7. Formularios
     8. Ventanas emergentes (merch y equipo)
-
-  Palabras que vas a ver mucho:
-    const / let  → guardan un valor con un nombre (una "variable").
-    function     → un grupo de instrucciones con nombre, que se puede
-                   usar varias veces.
-    document.querySelector('.clase')  → busca un elemento del HTML.
-    addEventListener('click', ...)    → "cuando pase esto, haz esto".
-    classList.add('x')                → le pone la clase x (el CSS
-                                        decide cómo se ve esa clase).
-  ================================================================
 */
 
 
@@ -31,17 +19,14 @@
    0. AJUSTES
    ================================================================ */
 
-// EDITABLE (texto): correo al que llegan las preguntas y donaciones
+// Destino de los formularios (mailto)
 const CORREO_DE_CONTACTO = 'hola@upstyle.com';
 
-// Si la persona pidió "reducir movimiento" en su celular o computador,
-// esta variable vale true y apagamos las animaciones.
 const reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 
 /* ================================================================
    1. MENÚ EN CELULAR
-   El botón de 3 rayitas abre y cierra la lista de enlaces.
    ================================================================ */
 
 const botonMenu = document.getElementById('navToggle');
@@ -50,23 +35,22 @@ const listaMenu = document.getElementById('navlinks');
 function abrirOCerrarMenu(abrir) {
   listaMenu.classList.toggle('open', abrir);
   document.getElementById('siteHeader').classList.toggle('menu-abierto', abrir);
-  document.body.classList.toggle('menu-open', abrir); // la página de atrás no se mueve
+  document.body.classList.toggle('menu-open', abrir); // bloquea el scroll de fondo
   botonMenu.setAttribute('aria-expanded', abrir ? 'true' : 'false');
   botonMenu.setAttribute('aria-label', abrir ? 'Cerrar menú' : 'Abrir menú');
 }
 
-// Al tocar el botón: si está abierto lo cierra, si está cerrado lo abre
 botonMenu.addEventListener('click', function () {
   const estaAbierto = listaMenu.classList.contains('open');
   abrirOCerrarMenu(!estaAbierto);
 });
 
-// Al tocar un enlace del menú, se cierra
+// Cierra el menú al elegir un enlace
 listaMenu.addEventListener('click', function (evento) {
   if (evento.target.closest('a')) abrirOCerrarMenu(false);
 });
 
-// Al tocar fuera del menú, también se cierra
+// Cierra el menú al hacer clic fuera de la navegación
 document.addEventListener('click', function (evento) {
   if (listaMenu.classList.contains('open') && !evento.target.closest('.nav')) {
     abrirOCerrarMenu(false);
@@ -75,13 +59,8 @@ document.addEventListener('click', function (evento) {
 
 
 /* ================================================================
-   2. EFECTOS AL BAJAR POR LA PÁGINA (scroll)
-   Todo lo que cambia mientras bajas:
-     - la barra dorada de progreso de arriba
-     - el menú se hace más delgado
-     - se subraya la sección en la que estás
-     - la foto del inicio y la del ODS 12 se mueven más lento
-       (efecto "parallax")
+   2. EFECTOS DE SCROLL
+   Barra de progreso, menú compacto, sección activa y parallax.
    ================================================================ */
 
 const encabezado = document.getElementById('siteHeader');
@@ -89,13 +68,11 @@ const barraProgreso = document.getElementById('scrollProgress');
 const fotoInicio = document.querySelector('.hero-bg');
 const fotoOds = document.querySelector('.ods-bg');
 
-// Enlaces del menú (menos el botón de celular) y la píldora que se desliza
 const enlacesMenu = document.querySelectorAll('.navlinks li:not(.nav-mobile-cta) a');
 const pildoraMenu = document.querySelector('.nav-pill');
 const seccionInicio = document.getElementById('inicio');
 let mouseEnMenu = false;
 
-// Mueve la píldora detrás de un enlace (o la esconde si no hay enlace)
 function moverPildoraMenu(enlace) {
   if (!enlace) {
     pildoraMenu.style.opacity = '0';
@@ -106,8 +83,7 @@ function moverPildoraMenu(enlace) {
   pildoraMenu.style.transform = 'translateX(' + enlace.parentElement.offsetLeft + 'px)';
 }
 
-// Al pasar el mouse por un enlace, la píldora va hacia él.
-// Al salir del menú, vuelve al enlace de la sección actual.
+// La píldora sigue al puntero y, al salir, vuelve a la sección activa
 enlacesMenu.forEach(function (enlace) {
   enlace.addEventListener('mouseenter', function () {
     mouseEnMenu = true;
@@ -120,7 +96,6 @@ listaMenu.addEventListener('mouseleave', function () {
 });
 
 function resaltarSeccionActual() {
-  // Punto de referencia: un poco más arriba de la mitad de la pantalla
   const referencia = window.scrollY + window.innerHeight * 0.35;
 
   enlacesMenu.forEach(function (enlace) {
@@ -136,35 +111,29 @@ function alBajar() {
   const bajado = window.scrollY;
   const totalQueSePuedeBajar = document.documentElement.scrollHeight - window.innerHeight;
 
-  // Barra de progreso: 0 = arriba del todo, 1 = abajo del todo
   const progreso = totalQueSePuedeBajar > 0 ? bajado / totalQueSePuedeBajar : 0;
   barraProgreso.style.transform = 'scaleX(' + progreso + ')';
 
-  // Menú más delgado después de bajar 40 píxeles
   encabezado.classList.toggle('scrolled', bajado > 40);
 
-  // Menú transparente mientras está encima de la foto del inicio
   const finDelInicio = seccionInicio.offsetHeight - encabezado.offsetHeight;
   encabezado.classList.toggle('sobre-inicio', bajado < finDelInicio);
 
   resaltarSeccionActual();
 
-  if (reducirMovimiento) return; // sin animaciones: aquí paramos
+  if (reducirMovimiento) return;
 
-  // Parallax: la foto del inicio baja al 30% de la velocidad
   if (bajado < window.innerHeight * 1.2) {
     fotoInicio.style.transform = 'translateY(' + bajado * 0.3 + 'px)';
   }
 
-  // Parallax del ODS 12: la foto se desplaza según dónde esté la franja
   const cajaOds = fotoOds.parentElement.getBoundingClientRect();
   if (cajaOds.bottom > 0 && cajaOds.top < window.innerHeight) {
     fotoOds.style.transform = 'translateY(' + cajaOds.top * -0.15 + 'px)';
   }
 }
 
-// requestAnimationFrame hace que el efecto se calcule una sola vez por
-// cuadro de animación, así la página no se pone lenta.
+// Limita el cálculo a un cuadro de animación por evento de scroll
 let esperandoCuadro = false;
 window.addEventListener('scroll', function () {
   if (esperandoCuadro) return;
@@ -177,22 +146,20 @@ window.addEventListener('scroll', function () {
 
 window.addEventListener('resize', alBajar);
 alBajar();
-// Cuando cargan las fuentes cambian los anchos: recolocamos la píldora
+// Las fuentes web cambian el ancho de los enlaces: se recoloca la píldora
 document.fonts.ready.then(alBajar);
 
 
 /* ================================================================
    3. CONTADORES Y BARRAS
-   Un contador es un <span class="counter" data-target="92">.
-   Cuando aparece en pantalla, cuenta desde 0 hasta data-target.
    ================================================================ */
 
 function ponerPuntosDeMiles(numero) {
-  return numero.toLocaleString('es-CO'); // 147767 → "147.767"
+  return numero.toLocaleString('es-CO');
 }
 
 function animarContador(contador) {
-  if (contador.dataset.yaConto) return; // cada contador cuenta solo una vez
+  if (contador.dataset.yaConto) return;
   contador.dataset.yaConto = 'si';
 
   const numeroFinal = parseFloat(contador.dataset.target) || 0;
@@ -203,31 +170,29 @@ function animarContador(contador) {
     return;
   }
 
-  const duracion = 1600; // milisegundos (1,6 segundos)
+  const duracion = 1600;
   let inicio = null;
 
   function paso(tiempo) {
     if (!inicio) inicio = tiempo;
-    const avance = Math.min((tiempo - inicio) / duracion, 1); // de 0 a 1
-    const suave = 1 - Math.pow(1 - avance, 4); // empieza rápido y frena al final
+    const avance = Math.min((tiempo - inicio) / duracion, 1);
+    const suave = 1 - Math.pow(1 - avance, 4); // ease-out cuártico
     contador.textContent = ponerPuntosDeMiles(Math.round(numeroFinal * suave)) + despues;
     if (avance < 1) requestAnimationFrame(paso);
   }
   requestAnimationFrame(paso);
 }
 
-// Llena las barras de un panel según su data-width (y data-max si tiene)
+// data-width es un porcentaje, o un valor absoluto si hay data-max
 function llenarBarras(contenedor) {
   contenedor.querySelectorAll('.bar-fill').forEach(function (barra) {
     const valor = parseFloat(barra.dataset.width);
     const maximo = parseFloat(barra.dataset.max);
-    // Si hay data-max, calculamos el porcentaje; si no, el valor ya es un %
     const porcentaje = maximo ? Math.max((valor / maximo) * 100, 1.5) : valor;
     barra.style.width = porcentaje + '%';
   });
 }
 
-// Al cargar, los contadores muestran 0 para luego contar hacia arriba
 if (!reducirMovimiento) {
   document.querySelectorAll('.counter').forEach(function (contador) {
     contador.textContent = '0' + (contador.dataset.suffix || '');
@@ -236,22 +201,17 @@ if (!reducirMovimiento) {
 
 
 /* ================================================================
-   4. APARICIÓN DE ELEMENTOS AL BAJAR
-   Todo lo que tiene la clase "reveal" en el HTML empieza invisible
-   y aparece suavemente cuando entra en la pantalla.
-   IntersectionObserver es un "vigilante" que avisa cuando un
-   elemento se vuelve visible.
+   4. APARICIÓN DE ELEMENTOS
    ================================================================ */
 
 function mostrarElemento(elemento) {
   elemento.classList.add('in-view');
 
-  // Si tiene contadores (y no están en una pestaña escondida), que cuenten
+  // Los contadores de pestañas ocultas se animan al activarlas
   elemento.querySelectorAll('.counter').forEach(function (contador) {
     if (!contador.closest('.tab-panel:not(.active)')) animarContador(contador);
   });
 
-  // Si tiene pestañas, llenamos las barras de la pestaña visible
   const panelVisible = elemento.querySelector('.tab-panel.active');
   if (panelVisible) llenarBarras(panelVisible);
 }
@@ -262,10 +222,10 @@ const vigilante = new IntersectionObserver(function (entradas) {
   entradas.forEach(function (entrada) {
     if (entrada.isIntersecting) {
       mostrarElemento(entrada.target);
-      vigilante.unobserve(entrada.target); // ya apareció: dejamos de vigilarlo
+      vigilante.unobserve(entrada.target);
     }
   });
-}, { threshold: 0.15 }); // aparece cuando se ve el 15% del elemento
+}, { threshold: 0.15 });
 
 elementosQueAparecen.forEach(function (elemento) {
   vigilante.observe(elemento);
@@ -274,8 +234,6 @@ elementosQueAparecen.forEach(function (elemento) {
 
 /* ================================================================
    5. PESTAÑAS COLOMBIA / BOGOTÁ / CHÍA
-   Cada botón tiene data-tab="colombia" y muestra el panel con
-   data-panel="colombia". La "píldora" azul se desliza al botón activo.
    ================================================================ */
 
 const botonesPestana = Array.from(document.querySelectorAll('.tab-btn'));
@@ -291,7 +249,7 @@ function moverPildora() {
 }
 
 function activarPestana(numero, darFoco) {
-  // Si llega a -1 va a la última, y si pasa la última vuelve a la primera
+  // Navegación circular
   pestanaActiva = (numero + botonesPestana.length) % botonesPestana.length;
   const botonElegido = botonesPestana[pestanaActiva];
   const nombre = botonElegido.dataset.tab;
@@ -313,10 +271,9 @@ function activarPestana(numero, darFoco) {
   moverPildora();
   if (darFoco) botonElegido.focus();
 
-  // Animamos barras y contadores solo si la sección ya se ve en pantalla
   if (panelNuevo && grupoPestanas.classList.contains('in-view')) {
     panelNuevo.querySelectorAll('.bar-fill').forEach(function (barra) { barra.style.width = '0%'; });
-    panelNuevo.offsetWidth; // truco: obliga al navegador a "reiniciar" la animación
+    panelNuevo.offsetWidth; // fuerza un reflow para reiniciar la transición
     llenarBarras(panelNuevo);
     panelNuevo.querySelectorAll('.counter').forEach(animarContador);
   }
@@ -325,7 +282,6 @@ function activarPestana(numero, darFoco) {
 botonesPestana.forEach(function (boton, numero) {
   boton.addEventListener('click', function () { activarPestana(numero); });
 
-  // Con el teclado también se puede: flechas izquierda y derecha
   boton.addEventListener('keydown', function (evento) {
     if (evento.key === 'ArrowRight') { evento.preventDefault(); activarPestana(pestanaActiva + 1, true); }
     if (evento.key === 'ArrowLeft') { evento.preventDefault(); activarPestana(pestanaActiva - 1, true); }
@@ -334,20 +290,13 @@ botonesPestana.forEach(function (boton, numero) {
 
 window.addEventListener('resize', moverPildora);
 activarPestana(0);
-// Cuando terminan de cargar las fuentes, los botones cambian de ancho
 document.fonts.ready.then(moverPildora);
 
 
 /* ================================================================
-   6. FOTOS Y VIDEOS QUE FALTAN
-   Así puedes subir archivos sin tocar el código:
-   - FOTOS: si una foto de merch o del equipo no existe todavía,
-     la tarjeta muestra "Foto pendiente" y el nombre del archivo
-     que hay que subir.
-   - VIDEOS: el <video class="slot-video"> solo se muestra cuando
-     el archivo existe. Mientras tanto se ve el recuadro de espera.
-   - Los videos con data-play-on-scroll se reproducen solos (sin
-     sonido) cuando aparecen en pantalla y se pausan al salir.
+   6. FOTOS Y VIDEOS
+   Imágenes no disponibles, videos opcionales y reproducción
+   automática al entrar en pantalla.
    ================================================================ */
 
 function marcarFotoPendiente(foto) {
@@ -360,8 +309,7 @@ function marcarFotoPendiente(foto) {
   aviso.innerHTML =
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">' +
     '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>' +
-    '<b>Foto pendiente</b>' +
-    '<small>' + foto.getAttribute('src') + '</small>' +
+    '<b>Foto próximamente</b>' +
     (tarjeta.dataset.name ? '<span class="pending-name">' + tarjeta.dataset.name + '</span>' : '') +
     (tarjeta.dataset.role ? '<span class="pending-role">' + tarjeta.dataset.role + '</span>' : '');
   (foto.closest('.merch-photo') || tarjeta).appendChild(aviso);
@@ -369,22 +317,21 @@ function marcarFotoPendiente(foto) {
 
 document.querySelectorAll('.member-card img, .merch-card img').forEach(function (foto) {
   foto.addEventListener('error', function () { marcarFotoPendiente(foto); });
-  // Por si la foto ya falló antes de que este código se ejecutara
+  // La imagen pudo fallar antes de registrar el evento
   if (foto.complete && foto.naturalWidth === 0) marcarFotoPendiente(foto);
 });
 
 document.querySelectorAll('.slot-video').forEach(function (video) {
   function videoListo() { video.closest('.video-slot').classList.add('ready'); }
   video.addEventListener('loadedmetadata', videoListo);
-  if (video.readyState >= 1) videoListo(); // ya había cargado
+  if (video.readyState >= 1) videoListo();
 });
 
-// Vigilante de videos: play cuando se ve al menos la mitad, pausa al salir
 const vigilanteVideos = new IntersectionObserver(function (entradas) {
   entradas.forEach(function (entrada) {
     const video = entrada.target;
     if (entrada.isIntersecting) {
-      // play() puede fallar si el navegador lo bloquea: no pasa nada
+      // El navegador puede bloquear la reproducción automática
       video.play().catch(function () {});
     } else {
       video.pause();
@@ -401,12 +348,11 @@ if (!reducirMovimiento) {
 
 /* ================================================================
    7. FORMULARIOS
-   Al enviar, se abre el programa de correo de la persona con el
-   asunto y el mensaje ya escritos (eso hace "mailto:").
+   Generan un correo (mailto) con asunto y mensaje prellenados.
    ================================================================ */
 
 function leer(id) {
-  return document.getElementById(id).value.trim(); // trim quita espacios sobrantes
+  return document.getElementById(id).value.trim();
 }
 
 function prepararFormulario(idFormulario, idMensajeGracias, armarCorreo) {
@@ -414,7 +360,7 @@ function prepararFormulario(idFormulario, idMensajeGracias, armarCorreo) {
   const gracias = document.getElementById(idMensajeGracias);
 
   formulario.addEventListener('submit', function (evento) {
-    evento.preventDefault(); // evita que la página se recargue
+    evento.preventDefault();
 
     const correo = armarCorreo();
     window.location.href =
@@ -423,12 +369,11 @@ function prepararFormulario(idFormulario, idMensajeGracias, armarCorreo) {
       '&body=' + encodeURIComponent(correo.mensaje);
 
     gracias.classList.add('show');
-    formulario.reset(); // limpia los campos
-    setTimeout(function () { gracias.classList.remove('show'); }, 8000); // se oculta en 8 s
+    formulario.reset();
+    setTimeout(function () { gracias.classList.remove('show'); }, 8000);
   });
 }
 
-// EDITABLE (texto): asunto y cuerpo de los correos que se generan
 prepararFormulario('questionForm', 'qSuccess', function () {
   return {
     asunto: 'Pregunta para Up Style: ' + leer('qName'),
@@ -448,8 +393,7 @@ prepararFormulario('donateForm', 'dSuccess', function () {
 
 /* ================================================================
    8. VENTANAS EMERGENTES (merch y equipo)
-   Al tocar un producto o integrante, se copia su información
-   (los data-... del HTML) dentro de la ventana y se muestra.
+   Se llenan con los atributos data-* de la tarjeta seleccionada.
    ================================================================ */
 
 let ventanaAbierta = null;
@@ -459,7 +403,7 @@ function abrirVentana(ventana, boton) {
   ventanaAbierta = ventana;
   botonQueLaAbrio = boton;
   ventana.classList.add('open');
-  document.body.classList.add('modal-open'); // la página de atrás no se mueve
+  document.body.classList.add('modal-open');
   setTimeout(function () { ventana.querySelector('.modal-close').focus(); }, 50);
 }
 
@@ -468,10 +412,10 @@ function cerrarVentana() {
   ventanaAbierta.classList.remove('open');
   document.body.classList.remove('modal-open');
   ventanaAbierta = null;
-  if (botonQueLaAbrio) botonQueLaAbrio.focus(); // el foco vuelve a donde estaba
+  if (botonQueLaAbrio) botonQueLaAbrio.focus(); // devuelve el foco a la tarjeta
 }
 
-// Se cierra con la X, tocando el fondo oscuro o con la tecla Escape
+// Cierre con el botón, clic en el fondo o tecla Escape
 document.querySelectorAll('.modal-backdrop').forEach(function (ventana) {
   ventana.querySelector('.modal-close').addEventListener('click', cerrarVentana);
   ventana.addEventListener('click', function (evento) {
@@ -485,8 +429,7 @@ document.addEventListener('keydown', function (evento) {
   }
 });
 
-// Pone la foto de la tarjeta en la ventana. Si la tarjeta no tiene
-// foto, la ventana se muestra solo con el texto (una columna).
+// Sin foto disponible, la ventana pasa a una sola columna
 function ponerFoto(ventana, idFoto, tarjeta) {
   const foto = tarjeta.querySelector('img');
   const hayFoto = !tarjeta.classList.contains('sin-foto');
@@ -496,7 +439,7 @@ function ponerFoto(ventana, idFoto, tarjeta) {
   ventana.querySelector('.modal').classList.toggle('modal-sin-foto', !hayFoto);
 }
 
-// ---------- Ventana de producto ----------
+// ---------- Producto ----------
 const ventanaMerch = document.getElementById('merchModal');
 
 document.querySelectorAll('.merch-card').forEach(function (tarjeta) {
@@ -509,14 +452,13 @@ document.querySelectorAll('.merch-card').forEach(function (tarjeta) {
   });
 });
 
-// ---------- Ventana de integrante ----------
+// ---------- Integrante ----------
 const ventanaEquipo = document.getElementById('memberModal');
 const cajaRedes = document.getElementById('memberModalSocials');
+const tituloRedes = ventanaEquipo.querySelector('.socials-title');
 
-// Redes sociales que se pueden mostrar. El orden de esta lista es el
-// orden en que aparecen. Cada una tiene su nombre y su dibujo (ícono).
-// Para agregar una red nueva: copia una línea, cambia la clave (que es
-// la misma que va en el HTML como data-clave) el nombre y el ícono.
+// El orden de la lista define el orden de los botones.
+// "clave" corresponde al atributo data-* de la tarjeta.
 const redesSociales = [
   { clave: 'ig', nombre: 'Instagram',
     icono: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>' },
@@ -532,12 +474,11 @@ const redesSociales = [
     icono: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>' }
 ];
 
-// Saca el nombre de usuario de un enlace, para mostrarlo en el botón.
-// Ejemplo: "https://www.instagram.com/upstyle/" → "@upstyle"
+// "https://www.instagram.com/upstyle/" → "@upstyle"; un dominio se devuelve tal cual
 function sacarUsuario(enlace) {
   const partes = enlace.split('?')[0].split('/').filter(function (parte) { return parte; });
   const ultima = partes[partes.length - 1] || '';
-  if (partes.length <= 2) return ultima; // es solo un dominio, ej: "miweb.com"
+  if (partes.length <= 2) return ultima;
   return ultima.startsWith('@') ? ultima : '@' + ultima;
 }
 
@@ -548,11 +489,10 @@ document.querySelectorAll('.member-card').forEach(function (tarjeta) {
     document.getElementById('memberModalRole').textContent = tarjeta.dataset.role || '';
     document.getElementById('memberModalBio').textContent = tarjeta.dataset.bio || '';
 
-    // Creamos un botón por cada red social que tenga enlace
     cajaRedes.innerHTML = '';
     redesSociales.forEach(function (red) {
       const enlace = tarjeta.dataset[red.clave];
-      if (!enlace) return; // si está vacío, no se muestra
+      if (!enlace) return;
       const a = document.createElement('a');
       a.href = enlace;
       a.target = '_blank';
@@ -563,9 +503,11 @@ document.querySelectorAll('.member-card').forEach(function (tarjeta) {
       a.querySelector('.usuario').textContent = sacarUsuario(enlace);
       cajaRedes.appendChild(a);
     });
-    if (!cajaRedes.children.length) {
-      cajaRedes.innerHTML = '<p class="empty">Pronto encontrarás aquí sus redes sociales.</p>';
-    }
+
+    // Sin redes registradas se oculta el bloque completo
+    const sinRedes = !cajaRedes.children.length;
+    tituloRedes.hidden = sinRedes;
+    cajaRedes.hidden = sinRedes;
 
     abrirVentana(ventanaEquipo, tarjeta);
   });

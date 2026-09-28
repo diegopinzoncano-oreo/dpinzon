@@ -1,43 +1,30 @@
 /*
-  ================================================================
-  UP STYLE · style.css
-  Aquí está el DISEÑO: colores, letras, tamaños, espacios y
-  animaciones. El orden es el mismo de la página.
+  Up Style · style.css
 
-  ÍNDICE (busca el número con Ctrl + F, por ejemplo "== 6.")
-    == 1. COLORES Y AJUSTES GENERALES   ← empieza por aquí
-    == 2. Base (lo que aplica a toda la página)
+  Índice
+    == 1. Colores y ajustes generales
+    == 2. Base
     == 3. Botones
     == 4. Menú superior
     == 5. Inicio
     == 6. Problemática
-    == 7. ODS 12 (franja con foto grande)
+    == 7. ODS 12
     == 8. Proceso y por qué el denim
     == 9. Merch
     == 10. Ventanas emergentes
     == 11. Redes sociales
     == 12. Equipo
-    == 13. Participa (formularios)
+    == 13. Participa
     == 14. Pie de página
     == 15. Fotos y videos pendientes
     == 16. Animaciones de aparición
-    == 17. Personas que prefieren menos movimiento
-    == 18. Animaciones con Motion (animaciones.js)
-
-  CÓMO LEER UNA REGLA
-    .boton {            ← a qué elementos aplica (clase "boton")
-      color: white;     ← propiedad: valor;
-    }
-  @media (max-width: 700px) { ... } → solo aplica en pantallas de
-  700 píxeles o menos (celulares).
-  ================================================================
+    == 17. Movimiento reducido
+    == 18. Animaciones con Motion
 */
 
 
 /* ================================================================
    == 1. COLORES Y AJUSTES GENERALES
-   Estas "variables" se usan en toda la hoja con var(--nombre).
-   Si cambias un color aquí, cambia en TODA la página.
    ================================================================ */
 :root {
   /* Fondos */
@@ -91,12 +78,12 @@
    == 2. BASE
    ================================================================ */
 * {
-  box-sizing: border-box; /* el borde y el relleno cuentan dentro del ancho */
+  box-sizing: border-box;
 }
 
 html {
-  scroll-behavior: smooth;                /* al tocar el menú, baja suavemente */
-  scroll-padding-top: var(--header-h);    /* deja espacio para el menú fijo */
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);    /* compensa el menú fijo */
 }
 
 body {
@@ -129,7 +116,7 @@ button, input, select, textarea {
   color: inherit;
 }
 
-/* .wrap centra el contenido y deja márgenes a los lados */
+/* Contenedor centrado */
 .wrap {
   max-width: var(--max);
   margin: 0 auto;
@@ -138,7 +125,7 @@ button, input, select, textarea {
 
 section {
   position: relative;
-  padding: 100px 0; /* espacio arriba y abajo de cada sección */
+  padding: 100px 0;
 }
 section > .wrap {
   position: relative;
@@ -155,7 +142,7 @@ h1, h2, h3, h4 {
   letter-spacing: -0.01em;
 }
 h2 {
-  font-size: clamp(1.9rem, 3.6vw, 2.7rem); /* mínimo, ideal, máximo */
+  font-size: clamp(1.9rem, 3.6vw, 2.7rem);
   line-height: 1.1;
   text-wrap: balance;
 }
@@ -169,7 +156,7 @@ p {
 
 /* Párrafo de introducción debajo de los títulos */
 .lede {
-  max-width: 56ch; /* ch = ancho de una letra: máximo 56 letras por renglón */
+  max-width: 56ch;
   color: var(--ink-soft);
   font-size: 1.04rem;
 }
@@ -204,7 +191,7 @@ p {
   outline-offset: 3px;
 }
 
-/* Color del texto cuando lo seleccionas con el mouse */
+/* Selección de texto */
 ::selection {
   background: var(--tan);
   color: var(--ink);
@@ -226,11 +213,8 @@ p {
 
 /* ================================================================
    == 3. BOTONES
-   .btn es la base. Luego se le suma un estilo:
-     .btn-primary       → blanco
-     .btn-denim         → azul jean
-     .btn-outline-light → transparente con borde blanco (sobre fotos)
-     .btn-sm            → más pequeño
+   Variantes: .btn-primary (blanco), .btn-denim (azul jean),
+   .btn-outline-light (sobre fotos) y .btn-sm (compacto).
    ================================================================ */
 .btn {
   display: inline-flex;
@@ -298,16 +282,13 @@ p {
 
 /* ================================================================
    == 4. MENÚ SUPERIOR
-   El menú siempre es oscuro y traslúcido (efecto vidrio) con letras
-   blancas, en todas las secciones. script.js le pone estos "estados":
-     .sobre-inicio → encima de la foto del inicio: aún más transparente.
-     .scrolled     → ya bajaste: el menú se hace más delgado.
-     .menu-abierto → en celular, el menú de pantalla completa está abierto.
-   Para cambiar qué tan oscuro/transparente es, cambia el último número
-   de rgba(24, 36, 62, 0.72) en header::before: 0 = invisible, 1 = sólido.
+   Vidrio azul denim traslúcido. Estados que aplica script.js:
+     .sobre-inicio → sobre la foto del inicio, más transparente.
+     .scrolled     → menú compacto tras hacer scroll.
+     .menu-abierto → menú de pantalla completa en celular.
    ================================================================ */
 header {
-  position: fixed; /* se queda arriba aunque bajes */
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -316,9 +297,8 @@ header {
   transition: padding .4s var(--ease-out);
   animation: bajarMenu .9s var(--ease-out) backwards; /* entra desde arriba al cargar */
 }
-/* El "vidrio" del menú. Es una capa aparte (::before) que va detrás de
-   los enlaces y se desvanece hacia abajo en degradé: así el menú no
-   termina en una línea marcada, sino que se funde con la página. */
+/* Capa de vidrio (::before) que se desvanece hacia abajo en degradé
+   para fundirse con la página. */
 header::before {
   content: "";
   position: absolute;
@@ -342,7 +322,7 @@ header::before {
 @keyframes bajarMenu {
   from { transform: translateY(-100%); opacity: 0; }
 }
-/* Cuando bajas, el menú se hace más delgado */
+/* Menú compacto tras hacer scroll */
 header.scrolled {
   padding: 9px 0;
 }
@@ -514,7 +494,7 @@ header .nav-cta {
   color: var(--denim);
 }
 
-/* ---------- Botón de 3 rayitas (celular). Se vuelve una X ---------- */
+/* ---------- Botón hamburguesa (se transforma en X) ---------- */
 .navtoggle {
   display: none;
   position: relative;
@@ -671,9 +651,7 @@ body.menu-open {
   background: var(--denim-deep);
 }
 
-/* Foto de fondo con un zoom lento al cargar.
-   background-position: horizontal vertical → qué parte de la foto se ve.
-   (60% = un poco a la derecha del centro, 20% = cerca de arriba: las caras) */
+/* Foto de fondo con zoom lento al cargar; el encuadre prioriza las caras */
 .hero-bg {
   position: absolute;
   inset: -4% 0;
@@ -776,8 +754,7 @@ body.menu-open {
   margin-top: 34px;
 }
 
-/* Entrada del inicio: cada elemento sube y aparece.
-   --d (en el HTML) es el orden: 0, 1, 2... cada uno 0,11 s después */
+/* Entrada escalonada del inicio: --d define el orden (0,11 s por paso) */
 .hero-in {
   opacity: 0;
   transform: translateY(26px);
@@ -788,7 +765,7 @@ body.menu-open {
   to { opacity: 1; transform: none; }
 }
 
-/* "Desliza para conocer el problema" con el ratoncito */
+/* Indicador de scroll del inicio */
 .scroll-cue {
   display: inline-flex;
   align-items: center;
@@ -856,7 +833,7 @@ body.menu-open {
 /* Las 3 cifras mundiales */
 .world-strip {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+  grid-template-columns: repeat(3, 1fr);
   margin-top: 44px;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
@@ -1129,11 +1106,8 @@ body.menu-open {
   .ods-grid { grid-template-columns: 1fr; gap: 40px; }
 }
 
-/* Sello ODS 12: cuadro dorado con el infinito que se dibuja.
-   Es una cuadrícula (grid) de 2 columnas y 2 filas:
-     fila 1:  "12" a la izquierda  |  "ODS" a la derecha
-     fila 2:  el infinito, ocupando todo el ancho y centrado
-   El sello siempre queda derecho: no tiene ningún giro. */
+/* Sello ODS 12: grid de 2 × 2 con "12" y "ODS" arriba y el infinito
+   abajo a todo el ancho. Sin rotación. */
 .ods-mark {
   --ods-tam-numero: clamp(4rem, 9vw, 6.5rem); /* tamaño del "12" */
   position: relative;
@@ -1302,7 +1276,7 @@ html:not(.js) .ods-infinity path,
   font-size: 0.98rem;
   color: var(--ink-soft);
 }
-/* Al pasar el mouse: el título se corre y cambia a azul */
+/* Hover: el título se desplaza y pasa a azul */
 .step:hover .step-title {
   color: var(--denim);
   transform: translateX(10px);
@@ -1344,7 +1318,7 @@ html:not(.js) .ods-infinity path,
 }
 .photo-frame {
   position: relative;
-  aspect-ratio: 4 / 3; /* proporción de la foto: 4 de ancho por 3 de alto */
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   background: var(--bg-2);
   border-radius: var(--radius-m);
@@ -1353,7 +1327,7 @@ html:not(.js) .ods-infinity path,
 .photo-frame video {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* la foto llena el marco sin deformarse */
+  object-fit: cover;
   transition: transform 1.2s var(--ease-out);
 }
 .real-photo:hover .photo-frame img {
@@ -1495,7 +1469,7 @@ html:not(.js) .ods-infinity path,
   color: var(--tan-text);
 }
 
-/* Botoncito "+" que aparece sobre la foto (merch y equipo) */
+/* Indicador "+" sobre la foto (merch y equipo) */
 .click-hint {
   position: absolute;
   bottom: 12px;
@@ -1524,7 +1498,7 @@ html:not(.js) .ods-infinity path,
   opacity: 1;
   transform: none;
 }
-/* En celular no hay "pasar el mouse": el botoncito se ve siempre */
+/* Dispositivos táctiles: el indicador queda siempre visible */
 @media (hover: none) {
   .click-hint { opacity: 1; transform: none; }
 }
@@ -1662,7 +1636,7 @@ html:not(.js) .ods-infinity path,
   color: var(--ink-faint);
   border-top: 1px solid var(--line);
 }
-/* Botones de redes sociales: grandes para que cada integrante se destaque */
+/* Enlaces a redes sociales del integrante */
 .modal-socials {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1709,11 +1683,6 @@ html:not(.js) .ods-infinity path,
   opacity: 0.7;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-.modal-socials .empty {
-  grid-column: 1 / -1;
-  font-size: 0.86rem;
-  color: var(--ink-faint);
 }
 
 /* Ventana sin foto: solo el texto, más angosta */
@@ -1846,7 +1815,7 @@ body.modal-open {
   background: #000;
 }
 
-/* Video horizontal: usa class="video-wide" en vez de class="phone" */
+/* Variante horizontal del video (.video-wide) */
 .video-wide {
   aspect-ratio: 16 / 9;
   overflow: hidden;
@@ -1866,7 +1835,7 @@ body.modal-open {
   border-radius: var(--radius-l);
 }
 
-/* Recuadro "Aquí va el video" */
+/* Recuadro visible mientras no hay video */
 .media-placeholder {
   display: flex;
   flex-direction: column;
@@ -1905,7 +1874,7 @@ body.modal-open {
   height: 26px;
   color: #fff;
 }
-/* Onda que "late" alrededor del botón de play */
+/* Pulso alrededor del botón de play */
 .play-ring::before {
   content: "";
   position: absolute;
@@ -1970,9 +1939,9 @@ body.modal-open {
 .member-card:hover img {
   transform: scale(1.04);
 }
-/* Etiqueta "Ver perfil" que aparece abajo al pasar el mouse */
+/* Etiqueta "Ver perfil" visible al hacer hover */
 .member-card::after {
-  content: "Ver perfil y redes";
+  content: "Ver perfil";
   position: absolute;
   left: 50%;
   bottom: 18px;
@@ -2017,7 +1986,7 @@ body.modal-open {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 12%; /* qué parte de la foto se ve: centro, un poco arriba */
+  object-position: center 12%; /* encuadre centrado, ligeramente arriba */
 }
 @media (max-width: 700px) {
   .group-photo { aspect-ratio: 4 / 3; }
@@ -2101,7 +2070,7 @@ body.modal-open {
   min-height: 96px;
   resize: vertical;
 }
-/* Lista desplegable con flechita propia */
+/* Select con flecha personalizada */
 .field select {
   padding-right: 40px;
   cursor: pointer;
@@ -2117,7 +2086,7 @@ body.modal-open {
 .field select:hover {
   border-color: color-mix(in srgb, var(--denim) 35%, transparent);
 }
-/* Cuando escribes en un campo, se resalta en azul */
+/* Campo con foco */
 .field input:focus,
 .field textarea:focus,
 .field select:focus {
@@ -2247,9 +2216,7 @@ footer {
 
 /* ================================================================
    == 15. FOTOS Y VIDEOS PENDIENTES
-   script.js pone estas clases cuando falta un archivo:
-     .sin-foto  → la foto no existe todavía
-     .ready     → el video sí existe y ya cargó
+   .sin-foto → imagen no disponible · .ready → video cargado (script.js)
    ================================================================ */
 
 /* Tarjeta sin foto: se esconde la imagen rota y se ve el aviso */
@@ -2258,7 +2225,7 @@ footer {
 }
 .member-card.sin-foto {
   background: var(--card);
-  border: 1.5px dashed var(--tan-text);
+  border: 1px solid var(--line);
 }
 .photo-missing {
   position: absolute;
@@ -2281,11 +2248,6 @@ footer {
 }
 .photo-missing b {
   color: var(--ink-soft);
-}
-.photo-missing small {
-  font-size: 0.68rem;
-  word-break: break-all;
-  opacity: 0.8;
 }
 .photo-missing .pending-name {
   margin-top: 14px;
@@ -2321,11 +2283,8 @@ footer {
 
 /* ================================================================
    == 16. ANIMACIONES DE APARICIÓN
-   Lo que tiene la clase "reveal" empieza invisible y un poco más
-   abajo. Cuando entra en pantalla, script.js le pone "in-view" y
-   sube suavemente. .reveal-1, -2, -3... lo retrasan para que
-   aparezcan uno detrás de otro.
-   (Solo se esconde si JavaScript está activo: clase .js)
+   .reveal se muestra al recibir .in-view (script.js); .reveal-N escalona
+   el retraso. Solo aplica con la clase .js en <html>.
    ================================================================ */
 .js .reveal {
   opacity: 0;
@@ -2342,7 +2301,7 @@ footer {
 .reveal-4 { transition-delay: .35s !important; }
 .reveal-5 { transition-delay: .45s !important; }
 
-/* Los títulos de sección se "aprietan" un poquito al aparecer */
+/* Los títulos de sección ajustan su espaciado al aparecer */
 .section-head h2 {
   transition: letter-spacing 1.2s var(--ease-out);
 }
@@ -2352,9 +2311,7 @@ footer {
 
 
 /* ================================================================
-   == 17. PERSONAS QUE PREFIEREN MENOS MOVIMIENTO
-   Si alguien activó "reducir movimiento" en su dispositivo,
-   apagamos todas las animaciones y mostramos todo de una vez.
+   == 17. MOVIMIENTO REDUCIDO (prefers-reduced-motion)
    ================================================================ */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -2377,16 +2334,12 @@ footer {
 
 /* ================================================================
    == 18. ANIMACIONES CON MOTION (animaciones.js)
-   Estas reglas solo aplican cuando la librería Motion cargó bien:
-   animaciones.js le pone la clase "motion-on" a <html>.
-   Si Motion no carga, nada de esto se usa y la página queda con
-   las animaciones de la sección 16.
+   Solo aplican con html.motion-on. Sin Motion se usan las de la sección 16.
    ================================================================ */
 
-/* Títulos palabra por palabra.
-   .m-mascara es la "ventanita" que esconde la palabra mientras sube.
-   El padding con margen negativo deja espacio para tildes y letras
-   como la "g" sin cambiar el alto de la línea. */
+/* Títulos palabra por palabra. .m-mascara recorta la palabra mientras sube;
+   el padding con margen negativo deja espacio a tildes y descendentes
+   sin cambiar el alto de línea. */
 .m-mascara {
   display: inline-block;
   overflow: hidden;
@@ -2401,8 +2354,7 @@ footer {
 .motion-on .m-titulo .m-palabra {
   transform: translateY(110%);
 }
-/* Apagamos el efecto de letras "apretándose" de la sección 16
-   para que Motion sea el único que anima estos títulos */
+/* Motion reemplaza el ajuste de letter-spacing de la sección 16 */
 .motion-on .section-head.reveal h2.m-titulo {
   letter-spacing: -0.01em;
   transition: none;
