@@ -26,6 +26,53 @@
 /* ================================================================
    == 1. COLORES Y AJUSTES GENERALES
    ================================================================ */
+
+/* Tipografías del manual de marca, alojadas en fonts/ */
+@font-face {
+  font-family: "Fredoka";
+  src: url("fonts/fredoka-medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fredoka";
+  src: url("fonts/fredoka-semibold.woff2") format("woff2");
+  font-weight: 600 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("fonts/poppins-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("fonts/poppins-semibold.woff2") format("woff2");
+  font-weight: 600 700;
+  font-style: normal;
+  font-display: swap;
+}
+/* The August: licencia de uso personal (fonts/licencias/) */
+@font-face {
+  font-family: "The August";
+  src: url("fonts/the-august.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+/* Matcha Mint no incluye tildes ni ñ: solo para el nombre de marca */
+@font-face {
+  font-family: "Matcha Mint";
+  src: url("fonts/matcha-mint.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* Fondos */
   --bg: #F7F1E4;          /* beige claro: fondo principal */
@@ -63,10 +110,10 @@
   --header-h: 80px;
 
   /* Tipos de letra */
-  --font-display: "Baloo 2", sans-serif;                    /* títulos */
-  --font-body: "Manrope", -apple-system, "Segoe UI", sans-serif; /* textos */
-  --font-script: "Beau Rivage", cursive;                     /* cursiva */
-  --font-condensed: "Archivo", "Arial Narrow", sans-serif;   /* angosta: pasos del proceso */
+  --font-display: "Fredoka", "Poppins", system-ui, sans-serif;           /* títulos (600) y subtítulos (500) */
+  --font-body: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif; /* textos (400) */
+  --font-script: "The August", "Brush Script MT", cursive;              /* acento caligráfico */
+  --font-logo: "Matcha Mint", "Fredoka", system-ui, sans-serif;         /* solo "Up Style" */
 
   /* Curva de las animaciones: arranca rápido y frena suave */
   --ease-out: cubic-bezier(.16, .84, .44, 1);
@@ -138,7 +185,7 @@ section > .wrap {
 h1, h2, h3, h4 {
   margin: 0;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.01em;
 }
 h2 {
@@ -152,6 +199,9 @@ h3 {
 }
 p {
   margin: 0;
+}
+b, strong {
+  font-weight: 600;
 }
 
 /* Párrafo de introducción debajo de los títulos */
@@ -175,8 +225,9 @@ p {
   align-items: center;
   gap: 10px;
   margin-bottom: 14px;
-  font-size: 0.78rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--tan-text);
@@ -224,8 +275,9 @@ p {
   padding: 13px 24px;
   border: 1px solid transparent;
   border-radius: 100px;
+  font-family: var(--font-display);
   font-size: 0.92rem;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.2;
   white-space: nowrap;
   text-decoration: none;
@@ -380,9 +432,9 @@ header.scrolled .brand-badge {
   box-shadow: 0 0 0 3px var(--thread), 0 14px 28px -8px rgba(15, 20, 35, 0.6);
 }
 .brand-name {
-  font-family: var(--font-display);
+  font-family: var(--font-logo);
   font-size: 1.4rem;
-  font-weight: 800;
+  font-weight: 400;
   color: var(--ink);
   white-space: nowrap;
   transition: color .4s ease;
@@ -398,8 +450,9 @@ header.menu-abierto .brand-name { color: #fff; }
   margin: 0;
   padding: 5px;
   list-style: none;
+  font-family: var(--font-display);
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 500;
   /* "cápsula" que agrupa los enlaces */
   background: color-mix(in srgb, var(--card) 55%, transparent);
   border: 1px solid var(--line);
@@ -589,10 +642,9 @@ header.menu-abierto .navtoggle span {
     padding: 12px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 0;
-    font-family: var(--font-condensed);
-    font-stretch: 75%;
-    font-size: clamp(2rem, 9vw, 3rem);
-    font-weight: 800;
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 8.4vw, 2.8rem);
+    font-weight: 600;
     line-height: 1;
     text-transform: uppercase;
     color: #fff;
@@ -603,10 +655,11 @@ header.menu-abierto .navtoggle span {
     color: var(--tan);
   }
   .nav-num {
-    display: inline;
-    font-family: var(--font-body);
+    display: inline-block;
+    font-family: var(--font-display);
+    min-width: 1.6em;
     font-size: 0.8rem;
-    font-weight: 700;
+    font-weight: 500;
     color: var(--thread);
   }
   .nav-mobile-cta {
@@ -619,9 +672,9 @@ header.menu-abierto .navtoggle span {
     padding: 15px 28px;
     border: none;
     border-radius: 100px;
-    font-family: var(--font-body);
+    font-family: var(--font-display);
+    font-weight: 500;
     font-size: 1rem;
-    font-stretch: 100%;
     text-transform: none;
     color: var(--denim);
   }
@@ -771,8 +824,9 @@ body.menu-open {
   align-items: center;
   gap: 12px;
   margin-top: 52px;
+  font-family: var(--font-display);
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 500;
   color: rgba(255, 255, 255, 0.75);
   text-decoration: none;
   transition: color .2s ease;
@@ -849,6 +903,7 @@ body.menu-open {
 .world-chip b {
   display: block;
   font-family: var(--font-display);
+  font-weight: 600;
   font-size: clamp(1.4rem, 2.4vw, 1.9rem);
   line-height: 1.15;
   color: var(--denim);
@@ -897,8 +952,9 @@ body.menu-open {
   border: none;
   border-radius: 100px;
   background: none;
+  font-family: var(--font-display);
   font-size: 0.88rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--ink-soft);
   white-space: nowrap;
   cursor: pointer;
@@ -965,13 +1021,14 @@ body.menu-open {
 }
 .stat-bar-row .top-row b {
   font-family: var(--font-display);
+  font-weight: 500;
   font-size: 1.08rem;
   line-height: 1.3;
 }
 .stat-bar-row .top-row span {
   font-family: var(--font-display);
   font-size: 1.05rem;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--denim);
   white-space: nowrap;
 }
@@ -1032,7 +1089,7 @@ body.menu-open {
   display: block;
   font-family: var(--font-display);
   font-size: 2rem;
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.1;
   color: var(--denim);
   font-variant-numeric: tabular-nums; /* los números no "bailan" al contar */
@@ -1062,7 +1119,7 @@ body.menu-open {
   text-align: center;
   font-family: var(--font-display);
   font-size: clamp(1.3rem, 2.4vw, 1.75rem);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.3;
 }
 
@@ -1128,10 +1185,9 @@ body.menu-open {
 .ods-number {
   grid-column: 1;
   grid-row: 1;
-  font-family: var(--font-condensed);
-  font-stretch: 75%;
+  font-family: var(--font-display);
   font-size: var(--ods-tam-numero);
-  font-weight: 800;
+  font-weight: 600;
   line-height: 0.85;
 }
 .ods-label {
@@ -1141,8 +1197,9 @@ body.menu-open {
   /* Bajamos "ODS" lo justo para que su borde de arriba
      quede a la misma altura que la parte de arriba del "12" */
   margin-top: calc(var(--ods-tam-numero) * 0.04);
+  font-family: var(--font-display);
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.12em;
   line-height: 1;
 }
@@ -1168,11 +1225,10 @@ html:not(.js) .ods-infinity path,
 }
 
 .ods-copy h2 {
-  font-family: var(--font-condensed);
-  font-stretch: 75%;
-  font-size: clamp(2.4rem, 5vw, 4rem);
-  font-weight: 800;
-  line-height: 0.95;
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 4.4vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1;
   text-transform: uppercase;
 }
 .ods-copy .lede {
@@ -1197,10 +1253,9 @@ html:not(.js) .ods-infinity path,
 }
 .ods-points b {
   display: block;
-  font-family: var(--font-condensed);
-  font-stretch: 75%;
+  font-family: var(--font-display);
   font-size: 1.4rem;
-  font-weight: 800;
+  font-weight: 600;
   text-transform: uppercase;
   color: var(--ods-light);
 }
@@ -1252,21 +1307,19 @@ html:not(.js) .ods-infinity path,
   transform: scaleX(1);
 }
 .step-num {
-  font-family: var(--font-condensed);
-  font-stretch: 75%;
+  font-family: var(--font-display);
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--ink-faint);
   font-variant-numeric: tabular-nums;
   transition: color .3s ease;
 }
 .step-title {
-  font-family: var(--font-condensed);
-  font-stretch: 75%;              /* letra angosta, estilo deportivo */
-  font-size: clamp(2rem, 4.6vw, 3.6rem);
-  font-weight: 800;
-  line-height: 0.95;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.9vw, 3.1rem);
+  font-weight: 600;
+  line-height: 1;
   letter-spacing: -0.01em;
   text-transform: uppercase;
   transition: color .3s ease, transform .45s var(--ease-out);
@@ -1371,14 +1424,16 @@ html:not(.js) .ods-infinity path,
   align-items: center;
   gap: 10px;
   margin-bottom: 16px;
+  font-family: var(--font-display);
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--tan-text);
 }
 .identity-card .idx span {
   font-family: var(--font-display);
+  font-weight: 600;
   font-size: 1.8rem;
   line-height: 1;
   letter-spacing: 0;
@@ -1459,13 +1514,14 @@ html:not(.js) .ods-infinity path,
   display: block;
   font-family: var(--font-display);
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 500;
 }
 .merch-body .price {
   display: block;
   margin-top: 4px;
+  font-family: var(--font-display);
   font-size: 0.92rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--tan-text);
 }
 
@@ -1604,18 +1660,18 @@ html:not(.js) .ods-infinity path,
 }
 .modal-body .name {
   padding-right: 40px;
-  font-family: var(--font-condensed);
-  font-stretch: 75%;
-  font-size: clamp(2rem, 4vw, 2.8rem);
-  font-weight: 800;
-  line-height: 0.95;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.4vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1;
   text-transform: uppercase;
 }
 .modal-body .role,
 .modal-body .price {
   margin-top: 8px;
+  font-family: var(--font-display);
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--tan-text);
 }
 .modal-body .bio,
@@ -1629,8 +1685,9 @@ html:not(.js) .ods-infinity path,
 .socials-title {
   margin-top: 28px;
   padding-top: 18px;
+  font-family: var(--font-display);
   font-size: 0.74rem;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ink-faint);
@@ -1672,8 +1729,9 @@ html:not(.js) .ods-infinity path,
 }
 .modal-socials .red {
   display: block;
+  font-family: var(--font-display);
   font-size: 0.86rem;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.2;
 }
 .modal-socials .usuario {
@@ -1764,6 +1822,7 @@ body.modal-open {
 .social-link-card b {
   display: block;
   font-family: var(--font-display);
+  font-weight: 500;
   font-size: 1.05rem;
 }
 .social-link-card span span {
@@ -1846,16 +1905,18 @@ body.modal-open {
   height: 100%;
   padding: 18px;
   text-align: center;
+  font-family: var(--font-display);
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 500;
   color: rgba(233, 238, 247, 0.85);
   background: linear-gradient(160deg, var(--denim) 0%, var(--denim-deep) 100%);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 28px;
 }
 .media-placeholder small {
+  font-family: var(--font-body);
   font-size: 0.76rem;
-  font-weight: 500;
+  font-weight: 400;
   opacity: 0.6;
 }
 .play-ring {
@@ -1946,8 +2007,9 @@ body.modal-open {
   left: 50%;
   bottom: 18px;
   padding: 9px 16px;
+  font-family: var(--font-display);
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--denim);
   white-space: nowrap;
   background: rgba(255, 255, 255, 0.95);
@@ -2051,7 +2113,7 @@ body.modal-open {
   display: block;
   margin-bottom: 6px;
   font-size: 0.82rem;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--ink-soft);
 }
 .field input,
@@ -2253,7 +2315,7 @@ footer {
   margin-top: 14px;
   font-family: var(--font-display);
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--ink);
 }
 .photo-missing .pending-role {

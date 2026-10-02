@@ -10,7 +10,11 @@ Proyecto formativo del SENA alineado con el **ODS 12: Producción y consumo resp
 - HTML5 y CSS3 (sin frameworks)
 - JavaScript (sin dependencias de compilación)
 - [Motion](https://motion.dev) 13.4.4, incluida localmente en `motion.js`
-- Google Fonts: Baloo 2, Manrope, Archivo y Beau Rivage
+- Tipografías del manual de marca, incluidas en `fonts/` (formato WOFF2):
+  - **Fredoka** SemiBold (títulos) y Medium (subtítulos, botones y etiquetas)
+  - **Poppins** Regular (texto) y SemiBold (negritas y etiquetas de formulario)
+  - **The August** (acento caligráfico del inicio). Licencia de uso personal.
+  - **Matcha Mint** (solo el nombre "Up Style"; no incluye tildes ni ñ)
 
 La página funciona como sitio estático. Las animaciones de Motion son una mejora
 progresiva: si la librería no carga o el sistema tiene activado *reducir movimiento*,
@@ -25,6 +29,7 @@ se usan las transiciones de CSS.
 ├── script.js         Menú, scroll, contadores, pestañas, formularios y ventanas
 ├── animaciones.js    Animaciones con Motion
 ├── motion.js         Librería Motion 13.4.4
+├── fonts/            Tipografías WOFF2 y sus licencias (licencias/)
 ├── img/
 │   ├── inicio/       Foto principal
 │   ├── secciones/    Franja del ODS 12
