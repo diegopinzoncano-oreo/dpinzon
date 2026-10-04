@@ -398,12 +398,19 @@ prepararFormulario('donateForm', 'dSuccess', function () {
 
 let ventanaAbierta = null;
 let botonQueLaAbrio = null;
+const zonasDeFondo = document.querySelectorAll('body > header, body > main, body > footer');
+
+// inert deja el resto de la página fuera del foco mientras la ventana está abierta
+function bloquearFondo(bloquear) {
+  zonasDeFondo.forEach(function (zona) { zona.inert = bloquear; });
+}
 
 function abrirVentana(ventana, boton) {
   ventanaAbierta = ventana;
   botonQueLaAbrio = boton;
   ventana.classList.add('open');
   document.body.classList.add('modal-open');
+  bloquearFondo(true);
   setTimeout(function () { ventana.querySelector('.modal-close').focus(); }, 50);
 }
 
@@ -411,6 +418,7 @@ function cerrarVentana() {
   if (!ventanaAbierta) return;
   ventanaAbierta.classList.remove('open');
   document.body.classList.remove('modal-open');
+  bloquearFondo(false);
   ventanaAbierta = null;
   if (botonQueLaAbrio) botonQueLaAbrio.focus(); // devuelve el foco a la tarjeta
 }

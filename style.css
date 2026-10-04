@@ -82,7 +82,7 @@
   /* Textos */
   --ink: #211C14;         /* casi negro: títulos y texto importante */
   --ink-soft: #5B5648;    /* gris cálido: párrafos */
-  --ink-faint: #7E7864;   /* gris claro: textos pequeños y fuentes */
+  --ink-faint: #67614F;   /* gris claro: textos pequeños y fuentes */
 
   /* Colores de marca */
   --denim: #2F4468;       /* azul jean: botones, números, detalles */
@@ -90,7 +90,7 @@
   --denim-ink: #E9EEF7;   /* texto claro sobre azul */
   --thread: #D9A45B;      /* dorado "hilo de costura" */
   --tan: #DDBF9B;         /* arena: letra cursiva del inicio */
-  --tan-text: #8A6A35;    /* café dorado: etiquetas pequeñas */
+  --tan-text: #74592B;    /* café dorado: etiquetas pequeñas */
   --olive: #68744C;       /* verde oliva: mensajes de "gracias" */
   --red: #C1663E;         /* terracota: barras de "alerta" */
   --ods: #BF8B2E;         /* dorado del ODS 12 */
@@ -2262,9 +2262,11 @@ footer {
   font-size: 0.9rem;
   color: rgba(233, 238, 247, 0.65);
 }
-.foot-col h4 {
+.foot-title {
   margin-bottom: 14px;
   font-size: 0.95rem;
+  line-height: inherit;
+  text-wrap: wrap;
   color: #fff;
 }
 .foot-col a {
@@ -2300,7 +2302,7 @@ footer {
   margin-top: 14px;
   font-size: 0.82rem;
   line-height: 1.5;
-  color: rgba(233, 238, 247, 0.5);
+  color: rgba(233, 238, 247, 0.62);
 }
 .foot-bottom {
   display: flex;
@@ -2310,7 +2312,7 @@ footer {
   margin-top: 48px;
   padding-top: 22px;
   font-size: 0.78rem;
-  color: rgba(233, 238, 247, 0.5);
+  color: rgba(233, 238, 247, 0.62);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
