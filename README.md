@@ -24,20 +24,25 @@ se usan las transiciones de CSS.
 
 ```
 .
-├── index.html        Contenido y estructura
-├── style.css         Estilos, organizados por secciones numeradas
-├── script.js         Menú, scroll, contadores, pestañas, formularios y ventanas
-├── animaciones.js    Animaciones con Motion
-├── motion.js         Librería Motion 13.4.4
-├── fonts/            Tipografías WOFF2 y sus licencias (licencias/)
+├── index.html            Contenido y estructura
+├── style.css             Estilos, organizados por secciones numeradas
+├── script.js             Menú, scroll, contadores, pestañas, formularios y ventanas
+├── animaciones.js        Animaciones con Motion
+├── motion.js             Librería Motion 13.4.4
+├── README.md             Documentación del proyecto
+├── fonts/                Tipografías WOFF2 del manual de marca
+│   └── licencias/        Licencias de cada tipografía
 ├── img/
-│   ├── inicio/       Foto principal
-│   ├── secciones/    Franja del ODS 12
-│   ├── proceso/      Fotos del proceso
-│   ├── merch/        Productos
-│   ├── equipo/       Integrantes y foto grupal
-│   └── biblioteca/   Material fotográfico del proyecto
-└── video/            Videos de la página (opcionales)
+│   ├── logo-upstyle.png       Logo (menú, favicon y pie de página)
+│   ├── fondo-problematica.jpg Fondo de la sección Problemática
+│   ├── inicio/           Foto principal
+│   ├── secciones/        Franja del ODS 12
+│   ├── proceso/          Fotos del proceso
+│   ├── merch/            Productos
+│   ├── equipo/           Integrantes y foto grupal
+│   └── biblioteca/       Carpeta reservada para material fotográfico adicional
+├── video/                Videos opcionales (intro.mp4 y proceso.mp4)
+└── .vscode/              Extensiones recomendadas para VS Code
 ```
 
 ## Secciones
@@ -47,7 +52,7 @@ se usan las transiciones de CSS.
 3. ODS 12
 4. Proceso y por qué el denim
 5. Merch
-6. Redes sociales
+6. Redes sociales: Instagram y TikTok
 7. Equipo
 8. Participa: formulario de preguntas y de donación de jeans (generan un correo con `mailto:`)
 

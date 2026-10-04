@@ -26,7 +26,7 @@ empezando a programar y edita la página en clase con VS Code.
 - `script.js`: comportamiento.
 - `animaciones.js`: animaciones con la librería Motion.
 - `motion.js`: librería de animaciones Motion 13.4.4, guardada en el proyecto (funciona sin internet). **No editar.**
-- `README.md`: explica cómo editar la página.
+- `README.md`: documentación del proyecto.
 - `fonts/`: tipografías del manual de marca en WOFF2 y sus licencias en `licencias/`. Fredoka 600 para títulos y 500 para subtítulos, Poppins 400 para texto (600 en negritas), The August para el acento caligráfico (licencia solo de uso personal) y Matcha Mint solo para el nombre "Up Style" (no tiene tildes ni ñ).
 - `img/`: imágenes, organizadas en `equipo/`, `merch/`, `proceso/`, `inicio/`, `secciones/` y `biblioteca/`.
 - `video/`: aquí van `intro.mp4` y `proceso.mp4`.
