@@ -57,7 +57,7 @@ se usan las transiciones de CSS.
 7. Equipo
 8. Participa: formulario de preguntas y de donación de jeans (generan un correo con `mailto:`)
 
-Mascota flotante: el mapache de Up Style (`img/mascota/`) queda fijo abajo a la izquierda con el globo "¡Dona tus jeans!" y lleva al formulario de donación; se oculta en el inicio, junto al formulario y en el pie de página.
+Mascota flotante: Ren, el mapache de Up Style (`img/mascota/`), queda fijo abajo a la izquierda con el globo "Soy Ren, ¡dona tus jeans!". Al hacer clic caen tres prendas de jean (pantalón, chaqueta y bolsillo) a su bote de reciclaje, el bote rebota al recibirlas, aparece "¡Gracias!" y luego la página baja al formulario de donación (con movimiento reducido solo muestra el mensaje y baja directo). Se oculta en el inicio, junto al formulario y en el pie de página.
 
 ## Cómo verla
 

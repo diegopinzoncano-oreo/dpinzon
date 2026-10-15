@@ -675,8 +675,9 @@ if (diapositivas.length > 1) {
 
 /* ================================================================
    10. MASCOTA FLOTANTE
-   Lleva al formulario de donación. Se oculta en el inicio y mientras
-   el formulario o el pie de página están en pantalla.
+   Ren lleva al formulario de donación: al hacer clic caen prendas a su
+   bote de jean y luego la página baja al formulario. Se oculta en el
+   inicio y mientras el formulario o el pie de página están en pantalla.
    ================================================================ */
 
 const mascota = document.getElementById('mascota');
@@ -704,17 +705,36 @@ function resaltarTarjetaDonar() {
   setTimeout(function () { tarjetaDonar.classList.remove('resaltada'); }, 1200);
 }
 
+function irAlFormularioDonar() {
+  tarjetaDonar.scrollIntoView({
+    behavior: reducirMovimiento ? 'auto' : 'smooth',
+    block: 'center'
+  });
+  alTerminarDesplazamiento(function () {
+    if (campoNombreDonante) campoNombreDonante.focus({ preventScroll: true });
+    resaltarTarjetaDonar();
+  });
+}
+
+// Tiempos de la animación del bote (ms), sincronizados con style.css
+const MASCOTA_GRACIAS = reducirMovimiento ? 0 : 980;
+const MASCOTA_IR_AL_FORMULARIO = reducirMovimiento ? 600 : 1150;
+const MASCOTA_FIN = 1900;
+let mascotaAnimando = false;
+
 if (mascota && tarjetaDonar) {
   mascota.addEventListener('click', function (evento) {
     evento.preventDefault();
-    tarjetaDonar.scrollIntoView({
-      behavior: reducirMovimiento ? 'auto' : 'smooth',
-      block: 'center'
-    });
-    alTerminarDesplazamiento(function () {
-      if (campoNombreDonante) campoNombreDonante.focus({ preventScroll: true });
-      resaltarTarjetaDonar();
-    });
+    if (mascotaAnimando) return; // los clics repetidos no reinician la animación
+    mascotaAnimando = true;
+
+    mascota.classList.add('llenando');
+    setTimeout(function () { mascota.classList.add('agradece'); }, MASCOTA_GRACIAS);
+    setTimeout(irAlFormularioDonar, MASCOTA_IR_AL_FORMULARIO);
+    setTimeout(function () {
+      mascota.classList.remove('llenando', 'agradece');
+      mascotaAnimando = false;
+    }, MASCOTA_FIN);
   });
 
   // Zonas que la mascota no debe tapar: el formulario, el pie y los botones del inicio

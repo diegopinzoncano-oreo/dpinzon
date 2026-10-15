@@ -2950,8 +2950,10 @@ footer {
 
 /* ================================================================
    == 19. MASCOTA FLOTANTE
-   Enlace fijo al formulario de donación. Estados que aplica script.js:
+   Ren, enlace fijo al formulario de donación. Estados que aplica script.js:
      .mascota-oculta → el inicio, el formulario o el pie están en pantalla.
+     .llenando       → caen prendas al bote de jean (al hacer clic).
+     .agradece       → el globo cambia a "¡Gracias por sumar!".
      .resaltada      → brillo breve de la tarjeta de donación al llegar.
    Debajo del menú (z-index 50) y de las ventanas emergentes (100).
    ================================================================ */
@@ -2986,9 +2988,13 @@ footer {
 }
 
 .mascota-figura {
+  position: relative;
   display: block;
   flex: none;
   transition: translate .35s var(--ease-out);
+}
+.mascota-figura picture {
+  display: block;
 }
 .mascota-figura img {
   display: block;
@@ -3040,6 +3046,141 @@ footer {
 @keyframes aparecerGlobo {
   from { opacity: 0; scale: .6; }
 }
+.globo-gracias {
+  display: none;
+}
+.mascota.agradece .globo-saludo {
+  display: none;
+}
+.mascota.agradece .globo-gracias {
+  display: block;
+  color: var(--olive);
+  animation: cambiarGlobo .35s var(--ease-out);
+}
+@keyframes cambiarGlobo {
+  from { opacity: 0; scale: .85; }
+}
+
+/* Prendas que caen al bote. La boca del bote está en la imagen
+   (513 × 525) en x ≈ 78,7 % e y ≈ 53 %; el recorte deja ver las prendas
+   solo por encima del borde delantero, así parece que entran. */
+.mascota-boca {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  clip-path: polygon(56% -120%, 100% -120%, 100% 52.9%, 97.2% 52.9%, 94.7% 54.6%, 87.9% 55.8%,
+    78.7% 56.2%, 69.4% 55.8%, 62.6% 54.6%, 60.2% 52.9%, 56% 52.9%);
+}
+.prenda {
+  position: absolute;
+  left: 78.7%;
+  top: 56.2%;
+  width: calc(var(--mascota-alto) * .25);
+  height: auto;
+  overflow: visible;
+  opacity: 0;
+  translate: -50% -50%;
+}
+.prenda-tela {
+  stroke: var(--denim-deep);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+.prenda-linea {
+  fill: none;
+  stroke: var(--denim-deep);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.prenda-costura {
+  fill: none;
+  stroke: var(--thread);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.prenda-pantalon .prenda-tela { fill: color-mix(in srgb, var(--denim) 72%, #fff); }
+.prenda-chaqueta .prenda-tela { fill: color-mix(in srgb, var(--denim) 50%, #fff); }
+.prenda-bolsillo .prenda-tela { fill: color-mix(in srgb, var(--denim) 88%, #fff); }
+.prenda-chaqueta { width: calc(var(--mascota-alto) * .28); }
+.prenda-bolsillo { width: calc(var(--mascota-alto) * .2); }
+
+.prenda-pantalon { --desde-x: -.16; --giro: -28deg; --giro-final: 10deg; }
+.prenda-chaqueta { --desde-x: .12;  --giro: 34deg;  --giro-final: -8deg; }
+.prenda-bolsillo { --desde-x: -.05; --giro: -18deg; --giro-final: 4deg; }
+
+.mascota.llenando .prenda {
+  animation:
+    caerPrenda .56s cubic-bezier(.45, 0, .85, .55) both,
+    mostrarPrenda .12s linear both;
+}
+.mascota.llenando .prenda-chaqueta { animation-delay: .22s; }
+.mascota.llenando .prenda-bolsillo { animation-delay: .44s; }
+@keyframes caerPrenda {
+  from {
+    transform: translate(calc(var(--mascota-alto) * var(--desde-x)), calc(var(--mascota-alto) * -.9))
+      rotate(var(--giro));
+  }
+  to {
+    transform: translate(0, calc(var(--mascota-alto) * .11)) rotate(var(--giro-final)) scale(.55);
+  }
+}
+@keyframes mostrarPrenda {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Rebote del bote al recibir cada prenda: un aplastamiento leve
+   anclado abajo, a la altura del bote */
+.mascota.llenando .mascota-figura img {
+  transform-origin: 79% 100%;
+  animation: reboteBote .22s ease-out .44s 3;
+}
+@keyframes reboteBote {
+  0%, 100% { transform: none; }
+  35% { transform: scale(1.012, .972); }
+  70% { transform: scale(.996, 1.008); }
+}
+
+/* Insignia de agradecimiento que sube desde el bote; alineada al borde
+   derecho de la figura para no tapar el globo */
+.mascota-gracias {
+  position: absolute;
+  right: 0;
+  top: 44%;
+  padding: 3px 10px;
+  background: var(--olive);
+  border-radius: 999px;
+  box-shadow: 0 6px 14px -6px rgba(31, 45, 72, 0.45);
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #fff;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+}
+.mascota.llenando .mascota-gracias {
+  animation: subirGracias .85s var(--ease-out) .98s both;
+}
+@keyframes subirGracias {
+  0%   { opacity: 0; transform: translateY(6px) scale(.6); }
+  25%  { opacity: 1; transform: translateY(calc(var(--mascota-alto) * -.08)) scale(1); }
+  70%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(calc(var(--mascota-alto) * -.18)) scale(1); }
+}
+
+/* Sin movimiento: solo el mensaje de gracias, quieto */
+@media (prefers-reduced-motion: reduce) {
+  .mascota.agradece .mascota-gracias {
+    opacity: 1;
+    transform: translateY(calc(var(--mascota-alto) * -.08));
+  }
+}
+
+/* Globo de diálogo con la punta hacia la mascota */
 
 .mascota:hover .mascota-figura,
 .mascota:focus-visible .mascota-figura {
@@ -3079,8 +3220,28 @@ footer {
     font-size: 0.8rem;
     animation: globoPorMomentos 10s ease-in-out 2.5s infinite backwards;
   }
-  .mascota:focus-visible .mascota-globo {
+  .mascota:focus-visible .mascota-globo,
+  .mascota.agradece .mascota-globo {
     animation: none;
+  }
+  /* "Soy Ren" en una línea pequeña encima del mensaje */
+  .globo-nombre {
+    display: block;
+    font-size: 0.68rem;
+    color: var(--tan-text);
+  }
+  .globo-coma {
+    display: none;
+  }
+  .globo-mensaje {
+    display: block;
+  }
+  .globo-mensaje::first-letter {
+    text-transform: uppercase;
+  }
+  .mascota-gracias {
+    padding: 2px 8px;
+    font-size: 0.7rem;
   }
   @keyframes globoPorMomentos {
     0%        { opacity: 0; scale: .6; }

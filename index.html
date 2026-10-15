@@ -820,12 +820,35 @@
      MASCOTA FLOTANTE
      Acceso directo al formulario de donación (script.js).
      ============================================================ -->
-<a href="#donar" class="mascota" id="mascota" aria-label="Dona tus jeans: ir al formulario de donación">
-  <picture class="mascota-figura">
-    <source srcset="img/mascota/mascota-upstyle.webp" type="image/webp">
-    <img src="img/mascota/mascota-upstyle.png" alt="" width="513" height="525" decoding="async">
-  </picture>
-  <span class="mascota-globo" aria-hidden="true">¡Dona tus jeans!</span>
+<a href="#donar" class="mascota" id="mascota" aria-label="Ren, la mascota de Up Style: ir al formulario de donación">
+  <span class="mascota-figura">
+    <picture>
+      <source srcset="img/mascota/mascota-upstyle.webp" type="image/webp">
+      <img src="img/mascota/mascota-upstyle.png" alt="Ren, el mapache de Up Style, junto a un bote de reciclaje hecho de jean" width="513" height="525" decoding="async">
+    </picture>
+    <!-- Prendas que caen al bote al hacer clic (decorativas) -->
+    <span class="mascota-boca" aria-hidden="true">
+      <svg class="prenda prenda-pantalon" viewBox="0 0 32 40">
+        <path class="prenda-tela" d="M6 3H26L28 37H19L16 15L13 37H4Z"/>
+        <path class="prenda-linea" d="M5.7 8H26.3M16 8V14"/>
+        <path class="prenda-costura" d="M7.5 8.6Q10 12 12.6 8.6M19.4 8.6Q22 12 24.5 8.6M4.7 33.5H13.1M18.9 33.5H27.4"/>
+      </svg>
+      <svg class="prenda prenda-chaqueta" viewBox="0 0 40 36">
+        <path class="prenda-tela" d="M14 3L20 6L26 3L33 6L38 24L33 25.5L30 15V33H10V15L7 25.5L2 24L7 6Z"/>
+        <path class="prenda-linea" d="M14 3L20 11L26 3M20 11V33"/>
+        <path class="prenda-costura" d="M12.5 15H17V19H12.5ZM23 15H27.5V19H23ZM10.6 30H29.4"/>
+      </svg>
+      <svg class="prenda prenda-bolsillo" viewBox="0 0 32 36">
+        <path class="prenda-tela" d="M4 3H28V24L16 33L4 24Z"/>
+        <path class="prenda-costura" d="M7 6.5H25V22.5L16 29.3L7 22.5ZM9 14Q16 10 23 14"/>
+      </svg>
+    </span>
+    <span class="mascota-gracias" aria-hidden="true">¡Gracias!</span>
+  </span>
+  <span class="mascota-globo" aria-hidden="true">
+    <span class="globo-saludo"><span class="globo-nombre">Soy Ren<span class="globo-coma">,</span></span> <span class="globo-mensaje">¡dona tus jeans!</span></span>
+    <span class="globo-gracias">¡Gracias por sumar!</span>
+  </span>
 </a>
 
 <!-- Motion 13.4.4 (copia local) -->
