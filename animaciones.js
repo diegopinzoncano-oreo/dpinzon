@@ -10,10 +10,9 @@
     2. Utilidades
     3. Títulos de sección palabra por palabra
     4. Tarjetas en cascada
-    5. Pasos del proceso
-    6. Parallax de fotos
-    7. Sello del ODS 12
-    8. Botones magnéticos
+    5. Parallax de fotos
+    6. Sello del ODS 12
+    7. Botones magnéticos
 */
 
 // Encapsulado para no compartir nombres con script.js
@@ -157,45 +156,7 @@ function iniciarAnimacionesMotion() {
 
 
   /* ==============================================================
-     5. PASOS DEL PROCESO
-     Número y título entran desde la izquierda, luego el texto.
-     La línea superior la sigue dibujando style.css (.in-view).
-     ============================================================== */
-
-  const pasos = document.querySelectorAll('.step');
-
-  const animarPasos = crearTanda(function (tanda) {
-    const numerosYTitulos = [];
-    const textos = [];
-    tanda.forEach(function (paso) {
-      numerosYTitulos.push(paso.querySelector('.step-num'), paso.querySelector('.step-title'));
-      textos.push(paso.querySelector('.step-text'));
-    });
-
-    animate(
-      numerosYTitulos,
-      { opacity: [0, 1], transform: ['translateX(-48px)', 'translateX(0px)'] },
-      { duration: 0.9, ease: curvaSuave, delay: stagger(0.07) }
-    ).then(function () { soltarEstilos(numerosYTitulos); });
-
-    animate(
-      textos,
-      { opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-      { duration: 0.9, ease: curvaSuave, delay: stagger(0.14, { startDelay: 0.2 }) }
-    ).then(function () { soltarEstilos(textos); });
-  });
-
-  pasos.forEach(function (paso) {
-    quitarAparicionCSS(paso);
-    paso.querySelectorAll('.step-num, .step-title, .step-text').forEach(function (parte) {
-      parte.style.opacity = '0';
-    });
-    inView(paso, function () { animarPasos(paso); }, { amount: 0.3 });
-  });
-
-
-  /* ==============================================================
-     6. PARALLAX DE FOTOS
+     5. PARALLAX DE FOTOS
      Desplazamiento de -5% a 5%; la imagen está ampliada al 112%
      en style.css para que no se vean los bordes.
      ============================================================== */
@@ -215,7 +176,7 @@ function iniciarAnimacionesMotion() {
 
 
   /* ==============================================================
-     7. SELLO DEL ODS 12
+     6. SELLO DEL ODS 12
      Escala sutil durante el recorrido, sin rotación. Se usa la
      propiedad "scale" para no chocar con el transform de .reveal.
      ============================================================== */
@@ -236,7 +197,7 @@ function iniciarAnimacionesMotion() {
 
 
   /* ==============================================================
-     8. BOTONES MAGNÉTICOS
+     7. BOTONES MAGNÉTICOS
      Solo con puntero fino (mouse); se excluyen los del menú.
      ============================================================== */
 
@@ -283,7 +244,7 @@ try {
 } catch (error) {
   console.warn('Las animaciones de Motion no se pudieron iniciar:', error);
   document.documentElement.classList.remove('motion-on');
-  document.querySelectorAll('.merch-card, .member-card, .identity-card, .step-num, .step-title, .step-text').forEach(function (elemento) {
+  document.querySelectorAll('.merch-card, .member-card, .identity-card').forEach(function (elemento) {
     elemento.style.opacity = '';
   });
 }

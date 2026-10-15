@@ -50,7 +50,7 @@ se usan las transiciones de CSS.
 1. Inicio
 2. Problemática: cifras de residuos textiles en el mundo, Colombia, Bogotá y Chía
 3. ODS 12
-4. Proceso y por qué el denim
+4. Proceso y por qué el denim: ciclo transmedia de 6 pasos (de la convocatoria al bolso y a la comunidad), con la red social donde se publica cada etapa. En computador es una pista ovalada y en celular una línea de tiempo vertical
 5. Merch
 6. Redes sociales: Instagram y TikTok
 7. Equipo

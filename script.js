@@ -231,6 +231,21 @@ elementosQueAparecen.forEach(function (elemento) {
   vigilante.observe(elemento);
 });
 
+// Ciclo del proceso: el diagrama completo (computador) y cada paso y el
+// cierre (celular) se activan por separado; style.css decide qué se anima.
+const vigilanteCiclo = new IntersectionObserver(function (entradas) {
+  entradas.forEach(function (entrada) {
+    if (entrada.isIntersecting) {
+      entrada.target.classList.add('in-view');
+      vigilanteCiclo.unobserve(entrada.target);
+    }
+  });
+}, { threshold: 0.35 });
+
+document.querySelectorAll('.ciclo, .ciclo-paso, .ciclo-centro').forEach(function (elemento) {
+  vigilanteCiclo.observe(elemento);
+});
+
 
 /* ================================================================
    5. PESTAÑAS COLOMBIA / BOGOTÁ / CHÍA
