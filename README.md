@@ -40,6 +40,7 @@ se usan las transiciones de CSS.
 │   ├── proceso/          Fotos del proceso
 │   ├── merch/            Productos
 │   ├── equipo/           Integrantes y foto grupal
+│   ├── mascota/          Mascota del proyecto (WebP y PNG de respaldo)
 │   └── biblioteca/       Carpeta reservada para material fotográfico adicional
 ├── video/                Videos opcionales (intro.mp4 y proceso.mp4)
 └── .vscode/              Extensiones recomendadas para VS Code
@@ -55,6 +56,8 @@ se usan las transiciones de CSS.
 6. Redes sociales: Instagram y TikTok
 7. Equipo
 8. Participa: formulario de preguntas y de donación de jeans (generan un correo con `mailto:`)
+
+Mascota flotante: el mapache de Up Style (`img/mascota/`) queda fijo abajo a la izquierda con el globo "¡Dona tus jeans!" y lleva al formulario de donación; se oculta en el inicio, junto al formulario y en el pie de página.
 
 ## Cómo verla
 

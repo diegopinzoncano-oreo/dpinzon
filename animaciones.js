@@ -198,15 +198,13 @@ function iniciarAnimacionesMotion() {
 
   /* ==============================================================
      7. BOTONES MAGNÉTICOS
-     Solo con puntero fino (mouse); se excluyen los del menú.
+     Solo con puntero fino (mouse).
      ============================================================== */
 
   const tieneMouse = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   if (tieneMouse) {
     document.querySelectorAll('.btn-primary, .btn-denim').forEach(function (boton) {
-      if (boton.closest('#siteHeader')) return; // el menú tiene su propia animación
-
       // Desplazamiento en x e y
       const corrimientoX = motionValue(0);
       const corrimientoY = motionValue(0);

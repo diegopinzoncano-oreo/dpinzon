@@ -55,12 +55,9 @@
       <li style="--i:4"><a href="#redes"><span class="nav-num">04</span>Redes</a></li>
       <li style="--i:5"><a href="#equipo"><span class="nav-num">05</span>Equipo</a></li>
       <li style="--i:6"><a href="#participa"><span class="nav-num">06</span>Participa</a></li>
-      <!-- Solo en el menú de celular -->
-      <li class="nav-mobile-cta" style="--i:7"><a href="#participa" class="btn btn-primary">Dona tus jeans</a></li>
     </ul>
 
     <div class="nav-actions">
-      <a href="#participa" class="btn btn-denim btn-sm btn-brillo nav-cta">Dona tus jeans</a>
       <!-- Menú hamburguesa (tablet y celular) -->
       <button class="navtoggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navlinks">
         <span></span><span></span><span></span>
@@ -704,7 +701,7 @@
       </div>
 
       <!-- ---------- Donaciones ---------- -->
-      <div class="interact-card reveal reveal-2">
+      <div class="interact-card reveal reveal-2" id="donar">
         <h3>
           <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h12l1 20h-5.5L12 9l-1.5 13H5z"/><path d="M6 6h12"/></svg></span>
           Dona tus jeans
@@ -818,6 +815,18 @@
     </div>
   </div>
 </footer>
+
+<!-- ============================================================
+     MASCOTA FLOTANTE
+     Acceso directo al formulario de donación (script.js).
+     ============================================================ -->
+<a href="#donar" class="mascota" id="mascota" aria-label="Dona tus jeans: ir al formulario de donación">
+  <picture class="mascota-figura">
+    <source srcset="img/mascota/mascota-upstyle.webp" type="image/webp">
+    <img src="img/mascota/mascota-upstyle.png" alt="" width="513" height="525" decoding="async">
+  </picture>
+  <span class="mascota-globo" aria-hidden="true">¡Dona tus jeans!</span>
+</a>
 
 <!-- Motion 13.4.4 (copia local) -->
 <script src="motion.js"></script>

@@ -13,6 +13,7 @@
     7. Formularios
     8. Ventanas emergentes (merch y equipo)
     9. Carrusel del inicio
+    10. Mascota flotante
 */
 
 
@@ -69,7 +70,7 @@ const barraProgreso = document.getElementById('scrollProgress');
 const fotoInicio = document.querySelector('.hero-bg');
 const fotoOds = document.querySelector('.ods-bg');
 
-const enlacesMenu = document.querySelectorAll('.navlinks li:not(.nav-mobile-cta) a');
+const enlacesMenu = document.querySelectorAll('.navlinks a');
 const pildoraMenu = document.querySelector('.nav-pill');
 const seccionInicio = document.getElementById('inicio');
 let mouseEnMenu = false;
@@ -414,7 +415,7 @@ prepararFormulario('donateForm', 'dSuccess', function () {
 
 let ventanaAbierta = null;
 let botonQueLaAbrio = null;
-const zonasDeFondo = document.querySelectorAll('body > header, body > main, body > footer');
+const zonasDeFondo = document.querySelectorAll('body > header, body > main, body > footer, body > .mascota');
 
 // inert deja el resto de la página fuera del foco mientras la ventana está abierta
 function bloquearFondo(bloquear) {
@@ -669,4 +670,67 @@ if (diapositivas.length > 1) {
   new IntersectionObserver(function (entradas) {
     pausarCarrusel('pantalla', !entradas[0].isIntersecting);
   }).observe(seccionInicio);
+}
+
+
+/* ================================================================
+   10. MASCOTA FLOTANTE
+   Lleva al formulario de donación. Se oculta en el inicio y mientras
+   el formulario o el pie de página están en pantalla.
+   ================================================================ */
+
+const mascota = document.getElementById('mascota');
+const tarjetaDonar = document.getElementById('donar');
+const campoNombreDonante = document.getElementById('dName');
+const piePagina = document.querySelector('body > footer');
+
+// Espera a que termine el desplazamiento suave (con respaldo por tiempo)
+function alTerminarDesplazamiento(accion) {
+  let hecho = false;
+  function terminar() {
+    if (hecho) return;
+    hecho = true;
+    window.removeEventListener('scrollend', terminar);
+    accion();
+  }
+  window.addEventListener('scrollend', terminar, { once: true });
+  setTimeout(terminar, reducirMovimiento ? 50 : 1200);
+}
+
+function resaltarTarjetaDonar() {
+  tarjetaDonar.classList.remove('resaltada');
+  void tarjetaDonar.offsetWidth; // reinicia la animación si ya estaba aplicada
+  tarjetaDonar.classList.add('resaltada');
+  setTimeout(function () { tarjetaDonar.classList.remove('resaltada'); }, 1200);
+}
+
+if (mascota && tarjetaDonar) {
+  mascota.addEventListener('click', function (evento) {
+    evento.preventDefault();
+    tarjetaDonar.scrollIntoView({
+      behavior: reducirMovimiento ? 'auto' : 'smooth',
+      block: 'center'
+    });
+    alTerminarDesplazamiento(function () {
+      if (campoNombreDonante) campoNombreDonante.focus({ preventScroll: true });
+      resaltarTarjetaDonar();
+    });
+  });
+
+  // Zonas que la mascota no debe tapar: el formulario, el pie y los botones del inicio
+  const zonasEnPantalla = new Set();
+  function anotarZonas(entradas) {
+    entradas.forEach(function (entrada) {
+      if (entrada.isIntersecting) zonasEnPantalla.add(entrada.target);
+      else zonasEnPantalla.delete(entrada.target);
+    });
+    mascota.classList.toggle('mascota-oculta', zonasEnPantalla.size > 0);
+  }
+
+  const observadorMascota = new IntersectionObserver(anotarZonas, { rootMargin: '0px 0px -12% 0px' });
+  observadorMascota.observe(tarjetaDonar);
+  if (piePagina) observadorMascota.observe(piePagina);
+
+  // El inicio cuenta mientras ocupa la franja inferior, donde está la mascota
+  new IntersectionObserver(anotarZonas, { rootMargin: '-75% 0px 0px 0px' }).observe(seccionInicio);
 }

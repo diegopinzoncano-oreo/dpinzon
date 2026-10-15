@@ -20,6 +20,7 @@
     == 16. Animaciones de aparición
     == 17. Movimiento reducido
     == 18. Animaciones con Motion
+    == 19. Mascota flotante
 */
 
 
@@ -271,8 +272,8 @@ footer :focus-visible,
 
 /* ================================================================
    == 3. BOTONES
-   Variantes: .btn-primary (blanco), .btn-denim (azul jean),
-   .btn-outline-light (sobre fotos) y .btn-sm (compacto).
+   Variantes: .btn-primary (blanco), .btn-denim (azul jean)
+   y .btn-outline-light (sobre fotos).
    ================================================================ */
 .btn {
   display: inline-flex;
@@ -299,11 +300,6 @@ footer :focus-visible,
 }
 .btn:hover svg {
   transform: translateY(3px);
-}
-
-.btn-sm {
-  padding: 10px 20px;
-  font-size: 0.85rem;
 }
 
 .btn-primary {
@@ -517,9 +513,8 @@ header .navlinks .nav-pill {
   background: rgba(255, 255, 255, 0.18);
   box-shadow: none;
 }
-.nav-num,
-.nav-mobile-cta {
-  display: none; /* solo se ven en el menú de celular */
+.nav-num {
+  display: none; /* solo se ve en el menú de celular */
 }
 
 .nav-actions {
@@ -527,31 +522,16 @@ header .navlinks .nav-pill {
   z-index: 2;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 12px;
 }
-
-/* Botón "Dona tus jeans" con un brillo que cruza al pasar el mouse */
-.btn-brillo {
-  position: relative;
-  overflow: hidden;
-}
-.btn-brillo::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -60%;
-  width: 40%;
-  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.45), transparent);
-  transform: skewX(-20deg);
-  transition: left .7s var(--ease-out);
-}
-.btn-brillo:hover::before {
-  left: 130%;
-}
-header .nav-cta {
-  background: #fff;
-  color: var(--denim);
+/* Computador: logo a la izquierda y enlaces centrados en la página */
+@media (min-width: 961px) {
+  .nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+  }
+  .brand { justify-self: start; }
 }
 
 /* ---------- Botón hamburguesa (se transforma en X) ---------- */
@@ -669,26 +649,9 @@ header.menu-abierto .navtoggle span {
     font-weight: 500;
     color: var(--thread);
   }
-  .nav-mobile-cta {
-    display: block;
-    margin-top: 28px;
-  }
-  .nav-mobile-cta a.btn,
-  header .nav-mobile-cta a.btn {
-    display: inline-flex;
-    padding: 15px 28px;
-    border: none;
-    border-radius: 100px;
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: 1rem;
-    text-transform: none;
-    color: var(--denim);
-  }
 }
-/* En celulares pequeños el botón "Dona tus jeans" pasa al menú */
+/* Celulares pequeños: logo más compacto */
 @media (max-width: 560px) {
-  .nav-cta { display: none; }
   .brand-badge { width: 50px; height: 50px; }
   header.scrolled .brand-badge { width: 44px; height: 44px; }
   .brand-name { font-size: 1.25rem; }
@@ -2982,4 +2945,146 @@ footer {
 .motion-on .m-parallax {
   scale: 1.12;
   translate: 0 var(--m-mover, 0%);
+}
+
+
+/* ================================================================
+   == 19. MASCOTA FLOTANTE
+   Enlace fijo al formulario de donación. Estados que aplica script.js:
+     .mascota-oculta → el inicio, el formulario o el pie están en pantalla.
+     .resaltada      → brillo breve de la tarjeta de donación al llegar.
+   Debajo del menú (z-index 50) y de las ventanas emergentes (100).
+   ================================================================ */
+.mascota {
+  --mascota-alto: 124px;
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 40;
+  display: flex;
+  align-items: flex-start;
+  border-radius: var(--radius-m);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: translate .5s var(--ease-out), opacity .35s ease, visibility 0s linear 0s;
+  /* entra desde abajo tras la entrada de la página */
+  animation: entraMascota .9s var(--ease-out) 1.7s backwards;
+}
+@keyframes entraMascota {
+  from { transform: translateY(140%); opacity: 0; }
+}
+.mascota:focus-visible {
+  outline: 3px solid var(--thread);
+  outline-offset: 4px;
+}
+.mascota.mascota-oculta {
+  translate: 0 140%;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: translate .45s var(--ease-out), opacity .3s ease, visibility 0s linear .45s;
+}
+
+.mascota-figura {
+  display: block;
+  flex: none;
+  transition: translate .35s var(--ease-out);
+}
+.mascota-figura img {
+  display: block;
+  width: auto;
+  height: var(--mascota-alto);
+  filter: drop-shadow(0 10px 14px rgba(15, 20, 35, 0.28));
+  transform-origin: 30% 100%;
+  /* saludo breve cada 8 s */
+  animation: saludoMascota 8s ease-in-out 4s infinite;
+}
+@keyframes saludoMascota {
+  0%, 86%, 100% { transform: none; }
+  89% { transform: rotate(-5deg) translateY(-3px); }
+  92% { transform: rotate(4deg); }
+  95% { transform: rotate(-2deg); }
+  98% { transform: rotate(1deg); }
+}
+
+/* Globo de diálogo con la punta hacia la mascota */
+.mascota-globo {
+  position: relative;
+  margin: 8px 0 0 4px;
+  padding: 9px 15px;
+  background: var(--card);
+  border-radius: 14px;
+  box-shadow: 0 12px 26px -12px rgba(31, 45, 72, 0.5), 0 2px 6px rgba(31, 45, 72, 0.12);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--denim-deep);
+  white-space: nowrap;
+  transform-origin: 0 50%;
+  transition: scale .3s var(--ease-out);
+  animation: aparecerGlobo .5s var(--ease-out) 2.5s backwards;
+}
+.mascota-globo::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -5px;
+  width: 12px;
+  height: 12px;
+  margin-top: -6px;
+  background: inherit;
+  border-radius: 2px;
+  transform: rotate(45deg);
+}
+@keyframes aparecerGlobo {
+  from { opacity: 0; scale: .6; }
+}
+
+.mascota:hover .mascota-figura,
+.mascota:focus-visible .mascota-figura {
+  translate: 0 -6px;
+}
+.mascota:hover .mascota-globo,
+.mascota:focus-visible .mascota-globo {
+  scale: 1.06;
+}
+
+/* Brillo breve del borde de la tarjeta de donación */
+.interact-card.resaltada {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--denim) 60%, transparent);
+  animation: resaltarTarjeta 1.2s ease-out;
+}
+@keyframes resaltarTarjeta {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--denim) 0%, transparent); }
+  30%  { box-shadow: 0 0 0 6px color-mix(in srgb, var(--denim) 40%, transparent), 0 0 32px 4px color-mix(in srgb, var(--thread) 45%, transparent); }
+  100% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--denim) 60%, transparent); }
+}
+
+/* Tablet */
+@media (max-width: 960px) {
+  .mascota { --mascota-alto: 104px; }
+}
+/* Celular: más pequeña y el globo aparece solo por momentos */
+@media (max-width: 560px) {
+  .mascota {
+    --mascota-alto: 86px;
+    left: 14px;
+    bottom: 14px;
+  }
+  .mascota-globo {
+    margin: 4px 0 0 2px;
+    padding: 7px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    animation: globoPorMomentos 10s ease-in-out 2.5s infinite backwards;
+  }
+  .mascota:focus-visible .mascota-globo {
+    animation: none;
+  }
+  @keyframes globoPorMomentos {
+    0%        { opacity: 0; scale: .6; }
+    5%, 45%   { opacity: 1; scale: 1; }
+    52%, 100% { opacity: 0; scale: .6; }
+  }
 }
