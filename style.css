@@ -709,21 +709,72 @@ body.menu-open {
   padding: calc(var(--header-h) + 60px) 0 90px;
   overflow: hidden;
   background: var(--denim-deep);
+  --carrusel-intervalo: 6s;    /* tiempo de cada foto */
+  --carrusel-transicion: 1.2s; /* duración del deslizamiento */
+  --carrusel-curva: cubic-bezier(.65, 0, .35, 1);
 }
 
-/* Foto de fondo con zoom lento al cargar; el encuadre prioriza las caras */
+/* Carrusel de fondo. El contenedor recibe el parallax (script.js) y cada
+   diapositiva se mueve con translate y scale, independientes de ese transform. */
 .hero-bg {
   position: absolute;
   inset: -4% 0;
   z-index: 0;
-  background-size: cover;
-  background-position: 60% 20%;
+  overflow: hidden;
   will-change: transform;
-  animation: zoomLento 18s ease-out both;
 }
-@keyframes zoomLento {
-  from { scale: 1.12; }
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-color: var(--denim-deep);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: var(--encuadre, 50% 30%);
+  transform-origin: var(--encuadre, 50% 30%); /* el zoom se centra en el encuadre */
+}
+/* Sin JavaScript solo se muestra la primera foto */
+html:not(.js) .hero-slide:not(:first-child) {
+  display: none;
+}
+
+/* Estados con JavaScript: en espera a la derecha, activa al centro
+   y saliente hacia la izquierda. Antes de iniciar, la primera ya es visible. */
+.js .hero-slide {
+  z-index: 0;
+  translate: 100% 0;
+  opacity: 0;
+}
+.js .hero-slide.es-activa,
+.js .hero-bg:not(.carrusel-listo) .hero-slide:first-child {
+  z-index: 2;
+  translate: 0 0;
+  opacity: 1;
+  box-shadow: -40px 0 80px rgba(15, 19, 30, 0.45); /* separa la entrante de la saliente */
+  transition:
+    translate var(--carrusel-transicion) var(--carrusel-curva),
+    opacity .3s linear;
+}
+.js .hero-slide.es-saliente {
+  z-index: 1;
+  translate: -45% 0;
+  opacity: 0.35;
+  transition:
+    translate var(--carrusel-transicion) var(--carrusel-curva),
+    opacity var(--carrusel-transicion) ease-in;
+}
+
+/* Zoom lento de la foto activa. Si la diapositiva cambia de clase,
+   la animación sigue porque conserva el mismo nombre. */
+.hero-slide.es-activa,
+.hero-bg:not(.carrusel-listo) .hero-slide:first-child {
+  animation: zoomDiapositiva 8s cubic-bezier(.25, .46, .45, .94) both;
+}
+@keyframes zoomDiapositiva {
+  from { scale: 1.08; }
   to   { scale: 1; }
+}
+.hero.en-pausa .hero-slide {
+  animation-play-state: paused;
 }
 /* Capa oscura encima de la foto para que el texto se lea bien
    (en celular: más oscura abajo, donde va el texto) */
@@ -731,6 +782,7 @@ body.menu-open {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 3;
   background:
     linear-gradient(180deg, rgba(15, 19, 30, 0.1) 0%, rgba(15, 19, 30, 0.25) 35%, rgba(15, 19, 30, 0.9) 72%, rgba(15, 19, 30, 0.97) 100%);
 }
@@ -745,7 +797,10 @@ body.menu-open {
   .hero-bg {
     inset: 0 0 auto 0;
     height: 78vh;                /* la foto ocupa la parte de arriba */
-    background-position: 64% 18%;
+  }
+  .hero-slide {
+    background-position: var(--encuadre-movil, var(--encuadre, 50% 30%));
+    transform-origin: var(--encuadre-movil, var(--encuadre, 50% 30%));
   }
   .hero-bg::after {
     background: linear-gradient(180deg, rgba(15, 19, 30, 0.15) 0%, rgba(15, 19, 30, 0.05) 30%, rgba(31, 45, 72, 0.75) 72%, var(--denim-deep) 100%);
@@ -760,7 +815,6 @@ body.menu-open {
 @media (min-width: 961px) {
   .hero-bg {
     left: 34%;                    /* la foto empieza al 34% del ancho */
-    background-position: 50% 22%;
   }
   .hero-bg::after {
     background:
@@ -825,12 +879,70 @@ body.menu-open {
   to { opacity: 1; transform: none; }
 }
 
+/* Indicador del carrusel: una barra por foto; la activa se llena
+   durante el intervalo y su animationend marca el cambio (script.js) */
+.carrusel-barras {
+  display: flex;
+  gap: 8px;
+  margin-top: 40px;
+}
+.carrusel-barras:empty {
+  display: none;
+}
+.carrusel-barra {
+  position: relative;
+  width: 44px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.carrusel-barra::before,
+.carrusel-progreso {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  margin-top: -1px;
+  border-radius: 2px;
+}
+.carrusel-barra::before {
+  content: "";
+  background: rgba(255, 255, 255, 0.3);
+  transition: background .2s ease;
+}
+.carrusel-barra:hover::before {
+  background: rgba(255, 255, 255, 0.55);
+}
+.carrusel-progreso {
+  background: rgba(255, 255, 255, 0.9);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.carrusel-barra.es-activa .carrusel-progreso {
+  animation: llenarBarra var(--carrusel-intervalo, 6s) linear forwards;
+}
+.hero.en-pausa .carrusel-progreso {
+  animation-play-state: paused;
+}
+@keyframes llenarBarra {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.carrusel-barra:focus-visible {
+  outline: 2px solid var(--tan);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 /* Indicador de scroll del inicio */
 .scroll-cue {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  margin-top: 52px;
+  margin-top: 26px;
   font-family: var(--font-display);
   font-size: 0.8rem;
   font-weight: 500;
@@ -2824,6 +2936,15 @@ footer {
   .js .reveal {
     opacity: 1 !important;
     transform: none !important;
+  }
+  /* Carrusel: sin deslizamiento ni zoom; la foto cambia solo con las barras */
+  .hero-slide,
+  .js .hero-slide,
+  .js .hero-slide.es-saliente {
+    translate: 0 0;
+  }
+  .carrusel-barra.es-activa .carrusel-progreso {
+    transform: scaleX(1);
   }
 }
 

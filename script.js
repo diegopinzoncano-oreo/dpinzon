@@ -12,6 +12,7 @@
     6. Fotos y videos
     7. Formularios
     8. Ventanas emergentes (merch y equipo)
+    9. Carrusel del inicio
 */
 
 
@@ -535,3 +536,137 @@ document.querySelectorAll('.member-card').forEach(function (tarjeta) {
     abrirVentana(ventanaEquipo, tarjeta);
   });
 });
+
+
+/* ================================================================
+   9. CARRUSEL DEL INICIO
+   El cambio de foto ocurre al terminar de llenarse la barra activa
+   (animationend). Así, la pausa por CSS detiene a la vez el tiempo,
+   la barra y el zoom.
+   ================================================================ */
+
+const diapositivas = Array.from(fotoInicio.querySelectorAll('.hero-slide'));
+const cajaBarras = document.querySelector('.carrusel-barras');
+const DURACION_SALIDA = 1300; // ms, algo más que --carrusel-transicion
+
+let fotoActual = 0;
+let solicitudActual = 0;
+let temporizadorSalida = null;
+const fotosPrecargadas = [];
+const motivosDePausa = new Set();
+
+function urlDeFoto(diapositiva) {
+  const fondo = getComputedStyle(diapositiva).backgroundImage;
+  const coincidencia = fondo.match(/url\(["']?(.*?)["']?\)/);
+  return coincidencia ? coincidencia[1] : '';
+}
+
+// Promesa que se cumple cuando la foto ya se puede pintar sin parpadeo
+function precargarFoto(indice) {
+  if (!fotosPrecargadas[indice]) {
+    const imagen = new Image();
+    imagen.src = urlDeFoto(diapositivas[indice]);
+    fotosPrecargadas[indice] = imagen.decode().catch(function () {});
+  }
+  return fotosPrecargadas[indice];
+}
+
+const barrasCarrusel = diapositivas.map(function (diapositiva, indice) {
+  const barra = document.createElement('button');
+  barra.type = 'button';
+  barra.className = 'carrusel-barra';
+  barra.setAttribute('aria-label', 'Ver foto ' + (indice + 1) + ' de ' + diapositivas.length);
+  barra.innerHTML = '<span class="carrusel-progreso"></span>';
+  barra.addEventListener('click', function () {
+    mostrarFoto(indice);
+  });
+  return barra;
+});
+
+function marcarFotoActiva(indice) {
+  diapositivas.forEach(function (diapositiva, i) {
+    if (i === indice) diapositiva.removeAttribute('aria-hidden');
+    else diapositiva.setAttribute('aria-hidden', 'true');
+  });
+  barrasCarrusel.forEach(function (barra) {
+    barra.classList.remove('es-activa');
+    barra.removeAttribute('aria-current');
+  });
+  void cajaBarras.offsetWidth; // reinicia el llenado aunque sea la misma barra
+  barrasCarrusel[indice].classList.add('es-activa');
+  barrasCarrusel[indice].setAttribute('aria-current', 'true');
+}
+
+function cambiarDiapositiva(indice) {
+  const anterior = diapositivas[fotoActual];
+  const siguiente = diapositivas[indice];
+
+  // Una salida sin terminar se descarta para no acumular capas
+  clearTimeout(temporizadorSalida);
+  diapositivas.forEach(function (diapositiva) {
+    if (diapositiva === anterior) return;
+    diapositiva.classList.remove('es-saliente', 'es-activa');
+    diapositiva.style.scale = '';
+  });
+  void siguiente.offsetWidth; // la entrante parte siempre desde la derecha
+
+  // Congela el zoom de la saliente en su valor actual para que no salte
+  anterior.style.scale = getComputedStyle(anterior).scale;
+  anterior.classList.remove('es-activa');
+  anterior.classList.add('es-saliente');
+  siguiente.classList.add('es-activa');
+
+  fotoActual = indice;
+  marcarFotoActiva(indice);
+  precargarFoto((indice + 1) % diapositivas.length);
+
+  temporizadorSalida = setTimeout(function () {
+    anterior.classList.remove('es-saliente');
+    anterior.style.scale = '';
+  }, DURACION_SALIDA);
+}
+
+// Espera a que la foto esté cargada; si llega otra orden antes, gana la última
+function mostrarFoto(indice) {
+  if (indice === fotoActual) return;
+  const solicitud = ++solicitudActual;
+  precargarFoto(indice).then(function () {
+    if (solicitud === solicitudActual && indice !== fotoActual) cambiarDiapositiva(indice);
+  });
+}
+
+function pausarCarrusel(motivo, pausar) {
+  if (pausar) motivosDePausa.add(motivo);
+  else motivosDePausa.delete(motivo);
+  seccionInicio.classList.toggle('en-pausa', motivosDePausa.size > 0);
+}
+
+if (diapositivas.length > 1) {
+  barrasCarrusel.forEach(function (barra) {
+    cajaBarras.appendChild(barra);
+  });
+
+  diapositivas[0].classList.add('es-activa');
+  fotoInicio.classList.add('carrusel-listo');
+  marcarFotoActiva(0);
+  precargarFoto(1);
+
+  // Con movimiento reducido la barra no se anima y el cambio es manual
+  cajaBarras.addEventListener('animationend', function (evento) {
+    if (evento.animationName !== 'llenarBarra' || reducirMovimiento) return;
+    mostrarFoto((fotoActual + 1) % diapositivas.length);
+  });
+
+  seccionInicio.addEventListener('pointerenter', function (evento) {
+    if (evento.pointerType === 'mouse') pausarCarrusel('mouse', true);
+  });
+  seccionInicio.addEventListener('pointerleave', function (evento) {
+    if (evento.pointerType === 'mouse') pausarCarrusel('mouse', false);
+  });
+  document.addEventListener('visibilitychange', function () {
+    pausarCarrusel('pestana', document.visibilityState === 'hidden');
+  });
+  new IntersectionObserver(function (entradas) {
+    pausarCarrusel('pantalla', !entradas[0].isIntersecting);
+  }).observe(seccionInicio);
+}
