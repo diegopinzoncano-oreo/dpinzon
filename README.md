@@ -35,7 +35,7 @@ se usan las transiciones de CSS.
 ├── img/
 │   ├── logo-upstyle.png       Logo (menú, favicon y pie de página)
 │   ├── fondo-problematica.jpg Fondo de la sección Problemática
-│   ├── inicio/           Foto principal (primera del carrusel)
+│   ├── inicio/           Fotos del carrusel del inicio (modelos y residuos textiles)
 │   ├── secciones/        Franja del ODS 12
 │   ├── proceso/          Fotos del proceso
 │   ├── merch/            Productos
@@ -47,7 +47,7 @@ se usan las transiciones de CSS.
 
 ## Secciones
 
-1. Inicio: carrusel de fotos que avanza solo (se pausa con el mouse encima). Cada foto es un bloque `hero-slide` en `index.html`; para agregar o quitar una foto basta con agregar o quitar ese bloque, con su encuadre (`--encuadre` y `--encuadre-movil`) y su texto alternativo
+1. Inicio: carrusel de fotos que avanza solo (se pausa con el mouse encima). Cada foto es un bloque `hero-slide` en `index.html`; para agregar o quitar una foto basta con agregar o quitar ese bloque, con su encuadre (`--encuadre` y `--encuadre-movil`) y su texto alternativo. Las fotos de residuos textiles son imágenes de referencia del desierto de Atacama (Chile), de uso académico, con crédito en el pie de página
 2. Problemática: cifras de residuos textiles en el mundo, Colombia, Bogotá y Chía
 3. ODS 12
 4. Proceso y por qué el denim: ciclo transmedia de 6 pasos (de la convocatoria al bolso y a la comunidad), con la red social donde se publica cada etapa. En computador es una pista ovalada y en celular una línea de tiempo vertical
