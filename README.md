@@ -33,7 +33,8 @@ se usan las transiciones de CSS.
 ├── fonts/                Tipografías WOFF2 del manual de marca
 │   └── licencias/        Licencias de cada tipografía
 ├── img/
-│   ├── logo-upstyle.png       Logo (menú, favicon y pie de página)
+│   ├── logo-upstyle.png       Logo circular (favicon y pie de página)
+│   ├── logo/             Imagotipo del menú (WebP y PNG, versión blanca y tinta)
 │   ├── fondo-problematica.jpg Fondo de la sección Problemática
 │   ├── inicio/           Fotos del carrusel del inicio (residuos textiles y modelos)
 │   ├── secciones/        Franja del ODS 12
