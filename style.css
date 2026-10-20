@@ -420,13 +420,11 @@ header.sobre-inicio::before {
   display: block;
   width: auto;
   max-width: none; /* conserva la proporción aunque la columna del menú sea estrecha */
-  height: 42px;
-  /* sombra suave: mantiene el contraste sobre fotos claras del inicio */
-  filter: drop-shadow(0 2px 6px rgba(12, 16, 28, 0.35));
+  height: 44px; /* incluye el contorno blanco del imagotipo */
   transition: transform .5s var(--ease-out), height .4s var(--ease-out);
 }
 header.scrolled .brand-logo img {
-  height: 35px;
+  height: 37px;
 }
 .brand:hover .brand-logo img {
   transform: translateY(-2px) scale(1.03);
@@ -434,7 +432,7 @@ header.scrolled .brand-logo img {
 /* Computador estrecho: deja aire entre el logo y la cápsula de enlaces */
 @media (min-width: 961px) and (max-width: 1180px) {
   .brand-logo img,
-  header.scrolled .brand-logo img { height: 34px; }
+  header.scrolled .brand-logo img { height: 36px; }
 }
 
 /* ---------- Enlaces (computador) ---------- */
@@ -644,8 +642,8 @@ header.menu-abierto .navtoggle span {
 }
 /* Celulares pequeños: logo más compacto */
 @media (max-width: 560px) {
-  .brand-logo img { height: 32px; }
-  header.scrolled .brand-logo img { height: 30px; }
+  .brand-logo img { height: 34px; }
+  header.scrolled .brand-logo img { height: 32px; }
 }
 /* Mientras el menú de celular está abierto, la página no se mueve */
 body.menu-open {
