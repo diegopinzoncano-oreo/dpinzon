@@ -329,7 +329,7 @@ function marcarFotoPendiente(foto) {
     '<b>Foto próximamente</b>' +
     (tarjeta.dataset.name ? '<span class="pending-name">' + tarjeta.dataset.name + '</span>' : '') +
     (tarjeta.dataset.role ? '<span class="pending-role">' + tarjeta.dataset.role + '</span>' : '');
-  (foto.closest('.merch-photo') || tarjeta).appendChild(aviso);
+  (foto.closest('.merch-photo, .member-photo') || tarjeta).appendChild(aviso);
 }
 
 document.querySelectorAll('.member-card img, .merch-card img').forEach(function (foto) {
