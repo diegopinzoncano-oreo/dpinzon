@@ -2958,7 +2958,7 @@ footer {
    Debajo del menú (z-index 50) y de las ventanas emergentes (100).
    ================================================================ */
 .mascota {
-  --mascota-alto: 124px;
+  --mascota-alto: 150px;
   position: fixed;
   left: 20px;
   bottom: 20px;
@@ -3016,8 +3016,8 @@ footer {
 /* Globo de diálogo con la punta hacia la mascota */
 .mascota-globo {
   position: relative;
-  margin: 8px 0 0 4px;
-  padding: 9px 15px;
+  margin: 12px 0 0 4px;
+  padding: 10px 16px;
   background: var(--card);
   border-radius: 14px;
   box-shadow: 0 12px 26px -12px rgba(31, 45, 72, 0.5), 0 2px 6px rgba(31, 45, 72, 0.12);
@@ -3180,8 +3180,6 @@ footer {
   }
 }
 
-/* Globo de diálogo con la punta hacia la mascota */
-
 .mascota:hover .mascota-figura,
 .mascota:focus-visible .mascota-figura {
   translate: 0 -6px;
@@ -3204,12 +3202,12 @@ footer {
 
 /* Tablet */
 @media (max-width: 960px) {
-  .mascota { --mascota-alto: 104px; }
+  .mascota { --mascota-alto: 126px; }
 }
 /* Celular: más pequeña y el globo aparece solo por momentos */
 @media (max-width: 560px) {
   .mascota {
-    --mascota-alto: 86px;
+    --mascota-alto: 104px;
     left: 14px;
     bottom: 14px;
   }
