@@ -48,7 +48,7 @@ se usan las transiciones de CSS.
 
 ## Secciones
 
-1. Inicio: carrusel de fotos que avanza solo (se pausa con el mouse encima). Cuenta primero el problema y al final la solución: montaña de ropa, desierto de ropa desechada y los modelos de Up Style. Cada foto es un bloque `hero-slide` en `index.html`; para agregar o quitar una foto basta con agregar o quitar ese bloque, con su encuadre (`--encuadre` y `--encuadre-movil`) y su texto alternativo. Las fotos de residuos textiles son imágenes de referencia del desierto de Atacama (Chile), de uso académico, con crédito en el pie de página
+1. Inicio: carrusel de fotos que avanza solo (se pausa con el mouse encima). Cuenta primero el problema y al final la solución: montaña de ropa, desierto de ropa desechada, campo de ropa hasta el horizonte y los modelos de Up Style. Cada foto es un bloque `hero-slide` en `index.html`; para agregar o quitar una foto basta con agregar o quitar ese bloque, con su encuadre (`--encuadre` y `--encuadre-movil`) y su texto alternativo. Las fotos de residuos textiles son imágenes de referencia del desierto de Atacama (Chile), de uso académico, con crédito en el pie de página
 2. Problemática: cifras de residuos textiles en el mundo, Colombia, Bogotá y Chía
 3. ODS 12
 4. Proceso y por qué el denim: ciclo transmedia de 6 pasos (de la convocatoria al bolso y a la comunidad), con la red social donde se publica cada etapa. En computador es una pista ovalada y en celular una línea de tiempo vertical
@@ -75,7 +75,7 @@ python3 -m http.server 8000
 | Diego Pinzón | Director |
 | Jean Diego | Fotografía e iluminación |
 | Isabella García | Productora |
-| Guillermo Hudsong | Productor de audio y vestuario |
+| Guillermo Hudgson | Productor de audio y vestuario |
 | Diego Méndez | Productor de audio |
 
 ## Fuentes de los datos
