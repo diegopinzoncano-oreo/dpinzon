@@ -10,7 +10,7 @@
     2. Utilidades
     3. Títulos de sección palabra por palabra
     4. Tarjetas en cascada
-    5. Parallax de fotos
+    5. Parallax de fotos del proceso
     6. Sello del ODS 12
     7. Botones magnéticos
 */
@@ -156,12 +156,13 @@ function iniciarAnimacionesMotion() {
 
 
   /* ==============================================================
-     5. PARALLAX DE FOTOS
-     Desplazamiento de -5% a 5%; la imagen está ampliada al 112%
-     en style.css para que no se vean los bordes.
+     5. PARALLAX DE FOTOS DEL PROCESO
+     Solo en las fotos del proceso. Desplazamiento de -5% a 5%; la
+     imagen está ampliada al 112% en style.css para que no se vean
+     los bordes. La foto grupal queda fija para mostrarla completa.
      ============================================================== */
 
-  document.querySelectorAll('.process-media .photo-frame img, .group-photo img').forEach(function (foto) {
+  document.querySelectorAll('.process-media .photo-frame img').forEach(function (foto) {
     foto.classList.add('m-parallax');
 
     scroll(function (progreso) {
