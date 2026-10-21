@@ -240,6 +240,7 @@ function iniciarAnimacionesMotion() {
     const numeroActual = relato.querySelector('.relato-actual');
     const rellenoBarra = relato.querySelector('.relato-barra-relleno');
     const enlaceVolver = relato.querySelector('.escena-volver');
+    const marcasEscena = Array.from(relato.querySelectorAll('.relato-marca'));
 
     const pantallaAncha = window.matchMedia('(min-width: 980px) and (min-height: 560px)');
     const PARALLAX_FOTO = 5;   // % máximo de desplazamiento de la foto (margen de scale 1.12)
@@ -292,6 +293,10 @@ function iniciarAnimacionesMotion() {
       if (masCercana !== escenaActual) {
         escenaActual = masCercana;
         numeroActual.textContent = String(masCercana + 1).padStart(2, '0');
+        marcasEscena.forEach(function (marca, indice) {
+          if (indice === masCercana) marca.setAttribute('aria-current', 'step');
+          else marca.removeAttribute('aria-current');
+        });
       }
     }
 
@@ -304,11 +309,18 @@ function iniciarAnimacionesMotion() {
       // La pista termina con la última escena centrada
       recorrido = Math.max(0, desplazamientoSinLimite(escenas.length - 1));
       relato.style.setProperty('--relato-alto', (recorrido + escenario.clientHeight) + 'px');
+      // Cada marca queda en el punto de la barra donde su escena está centrada
+      marcasEscena.forEach(function (marca, indice) {
+        const posicion = recorrido > 0 ? desplazamientoDe(indice) / recorrido : 0;
+        marca.style.setProperty('--marca-pos', (posicion * 100).toFixed(2) + '%');
+      });
       pintarRecorrido();
     }
 
     function limpiarEscenas() {
       pista.style.transform = '';
+      escenaActual = -1;
+      marcasEscena.forEach(function (marca) { marca.removeAttribute('aria-current'); });
       escenas.forEach(function (escena) {
         escena.style.removeProperty('--foto-x');
         escena.style.removeProperty('--foto-y');
@@ -355,6 +367,16 @@ function iniciarAnimacionesMotion() {
       const escena = evento.target.closest('.escena');
       if (!escena) return;
       window.scrollTo({ top: inicioRelato() + desplazamientoDe(escenas.indexOf(escena)) });
+    });
+
+    // Marcas de escena: bajan hasta el punto del tramo fijo que centra
+    // la escena elegida. Con las escenas apiladas el enlace es normal.
+    marcasEscena.forEach(function (marca, indice) {
+      marca.addEventListener('click', function (evento) {
+        if (!horizontal) return;
+        evento.preventDefault();
+        window.scrollTo({ top: inicioRelato() + desplazamientoDe(indice), behavior: 'smooth' });
+      });
     });
 
     // "Vuelve al inicio del ciclo" recorre la pista de regreso al 01

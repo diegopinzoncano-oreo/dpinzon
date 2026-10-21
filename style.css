@@ -1598,9 +1598,67 @@ html:not(.js) .ods-infinity path,
   }
 }
 
-/* Contador y barra: solo en el recorrido horizontal */
+/* Control del relato. Con las escenas apiladas solo se ve "Saltar el
+   relato", fijo bajo el menú mientras dura el relato; el contador, la
+   barra y las marcas de escena son del recorrido horizontal. */
 .relato-control {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 3;
+  height: 0;
+}
+.relato-contador,
+.relato-linea {
   display: none;
+}
+.relato-saltar {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px 9px 16px;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  background: rgba(17, 26, 44, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  backdrop-filter: blur(10px) saturate(140%);
+  transition: color .3s ease, border-color .3s ease, background-color .3s ease;
+}
+.relato-saltar svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: translate .4s var(--ease-out);
+}
+.relato-saltar:hover {
+  color: var(--thread);
+  border-color: var(--thread);
+}
+.relato-saltar:hover svg {
+  translate: 0 2px;
+}
+.relato-saltar:focus-visible {
+  outline-offset: 3px;
+}
+@media (min-width: 701px) {
+  .relato-saltar {
+    top: 18px;
+    right: max(32px, calc((100vw - var(--max)) / 2 + 24px));
+  }
 }
 
 /* ---------- Recorrido horizontal (computador con Motion) ---------- */
@@ -1670,9 +1728,11 @@ html:not(.js) .ods-infinity path,
 }
 .relato-horizontal .relato-control {
   position: absolute;
+  top: auto;
   right: 10vw;
   bottom: 26px;
   left: 10vw;
+  height: auto;
   display: flex;
   align-items: center;
   gap: 22px;
@@ -1683,12 +1743,20 @@ html:not(.js) .ods-infinity path,
   letter-spacing: 0.08em;
   color: rgba(255, 255, 255, 0.5);
 }
+.relato-horizontal .relato-contador {
+  display: block;
+}
 .relato-actual {
   color: #fff;
 }
+.relato-horizontal .relato-linea {
+  position: relative;
+  display: block;
+  flex: 1;
+}
 .relato-barra {
   position: relative;
-  flex: 1;
+  display: block;
   height: 2px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.14);
@@ -1701,9 +1769,68 @@ html:not(.js) .ods-infinity path,
   transform-origin: left;
 }
 
-/* ¿Por qué el denim? */
+/* Marcas de escena sobre la barra: cada una lleva a su escena.
+   animaciones.js las ubica en --marca-pos y marca la actual. */
+.relato-marcas {
+  position: absolute;
+  inset: -11px 0;
+}
+.relato-marca {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--marca-pos, 0%);
+  width: 24px;
+  margin-left: -12px;
+  border-radius: 4px;
+}
+.relato-marca::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 8px;
+  translate: -50% -50%;
+  background: rgba(255, 255, 255, 0.45);
+  transition: height .3s var(--ease-out), background-color .3s ease;
+}
+.relato-marca:hover::before,
+.relato-marca[aria-current]::before {
+  height: 14px;
+  background: var(--thread);
+}
+.relato-marca:focus-visible {
+  outline-width: 2px;
+  outline-offset: -2px;
+}
+
+/* En el recorrido horizontal el enlace va en línea con el contador */
+.relato-horizontal .relato-saltar {
+  position: static;
+  padding: 6px 0 5px;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.78);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.relato-horizontal .relato-saltar:hover {
+  color: var(--thread);
+  border-bottom-color: var(--thread);
+}
+
+/* ¿Por qué el denim? Destino de "Saltar el relato": el id va en el
+   contenedor porque el encabezado se desplaza al aparecer y movería el
+   punto de llegada. Queda a 24px bajo el menú. */
 .denim-head {
   margin-top: 100px;
+}
+#por-que-el-denim {
+  scroll-margin-top: 24px;
 }
 @media (max-width: 700px) {
   .denim-head { margin-top: 72px; }

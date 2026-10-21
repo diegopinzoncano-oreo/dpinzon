@@ -295,6 +295,27 @@
     </svg>
 
     <div class="relato-escenario">
+      <!-- Avance del recorrido y salida rápida. En celular solo se ve
+           "Saltar el relato", fijo en la esquina mientras se recorre. -->
+      <div class="relato-control">
+        <span class="relato-contador" aria-hidden="true"><span class="relato-actual">01</span> / 06</span>
+        <div class="relato-linea">
+          <span class="relato-barra" aria-hidden="true"><span class="relato-barra-relleno"></span></span>
+          <nav class="relato-marcas" aria-label="Escenas del relato">
+            <a class="relato-marca" href="#escena-01" aria-label="Escena 1: Convocatoria"></a>
+            <a class="relato-marca" href="#escena-02" aria-label="Escena 2: Clasificación"></a>
+            <a class="relato-marca" href="#escena-03" aria-label="Escena 3: Patronaje"></a>
+            <a class="relato-marca" href="#escena-04" aria-label="Escena 4: Confección"></a>
+            <a class="relato-marca" href="#escena-05" aria-label="Escena 5: El bolso"></a>
+            <a class="relato-marca" href="#escena-06" aria-label="Escena 6: Comunidad"></a>
+          </nav>
+        </div>
+        <a class="relato-saltar" href="#por-que-el-denim" aria-label="Saltar el relato del proceso y seguir con ¿Por qué el denim?">
+          Saltar el relato
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+        </a>
+      </div>
+
       <div class="relato-pista">
 
         <div class="relato-intro section-head reveal">
@@ -381,15 +402,10 @@
         </ol>
       </div>
 
-      <!-- Avance del recorrido horizontal -->
-      <div class="relato-control" aria-hidden="true">
-        <span class="relato-contador"><span class="relato-actual">01</span> / 06</span>
-        <span class="relato-barra"><span class="relato-barra-relleno"></span></span>
-      </div>
     </div>
   </div>
 
-  <div class="wrap">
+  <div class="wrap" id="por-que-el-denim">
     <!-- ---------- ¿Por qué el denim? ---------- -->
     <div class="section-head reveal denim-head">
       <p class="eyebrow">¿Por qué el denim?</p>
