@@ -1763,18 +1763,19 @@ html:not(.js) .ods-infinity path,
 .merch-band {
   background: var(--bg-2);
 }
-/* Dos productos grandes por fila; uno a todo el ancho en celular */
+/* Dos productos por fila en una grilla centrada; uno por fila en celular */
 .merch-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 56px 32px;
-  margin-top: 56px;
+  max-width: min(1000px, 84%);
+  margin: 56px auto 0;
 }
 @media (max-width: 960px) {
   .merch-grid { gap: 44px 20px; }
 }
 @media (max-width: 600px) {
-  .merch-grid { grid-template-columns: 1fr; gap: 40px; }
+  .merch-grid { grid-template-columns: 1fr; gap: 40px; max-width: 86%; }
 }
 
 .merch-card {
