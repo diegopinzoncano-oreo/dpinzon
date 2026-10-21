@@ -10,9 +10,10 @@
     2. Utilidades
     3. Títulos de sección palabra por palabra
     4. Tarjetas en cascada
-    5. Parallax de fotos (proceso y merch)
-    6. Sello del ODS 12
-    7. Botones magnéticos
+    5. Parallax de fotos de merch
+    6. Relato del proceso
+    7. Sello del ODS 12
+    8. Botones magnéticos
 */
 
 // Encapsulado para no compartir nombres con script.js
@@ -197,13 +198,13 @@ function iniciarAnimacionesMotion() {
 
 
   /* ==============================================================
-     5. PARALLAX DE FOTOS (PROCESO Y MERCH)
+     5. PARALLAX DE FOTOS DE MERCH
      La imagen está ampliada en style.css (propiedad "scale") y se
      desplaza dentro de su marco sin pasar del margen que deja esa
-     ampliación. La foto grupal queda fija para mostrarla completa.
+     ampliación.
      ============================================================== */
 
-  document.querySelectorAll('.process-media .photo-frame img, .merch-photo img').forEach(function (foto) {
+  document.querySelectorAll('.merch-photo img').forEach(function (foto) {
     foto.classList.add('m-parallax');
 
     // Margen sobrante por lado, en % del alto, con un 15% de holgura
@@ -222,7 +223,154 @@ function iniciarAnimacionesMotion() {
 
 
   /* ==============================================================
-     6. SELLO DEL ODS 12
+     6. RELATO DEL PROCESO
+     Computador: la escena queda fija (position: sticky) y el scroll
+     vertical desplaza la pista en horizontal. La altura de .relato es
+     el recorrido más una pantalla, así que cada píxel bajado mueve la
+     pista un píxel. Celular: escenas apiladas con parallax vertical.
+     La aparición de cada escena la maneja script.js (sección 4).
+     ============================================================== */
+
+  const relato = document.getElementById('relato');
+
+  if (relato) {
+    const escenario = relato.querySelector('.relato-escenario');
+    const pista = relato.querySelector('.relato-pista');
+    const escenas = Array.from(relato.querySelectorAll('.escena'));
+    const numeroActual = relato.querySelector('.relato-actual');
+    const rellenoBarra = relato.querySelector('.relato-barra-relleno');
+    const enlaceVolver = relato.querySelector('.escena-volver');
+
+    const pantallaAncha = window.matchMedia('(min-width: 980px) and (min-height: 560px)');
+    const PARALLAX_FOTO = 5;   // % máximo de desplazamiento de la foto (margen de scale 1.12)
+    const DERIVA_NUMERO = 5;   // vw que se adelanta el número grande
+
+    let horizontal = false;
+    let recorrido = 0;          // px que avanza la pista de principio a fin
+    let anchoVisible = 0;
+    let centrosEscenas = [];    // centro de cada escena dentro de la pista
+    let escenaActual = -1;
+
+    function limitar(valor, minimo, maximo) {
+      return Math.min(maximo, Math.max(minimo, valor));
+    }
+
+    // Desplazamiento de la pista que centra una escena en pantalla
+    function desplazamientoSinLimite(indice) {
+      return centrosEscenas[indice] - anchoVisible / 2;
+    }
+    function desplazamientoDe(indice) {
+      return limitar(desplazamientoSinLimite(indice), 0, recorrido);
+    }
+
+    function inicioRelato() {
+      return relato.getBoundingClientRect().top + window.scrollY;
+    }
+
+    function pintarRecorrido() {
+      const bajado = -relato.getBoundingClientRect().top;
+      const progreso = recorrido > 0 ? limitar(bajado / recorrido, 0, 1) : 0;
+      const desplazamiento = progreso * recorrido;
+      const centroPantalla = desplazamiento + anchoVisible / 2;
+
+      pista.style.transform = 'translate3d(' + (-desplazamiento).toFixed(1) + 'px, 0, 0)';
+      rellenoBarra.style.transform = 'scaleX(' + progreso.toFixed(4) + ')';
+
+      let masCercana = 0;
+      escenas.forEach(function (escena, indice) {
+        // -1: una pantalla a la izquierda · 0: centrada · 1: a la derecha
+        const distancia = (centrosEscenas[indice] - centroPantalla) / anchoVisible;
+        if (Math.abs(distancia) < Math.abs((centrosEscenas[masCercana] - centroPantalla) / anchoVisible)) {
+          masCercana = indice;
+        }
+        if (Math.abs(distancia) > 1.4) return;
+        // La foto avanza más lento que la pista y el número un poco más rápido
+        escena.style.setProperty('--foto-x', (limitar(-distancia, -1, 1) * PARALLAX_FOTO).toFixed(2) + '%');
+        escena.style.setProperty('--num-x', (distancia * DERIVA_NUMERO).toFixed(2) + 'vw');
+      });
+
+      if (masCercana !== escenaActual) {
+        escenaActual = masCercana;
+        numeroActual.textContent = String(masCercana + 1).padStart(2, '0');
+      }
+    }
+
+    function medirRelato() {
+      if (!horizontal) return;
+      anchoVisible = escenario.clientWidth;
+      centrosEscenas = escenas.map(function (escena) {
+        return escena.offsetLeft + escena.offsetWidth / 2;
+      });
+      // La pista termina con la última escena centrada
+      recorrido = Math.max(0, desplazamientoSinLimite(escenas.length - 1));
+      relato.style.setProperty('--relato-alto', (recorrido + escenario.clientHeight) + 'px');
+      pintarRecorrido();
+    }
+
+    function limpiarEscenas() {
+      pista.style.transform = '';
+      escenas.forEach(function (escena) {
+        escena.style.removeProperty('--foto-x');
+        escena.style.removeProperty('--foto-y');
+        escena.style.removeProperty('--num-x');
+      });
+    }
+
+    function elegirModo() {
+      horizontal = pantallaAncha.matches;
+      document.documentElement.classList.toggle('relato-horizontal', horizontal);
+      limpiarEscenas();
+      if (horizontal) {
+        medirRelato();
+      } else {
+        relato.style.removeProperty('--relato-alto');
+      }
+    }
+
+    elegirModo();
+    pantallaAncha.addEventListener('change', elegirModo);
+    new ResizeObserver(medirRelato).observe(escenario);
+    document.fonts.ready.then(medirRelato);
+
+    // Un solo cálculo por cuadro, sincronizado con el scroll
+    scroll(function () {
+      if (horizontal) pintarRecorrido();
+    });
+
+    // Celular y tablet: parallax vertical de cada foto
+    escenas.forEach(function (escena) {
+      scroll(function (progreso) {
+        if (horizontal) return;
+        escena.style.setProperty('--foto-y', ((progreso - 0.5) * 2 * PARALLAX_FOTO).toFixed(2) + '%');
+      }, {
+        target: escena,
+        offset: ['start end', 'end start']
+      });
+    });
+
+    // Teclado: al enfocar algo dentro de una escena, la página baja
+    // hasta el punto en que esa escena queda centrada.
+    relato.addEventListener('focusin', function (evento) {
+      if (!horizontal) return;
+      const escena = evento.target.closest('.escena');
+      if (!escena) return;
+      window.scrollTo({ top: inicioRelato() + desplazamientoDe(escenas.indexOf(escena)) });
+    });
+
+    // "Vuelve al inicio del ciclo" recorre la pista de regreso al 01
+    if (enlaceVolver) {
+      enlaceVolver.addEventListener('click', function (evento) {
+        if (!horizontal) return;
+        evento.preventDefault();
+        window.scrollTo({ top: inicioRelato() + desplazamientoDe(0), behavior: 'smooth' });
+        escenas[0].focus({ preventScroll: true });
+      });
+    }
+  }
+
+
+  /* ==============================================================
+     7. SELLO DEL ODS 12
      Escala sutil durante el recorrido, sin rotación. Se usa la
      propiedad "scale" para no chocar con el transform de .reveal.
      ============================================================== */
@@ -243,7 +391,7 @@ function iniciarAnimacionesMotion() {
 
 
   /* ==============================================================
-     7. BOTONES MAGNÉTICOS
+     8. BOTONES MAGNÉTICOS
      Solo con puntero fino (mouse).
      ============================================================== */
 
@@ -287,7 +435,11 @@ try {
   iniciarAnimacionesMotion();
 } catch (error) {
   console.warn('Las animaciones de Motion no se pudieron iniciar:', error);
-  document.documentElement.classList.remove('motion-on');
+  document.documentElement.classList.remove('motion-on', 'relato-horizontal');
+  const relatoFallido = document.getElementById('relato');
+  if (relatoFallido) relatoFallido.style.removeProperty('--relato-alto');
+  const pistaFallida = document.querySelector('.relato-pista');
+  if (pistaFallida) pistaFallida.style.transform = '';
   document.querySelectorAll('.member-card, .identity-card, .merch-body').forEach(function (elemento) {
     elemento.style.opacity = '';
   });

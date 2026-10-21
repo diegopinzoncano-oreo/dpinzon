@@ -38,7 +38,7 @@ se usan las transiciones de CSS.
 │   ├── fondo-problematica.jpg Fondo de la sección Problemática
 │   ├── inicio/           Fotos del carrusel del inicio (residuos textiles y modelos)
 │   ├── secciones/        Franja del ODS 12
-│   ├── proceso/          Fotos del proceso
+│   ├── proceso/          Fotos del proceso (escenas 03 y 04 del relato)
 │   ├── merch/            Productos
 │   ├── equipo/           Integrantes y foto grupal
 │   ├── mascota/          Mascota del proyecto (WebP y PNG de respaldo)
@@ -52,13 +52,13 @@ se usan las transiciones de CSS.
 1. Inicio: carrusel de fotos que avanza solo (se pausa con el mouse encima). Cuenta primero el problema y al final la solución: montaña de ropa, desierto de ropa desechada, campo de ropa hasta el horizonte y los modelos de Up Style. Cada foto es un bloque `hero-slide` en `index.html`; para agregar o quitar una foto basta con agregar o quitar ese bloque, con su encuadre (`--encuadre` y `--encuadre-movil`) y su texto alternativo. Las fotos de residuos textiles son imágenes de referencia del desierto de Atacama (Chile), de uso académico, con crédito en el pie de página
 2. Problemática: cifras de residuos textiles en el mundo, Colombia, Bogotá y Chía
 3. ODS 12
-4. Proceso y por qué el denim: ciclo transmedia de 6 pasos (de la convocatoria al bolso y a la comunidad), con la red social donde se publica cada etapa. En computador es una pista ovalada y en celular una línea de tiempo vertical
+4. Proceso y por qué el denim: relato visual "Del desecho a la calle" en 6 escenas con foto a sangre (convocatoria, clasificación, patronaje, confección, el bolso y comunidad), cada una con una frase corta y la red donde se cuenta. En computador la escena queda fija y, al bajar, la pista avanza en horizontal con contador y barra de progreso; en tablet y celular, sin Motion o con movimiento reducido las escenas se apilan. La escena 04 muestra `video/proceso.mp4` en lugar de la foto si el archivo existe. La infografía detallada del proceso se publica en redes
 5. Merch
 6. Redes sociales: Instagram ([@up_style26](https://www.instagram.com/up_style26/)) y TikTok ([@up.style07](https://www.tiktok.com/@up.style07)), las cuentas oficiales de Up Style
 7. Equipo
 8. Participa: formulario de preguntas y de donación de jeans (generan un correo con `mailto:`)
 
-Mascota flotante: Ren, el mapache de Up Style (`img/mascota/`), queda fijo abajo a la izquierda con el globo "Soy Ren, ¡dona tus jeans!". Al hacer clic caen tres prendas de jean (pantalón, chaqueta y bolsillo) a su bote de reciclaje, el bote rebota al recibirlas, aparece "¡Gracias!" y luego la página baja al formulario de donación (con movimiento reducido solo muestra el mensaje y baja directo). Se oculta en el inicio, junto al formulario y en el pie de página.
+Mascota flotante: Ren, el mapache de Up Style (`img/mascota/`), queda fijo abajo a la izquierda con el globo "Soy Ren, ¡dona tus jeans!". Al hacer clic caen tres prendas de jean (pantalón, chaqueta y bolsillo) a su bote de reciclaje, el bote rebota al recibirlas, aparece "¡Gracias!" y luego la página baja al formulario de donación (con movimiento reducido solo muestra el mensaje y baja directo). Se oculta en el inicio, durante el relato del proceso, junto al formulario y en el pie de página.
 
 ## Cómo verla
 

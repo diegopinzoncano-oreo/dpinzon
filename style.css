@@ -89,6 +89,8 @@
   --denim: #2F4468;       /* azul jean: botones, números, detalles */
   --denim-deep: #1F2D48;  /* azul jean oscuro: franjas y pie de página */
   --denim-ink: #E9EEF7;   /* texto claro sobre azul */
+  --denim-noche: #111A2C;   /* azul noche: fondo del relato del proceso */
+  --denim-noche-2: #0B111E; /* azul noche profundo: escena antes de revelarse */
   --thread: #D9A45B;      /* dorado "hilo de costura" */
   --tan: #DDBF9B;         /* arena: letra cursiva del inicio */
   --tan-text: #74592B;    /* café dorado: etiquetas pequeñas */
@@ -235,6 +237,19 @@ b, strong {
 }
 .eyebrow-light {
   color: var(--thread);
+}
+
+/* Texto solo para lectores de pantalla */
+.solo-lector {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Contorno que aparece al navegar con el teclado */
@@ -1342,506 +1357,348 @@ html:not(.js) .ods-infinity path,
    == 8. PROCESO Y POR QUÉ EL DENIM
    ================================================================ */
 
-/* ---------- Ciclo transmedia ----------
-   Computador: pasos 01 a 03 arriba y 04 a 06 abajo, sobre una pista
-   ovalada que se recorre en el sentido del reloj. La lista usa subgrid
-   para compartir filas con la pista y el centro.
-   Tablet y celular: línea de tiempo vertical.                        */
-.ciclo-simbolos {
+/* ---------- Relato del proceso ----------
+   Seis escenas con foto a sangre. Por defecto se apilan (celular, sin
+   Motion o con movimiento reducido). Con html.relato-horizontal
+   (animaciones.js) la escena queda fija y la pista avanza en horizontal
+   mientras se baja; la altura de .relato marca la duración del recorrido. */
+.proceso {
+  padding-top: 0;
+}
+.relato {
+  position: relative;
+  color: #fff;
+  background: var(--denim-noche);
+}
+.relato-simbolos {
   position: absolute;
   width: 0;
   height: 0;
   overflow: hidden;
 }
-.ciclo {
-  --nodo: 76px;           /* diámetro de cada nodo */
-  --pista: 260px;         /* alto de la pista; coincide con el SVG de index.html */
-  position: relative;
-  margin-top: 64px;
+.relato :focus-visible {
+  outline-color: var(--thread);
 }
-.ciclo-pasos {
+
+/* Encabezado */
+.relato-intro {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 120px 24px 56px;
+}
+.relato-intro h2 {
+  font-size: clamp(2.8rem, 7vw, 5.4rem);
+  line-height: 0.92;
+  text-transform: uppercase;
+  color: #fff;
+}
+.relato-intro .lede {
+  margin-top: 22px;
+  font-size: clamp(1.02rem, 1.3vw, 1.18rem);
+  color: rgba(255, 255, 255, 0.72);
+}
+@media (max-width: 700px) {
+  .relato-intro { padding: 88px 20px 40px; }
+}
+
+/* Escenas apiladas */
+.relato-escenas {
+  display: grid;
+  gap: 10px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.ciclo-paso {
+.escena {
   position: relative;
+  height: clamp(480px, 80svh, 860px);
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--denim-noche-2);
+}
+.escena:focus {
+  outline: none;
+}
+.escena-foto,
+.escena-media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.escena-media {
+  overflow: visible;
+}
+.escena-media img,
+.escena-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--encuadre-movil, 50% 50%);
+  translate: var(--foto-x, 0) var(--foto-y, 0);
+}
+@media (min-width: 701px) {
+  .escena-media img,
+  .escena-media video {
+    object-position: var(--encuadre, 50% 50%);
+  }
+}
+/* Capa oscura: más densa abajo a la izquierda, donde va el texto */
+.escena-foto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(8, 12, 22, 0.92) 0%, rgba(8, 12, 22, 0.6) 30%, rgba(8, 12, 22, 0) 62%),
+    linear-gradient(to right, rgba(8, 12, 22, 0.5) 0%, rgba(8, 12, 22, 0) 55%),
+    linear-gradient(to bottom, rgba(8, 12, 22, 0.4) 0%, rgba(8, 12, 22, 0) 24%);
 }
 
-/* Nodo: círculo con ícono y número */
-.ciclo-nodo {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  flex: none;
-  place-items: center;
-  width: var(--nodo);
-  height: var(--nodo);
-  color: var(--denim);
-  background: var(--card);
-  border: 1.5px solid var(--denim);
-  border-radius: 50%;
-  box-shadow: 0 0 0 8px var(--bg);
-  transition:
-    opacity .6s var(--ease-out) var(--retraso, 0s),
-    transform .8s var(--ease-out) var(--retraso, 0s),
-    scale .35s var(--ease-out),
-    color .3s ease,
-    background-color .3s ease;
+/* Número grande con contorno */
+.escena-num {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  font-family: var(--font-display);
+  font-size: clamp(6.5rem, 28vw, 16rem);
+  font-weight: 600;
+  line-height: 0.8;
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.6);
+  translate: var(--num-x, 0) 0;
+  pointer-events: none;
 }
-.ciclo-icono {
-  width: 44%;
-  height: 44%;
+
+/* Texto de la escena */
+.escena-texto {
+  position: absolute;
+  right: 22px;
+  bottom: 30px;
+  left: 22px;
+}
+.escena-titulo {
+  font-size: clamp(2.4rem, 10vw, 7rem);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.escena-frase {
+  max-width: 28ch;
+  margin-top: 14px;
+  font-size: clamp(1.05rem, 1.45vw, 1.4rem);
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.9);
+}
+.escena-red {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.66);
+}
+.escena-red::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--thread);
+}
+.escena-red-logos {
+  display: flex;
+  gap: 7px;
+}
+.escena-red-logos svg {
+  width: 15px;
+  height: 15px;
+  color: #fff;
+}
+
+/* Escena 06: flecha circular alrededor del número y regreso al 01 */
+.escena-num-ciclo {
+  top: 40px;
+  right: 34px;
+  font-size: clamp(4.5rem, 19vw, 9rem);
+}
+.escena-ciclo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1.55em;
+  height: 1.55em;
+  max-width: none;
+  translate: -50% -50%;
+  overflow: visible;
   fill: none;
-  stroke: currentColor;
-  stroke-width: 1.6;
+  stroke: var(--thread);
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.ciclo-num {
-  position: absolute;
-  top: -4px;
-  right: -12px;
-  display: grid;
-  place-items: center;
-  min-width: 32px;
-  height: 24px;
-  padding: 0 7px;
-  font-family: var(--font-display);
-  font-size: 0.74rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  font-variant-numeric: tabular-nums;
-  color: #fff;
-  background: var(--denim);
-  border-radius: 999px;
-  transition: background-color .3s ease;
+.escena-ciclo path {
+  stroke-width: 2px;
+  stroke-dasharray: 1;
+  vector-effect: non-scaling-stroke;
 }
-
-/* Texto del paso */
-.ciclo-texto {
-  transition:
-    opacity .7s var(--ease-out) var(--retraso, 0s),
-    transform .8s var(--ease-out) var(--retraso, 0s);
-}
-.ciclo-titulo {
-  font-size: clamp(1.15rem, 1.5vw, 1.4rem);
-  line-height: 1.1;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-  transition: color .3s ease;
-}
-.ciclo-desc {
-  margin-top: 8px;
-  font-size: 0.92rem;
-  line-height: 1.55;
-  color: var(--ink-soft);
-  text-wrap: pretty;
-}
-
-/* Chips de red social */
-.ciclo-redes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 14px 0 0;
-  padding: 0;
-  list-style: none;
-}
-.red-chip {
+.escena-volver {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 3px 11px 3px 3px;
-  font-size: 0.78rem;
-  line-height: 1;
-  color: var(--ink);
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 999px;
+  gap: 10px;
+  margin-top: 26px;
+  padding-bottom: 5px;
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--thread);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(217, 164, 91, 0.45);
 }
-.red-logo {
-  display: grid;
-  flex: none;
-  place-items: center;
-  width: 20px;
-  height: 20px;
-  color: #fff;
-  border-radius: 6px;
-}
-.red-logo svg {
-  width: 13px;
-  height: 13px;
-}
-.red-chip-instagram .red-logo {
-  background: radial-gradient(circle at 30% 107%, #FDF497 0%, #FDF497 5%, #FD5949 45%, #D6249F 60%, #285AEB 90%);
-}
-.red-chip-tiktok .red-logo {
-  background: #000;
-}
-.red-chip-tiktok .red-logo svg {
-  width: 15px;
-  height: 15px;
-}
-.red-chip-web .red-logo {
-  background: var(--denim);
-}
-.red-formato {
-  margin-left: -3px;
-  color: var(--ink-faint);
-}
-
-/* Centro del ciclo y regreso al inicio */
-.ciclo-centro {
-  position: relative;
-  z-index: 1;
-  transition:
-    opacity .8s var(--ease-out) var(--retraso, 0s),
-    transform .8s var(--ease-out) var(--retraso, 0s);
-}
-.ciclo-centro-icono {
-  display: grid;
-  flex: none;
-  place-items: center;
-  color: #fff;
-  background: var(--thread);
-  border-radius: 50%;
-}
-.ciclo-centro-icono svg {
-  width: 46%;
-  height: 46%;
+.escena-volver svg {
+  width: 18px;
+  height: 18px;
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
+  transition: rotate .7s var(--ease-out);
 }
-.ciclo-centro-marca {
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  font-weight: 600;
-  line-height: 1.15;
-  color: var(--ink);
+.escena-volver:hover {
+  border-bottom-color: var(--thread);
 }
-.ciclo-centro-logo {
-  font-family: var(--font-logo);
-  font-weight: 400;
-  color: var(--denim);
-}
-.ciclo-centro-texto {
-  margin-top: 4px;
-  font-size: 0.9rem;
-  color: var(--ink-soft);
+.escena-volver:hover svg {
+  rotate: -360deg;
 }
 
-/* ----- Computador: pista ovalada ----- */
-@media (min-width: 980px) {
-  .ciclo {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto calc(var(--pista) - var(--nodo)) auto;
+/* Escenas apiladas en pantallas medianas y grandes: texto alineado
+   con el contenido de la página */
+@media (min-width: 701px) {
+  .escena {
+    --margen-escena: max(32px, calc((100vw - var(--max)) / 2 + 24px));
   }
-  .ciclo-pista {
-    position: relative;
-    grid-row: 2;
-    grid-column: 1 / -1;
-    align-self: center;
-    height: var(--pista);
+  .escena-num {
+    top: 28px;
+    right: var(--margen-escena);
   }
-  .ciclo-pista-trazo {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
+  .escena-num-ciclo {
+    top: auto;
+    right: calc(var(--margen-escena) + 3vw);
+    bottom: 14%;
   }
-  .ciclo-pista-linea,
-  .ciclo-pista-retorno {
-    fill: none;
-    stroke-linecap: round;
-    stroke-dasharray: 1;
-    stroke-dashoffset: 0;
-  }
-  .ciclo-pista-linea {
-    stroke: rgba(47, 68, 104, 0.4);
-    stroke-width: 1.5;
-    transition: stroke-dashoffset 2s cubic-bezier(.45, .05, .35, 1) .1s;
-  }
-  .ciclo-pista-retorno {
-    stroke: var(--thread);
-    stroke-width: 2.5;
-    transition: stroke-dashoffset .8s var(--ease-out) 2s;
-  }
-
-  /* Flechas sobre la pista: a mitad de camino entre nodos y en las curvas */
-  .ciclo-flecha {
-    position: absolute;
-    display: grid;
-    place-items: center;
-    width: 26px;
-    height: 26px;
-    margin: -13px 0 0 -13px;
-    color: var(--denim);
-    background: var(--bg);
-    border-radius: 50%;
-    transition: opacity .6s ease var(--retraso, 0s);
-  }
-  .ciclo-flecha svg {
-    width: 16px;
-    height: 16px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2.2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-  .ciclo-flecha-1 { top: 0;    left: 33.333%; --retraso: .5s; }
-  .ciclo-flecha-2 { top: 0;    left: 66.667%; --retraso: .8s; }
-  .ciclo-flecha-3 { top: 50%;  left: 100%;    --retraso: 1.1s; }
-  .ciclo-flecha-4 { top: 100%; left: 66.667%; --retraso: 1.35s; }
-  .ciclo-flecha-5 { top: 100%; left: 33.333%; --retraso: 1.6s; }
-  .ciclo-flecha-6 { top: 50%;  left: 0;       --retraso: 2.2s; }
-  .ciclo-flecha-abajo svg  { rotate: 90deg; }
-  .ciclo-flecha-izq svg    { rotate: 180deg; }
-  .ciclo-flecha-arriba svg { rotate: -90deg; }
-  /* Regreso del 06 al 01 */
-  .ciclo-flecha-6 {
-    width: 32px;
-    height: 32px;
-    margin: -16px 0 0 -16px;
-    color: #fff;
-    background: var(--thread);
-    box-shadow: 0 0 0 6px var(--bg);
-  }
-
-  .ciclo-pasos {
-    display: grid;
-    grid-row: 1 / -1;
-    grid-column: 1 / -1;
-    grid-template-columns: subgrid;
-    grid-template-rows: subgrid;
-  }
-  .ciclo-paso {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 20px;
-    text-align: center;
-    --retraso: calc(.3s + var(--i) * .26s);
-  }
-  /* Recorrido en el sentido del reloj: 01 a 03 arriba, 04 a 06 abajo */
-  .ciclo-paso:nth-child(1) { grid-area: 1 / 1; }
-  .ciclo-paso:nth-child(2) { grid-area: 1 / 2; }
-  .ciclo-paso:nth-child(3) { grid-area: 1 / 3; }
-  .ciclo-paso:nth-child(4) { grid-area: 3 / 3; }
-  .ciclo-paso:nth-child(5) { grid-area: 3 / 2; }
-  .ciclo-paso:nth-child(6) { grid-area: 3 / 1; }
-  /* Fila superior: texto arriba y nodo sobre la pista. El texto ocupa
-     todo el alto de la fila para alinear los títulos arriba y las redes abajo. */
-  .ciclo-paso:nth-child(-n+3) .ciclo-texto {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    order: -1;
-    margin-bottom: 26px;
-  }
-  .ciclo-paso:nth-child(-n+3) .ciclo-redes {
-    margin-top: auto;
-    padding-top: 14px;
-  }
-  .ciclo-paso:nth-child(n+4) .ciclo-texto {
-    margin-top: 26px;
-  }
-  .ciclo-desc {
-    max-width: 30ch;
-    margin-inline: auto;
-  }
-  .ciclo-redes {
-    justify-content: center;
-  }
-
-  .ciclo-centro {
-    display: flex;
-    flex-direction: column;
-    grid-row: 2;
-    grid-column: 2;
-    align-items: center;
-    align-self: center;
-    gap: 12px;
-    text-align: center;
-    --retraso: 1.9s;
-  }
-  .ciclo-centro-icono {
-    width: 44px;
-    height: 44px;
-  }
-  .ciclo-centro-flecha {
-    display: none;
-  }
-
-  /* Hover: el nodo se llena de azul y el título se acentúa */
-  .ciclo-paso:hover .ciclo-nodo {
-    scale: 1.08;
-    color: #fff;
-    background-color: var(--denim);
-  }
-  .ciclo-paso:hover .ciclo-num {
-    background-color: var(--thread);
-  }
-  .ciclo-paso:hover .ciclo-titulo {
-    color: var(--denim);
-  }
-
-  /* Antes de entrar en pantalla (script.js agrega .in-view) */
-  .js .ciclo:not(.in-view) .ciclo-pista-linea,
-  .js .ciclo:not(.in-view) .ciclo-pista-retorno {
-    stroke-dashoffset: 1;
-  }
-  .js .ciclo:not(.in-view) .ciclo-flecha,
-  .js .ciclo:not(.in-view) .ciclo-centro {
-    opacity: 0;
-  }
-  .js .ciclo:not(.in-view) .ciclo-nodo {
-    opacity: 0;
-    transform: scale(.6);
-  }
-  .js .ciclo:not(.in-view) .ciclo-paso:nth-child(-n+3) .ciclo-texto {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  .js .ciclo:not(.in-view) .ciclo-paso:nth-child(n+4) .ciclo-texto {
-    opacity: 0;
-    transform: translateY(-14px);
+  .escena-texto {
+    right: var(--margen-escena);
+    bottom: 7vh;
+    left: var(--margen-escena);
   }
 }
 
-/* ----- Tablet y celular: línea de tiempo vertical ----- */
-@media (max-width: 979px) {
-  .ciclo {
-    --nodo: 60px;
-    max-width: 640px;
-    margin-top: 48px;
-  }
-  .ciclo-pista {
-    display: none;
-  }
-  .ciclo-paso {
-    display: grid;
-    grid-template-columns: var(--nodo) 1fr;
-    column-gap: 22px;
-    padding-bottom: 40px;
-  }
-  /* Tramo de línea que une este nodo con el siguiente */
-  .ciclo-paso::before {
-    content: "";
-    position: absolute;
-    top: calc(var(--nodo) / 2);
-    bottom: 0;
-    left: calc(var(--nodo) / 2 - 1px);
-    width: 2px;
-    background: rgba(47, 68, 104, 0.3);
-    transform-origin: top;
-    transition: transform 1s var(--ease-out) .2s;
-  }
-  .ciclo-nodo {
-    box-shadow: none;
-  }
-  .ciclo-num {
-    top: -6px;
-    right: -10px;
-    min-width: 28px;
-    height: 22px;
-    font-size: 0.7rem;
-  }
-  .ciclo-texto {
-    padding-top: 6px;
-    --retraso: .12s;
-  }
-
-  .ciclo-centro {
-    display: grid;
-    grid-template-columns: var(--nodo) 1fr;
-    column-gap: 22px;
-    align-items: center;
-  }
-  .ciclo-centro-icono {
-    width: var(--nodo);
-    height: var(--nodo);
-  }
-  .ciclo-centro-vuelta {
-    display: none;
-  }
-
-  .js .ciclo-paso:not(.in-view)::before {
-    transform: scaleY(0);
-  }
-  .js .ciclo-paso:not(.in-view) .ciclo-nodo {
-    opacity: 0;
-    transform: scale(.6);
-  }
-  .js .ciclo-paso:not(.in-view) .ciclo-texto,
-  .js .ciclo-centro:not(.in-view) {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-}
-@media (max-width: 480px) {
-  .ciclo {
-    --nodo: 52px;
-  }
-  .ciclo-paso,
-  .ciclo-centro {
-    column-gap: 18px;
-  }
-  .ciclo-paso {
-    padding-bottom: 34px;
-  }
-  .ciclo-texto {
-    padding-top: 2px;
-  }
+/* Contador y barra: solo en el recorrido horizontal */
+.relato-control {
+  display: none;
 }
 
-/* Fotos del proceso: dos columnas debajo del ciclo */
-.process-media {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-top: 48px;
+/* ---------- Recorrido horizontal (computador con Motion) ---------- */
+.relato-horizontal #proceso {
+  scroll-margin-top: calc(var(--header-h) * -1); /* el enlace llega con la escena ya fija */
 }
-.process-media .video-optional {
-  grid-column: 1 / -1; /* el video ocupa todo el ancho */
+.relato-horizontal .relato {
+  height: var(--relato-alto, 600vh);
 }
-.process-media .video-optional .photo-frame {
-  aspect-ratio: 16 / 9;
-}
-@media (max-width: 560px) {
-  .process-media { grid-template-columns: 1fr; }
-}
-
-.real-photo {
-  margin: 0;
-}
-.photo-frame {
-  position: relative;
-  aspect-ratio: 4 / 3;
+.relato-horizontal .relato-escenario {
+  position: sticky;
+  top: 0;
+  height: 100vh;
   overflow: hidden;
-  background: var(--bg-2);
-  border-radius: var(--radius-m);
+  overflow: clip; /* evita que el foco desplace la pista por su cuenta */
 }
-.photo-frame img,
-.photo-frame video {
-  width: 100%;
+.relato-horizontal .relato-pista {
+  position: relative;
+  display: flex;
+  gap: 3vw;
+  width: max-content;
   height: 100%;
-  object-fit: cover;
-  transition: transform 1.2s var(--ease-out);
+  padding: calc(var(--header-h) + 14px) 10vw 72px 0;
+  will-change: transform;
 }
-.real-photo:hover .photo-frame img {
-  transform: scale(1.05); /* zoom suave al pasar el mouse */
+.relato-horizontal .relato-intro {
+  flex: none;
+  align-self: center;
+  width: 40vw;
+  max-width: none;
+  margin: 0;
+  padding: 0 4vw 0 max(24px, calc((100vw - var(--max)) / 2 + 24px));
 }
-.real-photo figcaption {
-  margin-top: 10px;
-  font-size: 0.82rem;
-  color: var(--ink-faint);
+.relato-horizontal .relato-intro h2 {
+  font-size: clamp(3rem, 5.2vw, 5.4rem);
+}
+.relato-horizontal .relato-escenas {
+  display: flex;
+  gap: 3vw;
+}
+.relato-horizontal .escena {
+  flex: none;
+  width: 80vw;
+  height: 100%;
+  border-radius: var(--radius-s);
+}
+.relato-horizontal .escena-num {
+  top: 4vh;
+  right: 3.2vw;
+  font-size: clamp(8rem, 16vw, 16rem);
+}
+.relato-horizontal .escena-num-ciclo {
+  top: auto;
+  right: 7vw;
+  bottom: 10vh;
+}
+.relato-horizontal .escena-texto {
+  right: 4.5vw;
+  bottom: 6vh;
+  left: 4.5vw;
+}
+.relato-horizontal .escena-titulo {
+  font-size: clamp(3.4rem, 6.6vw, 7.6rem);
+}
+.relato-horizontal .escena-frase {
+  max-width: 40ch;
+}
+.relato-horizontal .relato-control {
+  position: absolute;
+  right: 10vw;
+  bottom: 26px;
+  left: 10vw;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.5);
+}
+.relato-actual {
+  color: #fff;
+}
+.relato-barra {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.14);
+}
+.relato-barra-relleno {
+  position: absolute;
+  inset: 0;
+  background: var(--thread);
+  transform: scaleX(0);
+  transform-origin: left;
 }
 
 /* ¿Por qué el denim? */
@@ -2943,11 +2800,6 @@ footer {
 .video-slot.ready .media-placeholder {
   display: none;
 }
-/* El espacio del video del proceso no se ve hasta que haya video */
-.video-optional:not(.ready) {
-  display: none;
-}
-
 
 /* ================================================================
    == 16. ANIMACIONES DE APARICIÓN
@@ -2999,6 +2851,77 @@ footer {
   transform: none;
 }
 
+/* Relato del proceso: la foto se descubre como una cortina (sube en las
+   escenas apiladas y se abre hacia la derecha en el recorrido horizontal),
+   el título entra letra por letra (script.js) y luego la frase. */
+.js .escena-foto {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.3s var(--ease-out);
+}
+.js.relato-horizontal .escena-foto {
+  clip-path: inset(0 100% 0 0);
+}
+.js .escena.in-view .escena-foto {
+  clip-path: inset(0 0 0 0);
+}
+.js .escena-media {
+  transform: scale(1.14);
+  transition: transform 2.2s var(--ease-out);
+}
+.js .escena.in-view .escena-media {
+  transform: none;
+}
+.js .escena-num {
+  opacity: 0;
+  transition: opacity 1.4s ease .3s;
+}
+.js .escena.in-view .escena-num {
+  opacity: 1;
+}
+.escena-titulo .t-palabra {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  white-space: nowrap;
+  padding: 0.2em 0 0.08em;
+  margin: -0.2em 0 -0.08em;
+}
+.escena-titulo .t-letra {
+  display: inline-block;
+}
+.js .escena .t-letra {
+  transform: translateY(115%);
+  transition: transform 1s var(--ease-out) calc(.35s + var(--l, 0) * .035s);
+}
+.js .escena.in-view .t-letra {
+  transform: none;
+}
+.js .escena .escena-frase,
+.js .escena .escena-red,
+.js .escena .escena-volver {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity .8s ease var(--retraso, .8s),
+    transform 1s var(--ease-out) var(--retraso, .8s),
+    border-color .3s ease;
+}
+.js .escena .escena-red { --retraso: 1s; }
+.js .escena .escena-volver { --retraso: 1.2s; }
+.js .escena.in-view .escena-frase,
+.js .escena.in-view .escena-red,
+.js .escena.in-view .escena-volver {
+  opacity: 1;
+  transform: none;
+}
+.js .escena-ciclo path {
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.8s var(--ease-out) .9s;
+}
+.js .escena.in-view .escena-ciclo path {
+  stroke-dashoffset: 0;
+}
+
 /* Los títulos de sección ajustan su espaciado al aparecer */
 .section-head h2 {
   transition: letter-spacing 1.2s var(--ease-out);
@@ -3020,18 +2943,20 @@ footer {
     transition: none !important;
   }
   .ods-infinity path,
-  .ciclo-pista-linea,
-  .ciclo-pista-retorno {
+  .escena-ciclo path {
     stroke-dashoffset: 0 !important;
   }
-  .js .ciclo-nodo,
-  .js .ciclo-texto,
-  .js .ciclo-flecha,
-  .js .ciclo-centro {
-    opacity: 1 !important;
-    transform: none !important;
+  /* Relato del proceso: escenas apiladas y todo visible */
+  .js .escena-foto {
+    clip-path: none !important;
   }
-  .js .ciclo-paso::before {
+  .js .escena-media,
+  .js .escena-num,
+  .js .escena .t-letra,
+  .js .escena .escena-frase,
+  .js .escena .escena-red,
+  .js .escena .escena-volver {
+    opacity: 1 !important;
     transform: none !important;
   }
   .hero-in,
@@ -3104,6 +3029,12 @@ footer {
 }
 .motion-on .merch-photo .m-parallax[src$="esfero.jpg"] {
   scale: 1;
+}
+/* Relato: fotos del proceso un 12% más grandes; animaciones.js las
+   desplaza con --foto-x (recorrido horizontal) o --foto-y (apiladas). */
+.motion-on .escena-media img,
+.motion-on .escena-media video {
+  scale: 1.12;
 }
 
 

@@ -233,19 +233,54 @@ elementosQueAparecen.forEach(function (elemento) {
   vigilante.observe(elemento);
 });
 
-// Ciclo del proceso: el diagrama completo (computador) y cada paso y el
-// cierre (celular) se activan por separado; style.css decide qué se anima.
-const vigilanteCiclo = new IntersectionObserver(function (entradas) {
+// Relato del proceso: el título de cada escena se divide en letras que
+// suben en cascada. El texto completo queda para los lectores de pantalla.
+function dividirEnLetras(titulo) {
+  const texto = titulo.textContent.trim();
+  let numeroDeLetra = 0;
+
+  const textoAccesible = document.createElement('span');
+  textoAccesible.className = 'solo-lector';
+  textoAccesible.textContent = texto;
+
+  const letras = document.createElement('span');
+  letras.setAttribute('aria-hidden', 'true');
+
+  texto.split(/\s+/).forEach(function (palabra, numero) {
+    if (numero > 0) letras.appendChild(document.createTextNode(' '));
+    const caja = document.createElement('span');
+    caja.className = 't-palabra';
+    Array.from(palabra).forEach(function (caracter) {
+      const letra = document.createElement('span');
+      letra.className = 't-letra';
+      letra.style.setProperty('--l', numeroDeLetra++);
+      letra.textContent = caracter;
+      caja.appendChild(letra);
+    });
+    letras.appendChild(caja);
+  });
+
+  titulo.textContent = '';
+  titulo.append(textoAccesible, letras);
+}
+
+if (!reducirMovimiento) {
+  document.querySelectorAll('.escena-titulo').forEach(dividirEnLetras);
+}
+
+// Cada escena se revela al entrar en pantalla, tanto apilada como en el
+// recorrido horizontal (el observador tiene en cuenta el desplazamiento).
+const vigilanteEscenas = new IntersectionObserver(function (entradas) {
   entradas.forEach(function (entrada) {
     if (entrada.isIntersecting) {
       entrada.target.classList.add('in-view');
-      vigilanteCiclo.unobserve(entrada.target);
+      vigilanteEscenas.unobserve(entrada.target);
     }
   });
 }, { threshold: 0.35 });
 
-document.querySelectorAll('.ciclo, .ciclo-paso, .ciclo-centro').forEach(function (elemento) {
-  vigilanteCiclo.observe(elemento);
+document.querySelectorAll('.escena').forEach(function (escena) {
+  vigilanteEscenas.observe(escena);
 });
 
 
@@ -737,6 +772,7 @@ const mascota = document.getElementById('mascota');
 const tarjetaDonar = document.getElementById('donar');
 const campoNombreDonante = document.getElementById('dName');
 const piePagina = document.querySelector('body > footer');
+const relatoProceso = document.getElementById('relato');
 
 // Espera a que termine el desplazamiento suave (con respaldo por tiempo)
 function alTerminarDesplazamiento(accion) {
@@ -790,7 +826,8 @@ if (mascota && tarjetaDonar) {
     }, MASCOTA_FIN);
   });
 
-  // Zonas que la mascota no debe tapar: el formulario, el pie y los botones del inicio
+  // Zonas que la mascota no debe tapar: el relato del proceso, el formulario,
+  // el pie y los botones del inicio
   const zonasEnPantalla = new Set();
   function anotarZonas(entradas) {
     entradas.forEach(function (entrada) {
@@ -802,6 +839,7 @@ if (mascota && tarjetaDonar) {
 
   const observadorMascota = new IntersectionObserver(anotarZonas, { rootMargin: '0px 0px -12% 0px' });
   observadorMascota.observe(tarjetaDonar);
+  if (relatoProceso) observadorMascota.observe(relatoProceso);
   if (piePagina) observadorMascota.observe(piePagina);
 
   // El inicio cuenta mientras ocupa la franja inferior, donde está la mascota
