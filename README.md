@@ -54,7 +54,7 @@ se usan las transiciones de CSS.
 3. ODS 12
 4. Proceso y por qué el denim: ciclo transmedia de 6 pasos (de la convocatoria al bolso y a la comunidad), con la red social donde se publica cada etapa. En computador es una pista ovalada y en celular una línea de tiempo vertical
 5. Merch
-6. Redes sociales: Instagram y TikTok
+6. Redes sociales: Instagram ([@up_style26](https://www.instagram.com/up_style26/)) y TikTok ([@up.style07](https://www.tiktok.com/@up.style07)), las cuentas oficiales de Up Style
 7. Equipo
 8. Participa: formulario de preguntas y de donación de jeans (generan un correo con `mailto:`)
 

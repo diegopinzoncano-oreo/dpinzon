@@ -2322,6 +2322,15 @@ body.modal-open {
   font-size: 0.84rem;
   color: rgba(233, 238, 247, 0.65);
 }
+.social-handle {
+  white-space: nowrap;
+  color: rgba(233, 238, 247, 0.9);
+}
+/* En celular el usuario va en su propia línea, sobre la descripción */
+@media (max-width: 560px) {
+  .social-handle { display: block; }
+  .social-sep { display: none; }
+}
 .social-link-card .arrow {
   flex: none;
   width: 20px;
