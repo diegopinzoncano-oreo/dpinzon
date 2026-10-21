@@ -1906,84 +1906,150 @@ html:not(.js) .ods-infinity path,
 .merch-band {
   background: var(--bg-2);
 }
+/* Dos productos grandes por fila; uno a todo el ancho en celular */
 .merch-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 productos por fila */
-  gap: 22px;
-  margin-top: 48px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 56px 32px;
+  margin-top: 56px;
 }
 @media (max-width: 960px) {
-  .merch-grid { grid-template-columns: repeat(2, 1fr); } /* 2 por fila */
+  .merch-grid { gap: 44px 20px; }
 }
-@media (max-width: 420px) {
-  .merch-grid { gap: 12px; }
+@media (max-width: 600px) {
+  .merch-grid { grid-template-columns: 1fr; gap: 40px; }
 }
 
 .merch-card {
-  position: relative;
   display: block;
   width: 100%;
   padding: 0;
-  overflow: hidden;
   text-align: left;
-  background: var(--card);
+  color: inherit;
+  background: none;
   border: none;
   border-radius: var(--radius-m);
-  box-shadow: 0 1px 0 var(--line);
   cursor: pointer;
-  transition: transform .35s var(--ease-out), box-shadow .35s ease;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .3s var(--ease-out);
 }
-.merch-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 24px 40px -22px rgba(31, 45, 72, 0.5);
+.merch-card:focus-visible {
+  outline-offset: 6px;
 }
+
+/* Foto: script.js inclina el marco con --giro-x y --giro-y */
 .merch-photo {
   position: relative;
   display: block;
-  aspect-ratio: 1 / 1; /* foto cuadrada */
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   background: var(--bg);
+  border-radius: var(--radius-m);
+  transform: perspective(1100px) rotateX(var(--giro-x, 0deg)) rotateY(var(--giro-y, 0deg));
+  box-shadow: 0 1px 0 var(--line);
+  transition: box-shadow .5s var(--ease-out);
 }
 .merch-photo img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform .8s var(--ease-out);
+  transition: transform 1.2s var(--ease-out);
 }
-/* Foto del esfero: se corre un poco a la izquierda para que el esfero
-   se vea completo dentro del cuadro */
+/* Foto del esfero: corrida a la izquierda para mostrar el esfero completo */
 .merch-photo img[src$="esfero.jpg"] {
   object-position: 39% center;
 }
-.merch-card:hover .merch-photo img {
-  transform: scale(1.07);
+/* Brillo diagonal que cruza la foto en hover */
+.merch-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.28) 50%, transparent 65%);
+  transform: translateX(-110%);
+  pointer-events: none;
 }
+
+/* Nombre y precio a la izquierda, "Ver detalles" a la derecha */
 .merch-body {
-  display: block;
-  padding: 14px 16px 18px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  column-gap: 16px;
+  padding: 20px 2px 0;
 }
 .merch-body .name {
-  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 1.05rem + 0.8vw, 1.65rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.merch-body .price {
+  grid-row: 2;
+  margin-top: 6px;
   font-family: var(--font-display);
   font-size: 1rem;
   font-weight: 500;
-}
-.merch-body .price {
-  display: block;
-  margin-top: 4px;
-  font-family: var(--font-display);
-  font-size: 0.92rem;
-  font-weight: 500;
   color: var(--tan-text);
 }
-/* Celular: el precio cabe en una sola línea en tarjetas de dos columnas */
-@media (max-width: 480px) {
-  .merch-body { padding: 12px 12px 14px; }
-  .merch-body .name { font-size: 0.92rem; }
-  .merch-body .price { font-size: 0.8rem; }
+.merch-cta {
+  grid-row: 1 / 3;
+  grid-column: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 2px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--denim);
+  white-space: nowrap;
+}
+.merch-cta svg {
+  width: 18px;
+  height: 18px;
+  transition: transform .45s var(--ease-out);
 }
 
-/* Indicador "+" sobre la foto (merch y equipo) */
+/* Computador: zoom, brillo y "Ver detalles" al pasar el mouse */
+@media (hover: hover) and (pointer: fine) {
+  .merch-cta {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity .35s ease, transform .45s var(--ease-out);
+  }
+  .merch-card:hover .merch-cta,
+  .merch-card:focus-visible .merch-cta {
+    opacity: 1;
+    transform: none;
+  }
+  .merch-card:hover .merch-cta svg {
+    transform: translateX(4px);
+  }
+  .merch-card:hover .merch-photo {
+    box-shadow: 0 30px 50px -30px rgba(31, 45, 72, 0.55);
+  }
+  .merch-card:hover .merch-photo img {
+    transform: scale(1.06);
+  }
+  .merch-card:hover .merch-photo::after {
+    transform: translateX(110%);
+    transition: transform 1.1s var(--ease-out);
+  }
+}
+
+/* Celular: respuesta breve al tocar */
+@media (hover: none) {
+  .merch-card:active .merch-photo img {
+    transform: scale(1.04);
+    transition-duration: .3s;
+  }
+}
+
+/* Indicador "+" sobre la foto (equipo) */
 .click-hint {
   position: absolute;
   bottom: 12px;
@@ -2005,9 +2071,7 @@ html:not(.js) .ods-infinity path,
   width: 16px;
   height: 16px;
 }
-.merch-card:hover .click-hint,
 .member-card:hover .click-hint,
-.merch-card:focus-visible .click-hint,
 .member-card:focus-visible .click-hint {
   opacity: 1;
   transform: none;
@@ -2905,6 +2969,36 @@ footer {
 .reveal-4 { transition-delay: .35s !important; }
 .reveal-5 { transition-delay: .45s !important; }
 
+/* Merch: la foto se revela como una cortina que sube, con un leve zoom
+   de salida, y el texto entra después. La tarjeta en sí no se mueve. */
+.js .merch-card.reveal {
+  opacity: 1;
+  transform: none;
+}
+.merch-card:nth-child(even) { --retraso: .14s; }
+@media (max-width: 600px) {
+  .merch-card:nth-child(even) { --retraso: 0s; }
+}
+.js .merch-card.reveal .merch-photo {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.1s var(--ease-out) var(--retraso, 0s), box-shadow .5s var(--ease-out);
+}
+.js .merch-card.reveal.in-view .merch-photo {
+  clip-path: inset(0 0 0 0);
+}
+.js .merch-card.reveal:not(.in-view) .merch-photo img {
+  transform: scale(1.15);
+}
+.js .merch-card.reveal .merch-body {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .7s ease calc(var(--retraso, 0s) + .4s), transform .9s var(--ease-out) calc(var(--retraso, 0s) + .4s);
+}
+.js .merch-card.reveal.in-view .merch-body {
+  opacity: 1;
+  transform: none;
+}
+
 /* Los títulos de sección ajustan su espaciado al aparecer */
 .section-head h2 {
   transition: letter-spacing 1.2s var(--ease-out);
@@ -2944,6 +3038,18 @@ footer {
   .js .reveal {
     opacity: 1 !important;
     transform: none !important;
+  }
+  /* Merch: foto y texto visibles, sin zoom ni brillo */
+  .js .merch-card .merch-photo {
+    clip-path: none !important;
+  }
+  .merch-photo img,
+  .js .merch-card .merch-body {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .merch-photo::after {
+    display: none;
   }
   /* Carrusel: sin deslizamiento ni zoom; la foto cambia solo con las barras */
   .hero-slide,
@@ -2990,6 +3096,14 @@ footer {
 .motion-on .m-parallax {
   scale: 1.12;
   translate: 0 var(--m-mover, 0%);
+}
+/* Merch: ampliación menor. El esfero ocupa casi todo el ancho de su
+   recorte (object-position), así que no se amplía ni se desplaza. */
+.motion-on .merch-photo .m-parallax {
+  scale: 1.1;
+}
+.motion-on .merch-photo .m-parallax[src$="esfero.jpg"] {
+  scale: 1;
 }
 
 

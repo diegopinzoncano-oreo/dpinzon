@@ -477,6 +477,59 @@ document.querySelectorAll('.merch-card').forEach(function (tarjeta) {
   });
 });
 
+// Inclinación 3D de la foto hacia el puntero, solo con mouse.
+// Se aplica a .merch-photo (no al botón) mediante --giro-x y --giro-y.
+const GIRO_MAXIMO = 6;       // grados
+const SUAVIZADO_GIRO = 0.12; // fracción del camino recorrida por cuadro
+
+if (!reducirMovimiento && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  document.querySelectorAll('.merch-card').forEach(function (tarjeta) {
+    const marco = tarjeta.querySelector('.merch-photo');
+    const giro = { x: 0, y: 0, destinoX: 0, destinoY: 0 };
+    let cuadroPendiente = null;
+
+    function pintarGiro() {
+      giro.x += (giro.destinoX - giro.x) * SUAVIZADO_GIRO;
+      giro.y += (giro.destinoY - giro.y) * SUAVIZADO_GIRO;
+
+      const enReposo = giro.destinoX === 0 && giro.destinoY === 0 &&
+        Math.abs(giro.x) < 0.02 && Math.abs(giro.y) < 0.02;
+
+      if (enReposo) {
+        // De vuelta en 0: sin estilos residuales
+        marco.style.removeProperty('--giro-x');
+        marco.style.removeProperty('--giro-y');
+        cuadroPendiente = null;
+        return;
+      }
+      marco.style.setProperty('--giro-x', giro.x.toFixed(2) + 'deg');
+      marco.style.setProperty('--giro-y', giro.y.toFixed(2) + 'deg');
+      cuadroPendiente = requestAnimationFrame(pintarGiro);
+    }
+
+    function animarGiro() {
+      if (cuadroPendiente === null) cuadroPendiente = requestAnimationFrame(pintarGiro);
+    }
+
+    tarjeta.addEventListener('pointermove', function (evento) {
+      if (evento.pointerType !== 'mouse') return;
+      const caja = marco.getBoundingClientRect();
+      // Posición del puntero de -0.5 a 0.5 respecto al centro de la foto
+      const relativoX = Math.max(-0.5, Math.min(0.5, (evento.clientX - caja.left) / caja.width - 0.5));
+      const relativoY = Math.max(-0.5, Math.min(0.5, (evento.clientY - caja.top) / caja.height - 0.5));
+      giro.destinoY = relativoX * 2 * GIRO_MAXIMO;
+      giro.destinoX = -relativoY * 2 * GIRO_MAXIMO;
+      animarGiro();
+    });
+
+    tarjeta.addEventListener('pointerleave', function () {
+      giro.destinoX = 0;
+      giro.destinoY = 0;
+      animarGiro();
+    });
+  });
+}
+
 // ---------- Integrante ----------
 const ventanaEquipo = document.getElementById('memberModal');
 const cajaRedes = document.getElementById('memberModalSocials');

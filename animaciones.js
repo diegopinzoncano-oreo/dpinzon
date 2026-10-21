@@ -10,7 +10,7 @@
     2. Utilidades
     3. Títulos de sección palabra por palabra
     4. Tarjetas en cascada
-    5. Parallax de fotos del proceso
+    5. Parallax de fotos (proceso y merch)
     6. Sello del ODS 12
     7. Botones magnéticos
 */
@@ -43,6 +43,8 @@ function iniciarAnimacionesMotion() {
   const DURACION_TITULO = 0.9;    // s por palabra
   const DURACION_TARJETA = 0.8;   // s por tarjeta
   const CASCADA = 0.08;           // s entre elementos
+  const DURACION_CORTINA = 1.1;   // s del revelado de cada foto de merch
+  const CASCADA_MERCH = 0.14;     // s entre productos
 
 
   /* ==============================================================
@@ -62,6 +64,7 @@ function iniciarAnimacionesMotion() {
       elementos.forEach(function (elemento) {
         elemento.style.opacity = '';
         elemento.style.transform = '';
+        elemento.style.clipPath = '';
       });
     });
   }
@@ -135,10 +138,12 @@ function iniciarAnimacionesMotion() {
 
   /* ==============================================================
      4. TARJETAS EN CASCADA
-     Merch, equipo y "¿Por qué el denim?": opacidad y escala 0.94 → 1.
+     Equipo y "¿Por qué el denim?": opacidad y escala 0.94 → 1.
+     Merch: la foto se revela como una cortina que sube mientras la
+     imagen pasa de 1.15 a 1; el texto entra después.
      ============================================================== */
 
-  const tarjetas = document.querySelectorAll('.merch-card, .member-card, .identity-card');
+  const tarjetas = document.querySelectorAll('.member-card, .identity-card');
 
   const animarTarjetas = crearTanda(function (tanda) {
     animate(
@@ -154,20 +159,60 @@ function iniciarAnimacionesMotion() {
     inView(tarjeta, function () { animarTarjetas(tarjeta); }, { amount: 0.2 });
   });
 
+  const animarProductos = crearTanda(function (tanda) {
+    const animaciones = [];
+    const animados = [];
+
+    tanda.forEach(function (producto, numero) {
+      const marco = producto.querySelector('.merch-photo');
+      const foto = marco.querySelector('img');
+      const texto = producto.querySelector('.merch-body');
+      const retraso = numero * CASCADA_MERCH;
+
+      animaciones.push(
+        animate(marco,
+          { clipPath: ['inset(100% 0% 0% 0%)', 'inset(0% 0% 0% 0%)'] },
+          { duration: DURACION_CORTINA, ease: curvaSuave, delay: retraso }),
+        animate(foto,
+          { transform: ['scale(1.15)', 'scale(1)'] },
+          { duration: DURACION_CORTINA + 0.4, ease: curvaSuave, delay: retraso }),
+        animate(texto,
+          { opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
+          { duration: 0.8, ease: curvaSuave, delay: retraso + 0.4 })
+      );
+      animados.push(marco, foto, texto);
+    });
+
+    Promise.all(animaciones).then(function () { soltarEstilos(animados); });
+  });
+
+  document.querySelectorAll('.merch-card').forEach(function (producto) {
+    quitarAparicionCSS(producto);
+    // Estado inicial: foto cubierta y texto oculto
+    producto.querySelector('.merch-photo').style.clipPath = 'inset(100% 0% 0% 0%)';
+    producto.querySelector('.merch-photo img').style.transform = 'scale(1.15)';
+    producto.querySelector('.merch-body').style.opacity = '0';
+    inView(producto, function () { animarProductos(producto); }, { amount: 0.25 });
+  });
+
 
   /* ==============================================================
-     5. PARALLAX DE FOTOS DEL PROCESO
-     Solo en las fotos del proceso. Desplazamiento de -5% a 5%; la
-     imagen está ampliada al 112% en style.css para que no se vean
-     los bordes. La foto grupal queda fija para mostrarla completa.
+     5. PARALLAX DE FOTOS (PROCESO Y MERCH)
+     La imagen está ampliada en style.css (propiedad "scale") y se
+     desplaza dentro de su marco sin pasar del margen que deja esa
+     ampliación. La foto grupal queda fija para mostrarla completa.
      ============================================================== */
 
-  document.querySelectorAll('.process-media .photo-frame img').forEach(function (foto) {
+  document.querySelectorAll('.process-media .photo-frame img, .merch-photo img').forEach(function (foto) {
     foto.classList.add('m-parallax');
+
+    // Margen sobrante por lado, en % del alto, con un 15% de holgura
+    const escala = parseFloat(getComputedStyle(foto).scale) || 1;
+    const limite = (escala - 1) / 2 * 100 * 0.85;
 
     scroll(function (progreso) {
       // 0: la foto asoma por abajo · 1: sale por arriba
-      const mover = (progreso - 0.5) * 10;
+      const mover = (progreso - 0.5) * 2 * limite;
       foto.style.setProperty('--m-mover', mover.toFixed(2) + '%');
     }, {
       target: foto.parentElement,
@@ -243,7 +288,11 @@ try {
 } catch (error) {
   console.warn('Las animaciones de Motion no se pudieron iniciar:', error);
   document.documentElement.classList.remove('motion-on');
-  document.querySelectorAll('.merch-card, .member-card, .identity-card').forEach(function (elemento) {
+  document.querySelectorAll('.member-card, .identity-card, .merch-body').forEach(function (elemento) {
     elemento.style.opacity = '';
+  });
+  document.querySelectorAll('.merch-photo, .merch-photo img').forEach(function (elemento) {
+    elemento.style.clipPath = '';
+    elemento.style.transform = '';
   });
 }
