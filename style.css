@@ -2282,19 +2282,66 @@ body.modal-open {
 .phone:hover {
   transform: rotate(0deg) translateY(-6px);
 }
-.phone .video-slot,
-.phone iframe {
+.phone-screen {
+  position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border: 0;
   border-radius: 28px;
+  isolation: isolate; /* recorta el iframe a las esquinas redondeadas */
 }
-.phone .slot-video {
+.phone-embed,
+.phone-fallback {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  background: #000;
+  border: 0;
+}
+.phone-embed {
+  z-index: 1;
+  background: transparent;
+}
+/* Fondo de marca visible mientras carga el reproductor */
+.phone-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(120% 70% at 50% 0%, rgba(255, 255, 255, 0.10) 0%, transparent 60%),
+    linear-gradient(160deg, var(--denim) 0%, var(--denim-deep) 100%);
+}
+
+/* Enlace al video bajo el marco */
+.phone-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+.phone-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(233, 238, 247, 0.8);
+  text-decoration: none;
+  transition: color .3s var(--ease-out);
+}
+.phone-link svg {
+  width: 15px;
+  height: 15px;
+  transition: transform .3s var(--ease-out);
+}
+.phone-link:hover,
+.phone-link:focus-visible {
+  color: #fff;
+}
+.phone-link:hover svg,
+.phone-link:focus-visible svg {
+  transform: translate(2px, -2px);
 }
 
 /* Variante horizontal del video (.video-wide) */

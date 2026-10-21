@@ -524,18 +524,25 @@
       </div>
     </div>
 
-    <!-- Video vertical: se reproduce sin sonido al entrar en pantalla (data-play-on-scroll) -->
-    <div class="reveal reveal-2">
+    <!-- Video vertical de TikTok con el reproductor oficial; el fondo de marca queda detrás mientras carga -->
+    <div class="reveal reveal-2 phone-col">
       <div class="phone">
-        <div class="video-slot">
-          <video class="slot-video" src="video/intro.mp4" poster="img/equipo/equipo-completo.jpg" data-play-on-scroll muted controls playsinline preload="metadata"></video>
-          <div class="media-placeholder">
+        <div class="phone-screen">
+          <div class="phone-fallback" aria-hidden="true">
             <img class="placeholder-logo" src="img/logo-upstyle.png" alt="" width="72" height="72">
-            <span class="placeholder-title">La historia de Up&nbsp;Style</span>
-            <small>Próximamente</small>
           </div>
+          <iframe class="phone-embed"
+                  src="https://www.tiktok.com/player/v1/7699119118376652039?autoplay=1&amp;loop=1&amp;muted=1&amp;music_info=0&amp;description=0&amp;rel=0"
+                  title="Video de Up Style en TikTok"
+                  loading="lazy"
+                  allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+                  allowfullscreen></iframe>
         </div>
       </div>
+      <a class="phone-link" href="https://www.tiktok.com/@up.style07/video/7699119118376652039" target="_blank" rel="noopener">
+        Ver en TikTok
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+      </a>
     </div>
   </div>
 </section>

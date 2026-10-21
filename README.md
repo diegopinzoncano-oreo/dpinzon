@@ -43,7 +43,7 @@ se usan las transiciones de CSS.
 │   ├── equipo/           Integrantes y foto grupal
 │   ├── mascota/          Mascota del proyecto (WebP y PNG de respaldo)
 │   └── biblioteca/       Carpeta reservada para material fotográfico adicional
-├── video/                Videos opcionales (intro.mp4 y proceso.mp4)
+├── video/                Video opcional del proceso (proceso.mp4)
 └── .vscode/              Extensiones recomendadas para VS Code
 ```
 
@@ -54,7 +54,7 @@ se usan las transiciones de CSS.
 3. ODS 12
 4. Proceso y por qué el denim: relato visual "Del desecho a la calle" en 6 escenas con foto a sangre (convocatoria, clasificación, patronaje, confección, el bolso y comunidad), cada una con una frase corta y la red donde se cuenta. En computador la escena queda fija y, al bajar, la pista avanza en horizontal con contador y barra de progreso; en tablet y celular, sin Motion o con movimiento reducido las escenas se apilan. La escena 04 muestra `video/proceso.mp4` en lugar de la foto si el archivo existe. La infografía detallada del proceso se publica en redes
 5. Merch
-6. Redes sociales: Instagram ([@up_style26](https://www.instagram.com/up_style26/)) y TikTok ([@up.style07](https://www.tiktok.com/@up.style07)), las cuentas oficiales de Up Style
+6. Redes sociales: Instagram ([@up_style26](https://www.instagram.com/up_style26/)) y TikTok ([@up.style07](https://www.tiktok.com/@up.style07)), las cuentas oficiales de Up Style. El marco de celular muestra un video de TikTok con el reproductor oficial (`https://www.tiktok.com/player/v1/<ID>`, sin sonido y en bucle); para cambiarlo basta con reemplazar el ID en el `iframe` y en el enlace "Ver en TikTok" de `index.html`
 7. Equipo
 8. Participa: formulario de preguntas y de donación de jeans (generan un correo con `mailto:`)
 
