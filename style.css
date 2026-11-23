@@ -1427,6 +1427,7 @@ html:not(.js) .ods-infinity path,
 }
 .escena-media {
   overflow: visible;
+  transform-origin: var(--encuadre-movil, 50% 50%); /* el zoom de aparición se centra en el encuadre */
 }
 .escena-media img,
 .escena-media video {
@@ -1439,6 +1440,9 @@ html:not(.js) .ods-infinity path,
   translate: var(--foto-x, 0) var(--foto-y, 0);
 }
 @media (min-width: 701px) {
+  .escena-media {
+    transform-origin: var(--encuadre, 50% 50%);
+  }
   .escena-media img,
   .escena-media video {
     object-position: var(--encuadre, 50% 50%);
@@ -1451,6 +1455,45 @@ html:not(.js) .ods-infinity path,
     object-position: var(--encuadre-movil, 50% 50%);
   }
 }
+/* Escena 06 (foto grupal): sin ampliación ni parallax, para que se vean
+   completas las cinco personas. Con las escenas apiladas la escena toma
+   la proporción de la foto; en celular el texto pasa debajo de ella. */
+.escena-completa .escena-media img {
+  translate: none;
+}
+html:not(.relato-horizontal) .escena-completa {
+  height: auto;
+  aspect-ratio: 2000 / 1316;
+  max-height: max(480px, 92svh);
+}
+@media (max-width: 700px) {
+  html:not(.relato-horizontal) .escena-completa {
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: auto;
+    max-height: none;
+  }
+  html:not(.relato-horizontal) .escena-completa .escena-foto {
+    position: relative;
+    flex: none;
+    aspect-ratio: 2000 / 1316;
+  }
+  /* La foto se funde con el fondo del texto y deja las caras sin sombra */
+  html:not(.relato-horizontal) .escena-completa .escena-foto::after {
+    background: linear-gradient(to top, var(--denim-noche-2) 0%, rgba(11, 17, 30, 0.55) 20%, rgba(11, 17, 30, 0) 48%);
+  }
+  html:not(.relato-horizontal) .escena-completa .escena-texto {
+    position: relative;
+    inset: auto;
+    padding: 26px 22px 34px;
+  }
+  html:not(.relato-horizontal) .escena-completa .escena-num-ciclo {
+    top: calc(100vw * 1316 / 2000 + 34px);
+    right: 26px;
+    font-size: clamp(3.4rem, 15vw, 5rem);
+  }
+}
+
 /* Capa oscura: más densa abajo a la izquierda, donde va el texto */
 .escena-foto::after {
   content: "";
@@ -1602,6 +1645,14 @@ html:not(.js) .ods-infinity path,
     right: var(--margen-escena);
     bottom: 7vh;
     left: var(--margen-escena);
+  }
+}
+/* Escena 05 en tablet: la foto vertical deja la cara de la modelo bajo
+   el número, así que este baja a la esquina inferior */
+@media (min-width: 701px) and (max-width: 979px) {
+  html:not(.relato-horizontal) .escena-num-abajo .escena-num {
+    top: auto;
+    bottom: 14%;
   }
 }
 
@@ -3047,8 +3098,11 @@ footer {
   clip-path: inset(0 0 0 0);
 }
 .js .escena-media {
-  transform: scale(1.14);
+  transform: scale(1.04);
   transition: transform 2.2s var(--ease-out);
+}
+.js .escena-completa .escena-media {
+  transform: none;
 }
 .js .escena.in-view .escena-media {
   transform: none;
@@ -3212,11 +3266,15 @@ footer {
 .motion-on .merch-photo .m-parallax[src$="esfero.jpg"] {
   scale: 1;
 }
-/* Relato: fotos del proceso un 12% más grandes; animaciones.js las
-   desplaza con --foto-x (recorrido horizontal) o --foto-y (apiladas). */
+/* Relato: fotos del proceso un 5% más grandes, lo justo para el
+   parallax de animaciones.js (--foto-x en el recorrido horizontal,
+   --foto-y con las escenas apiladas; máximo 2%). */
 .motion-on .escena-media img,
 .motion-on .escena-media video {
-  scale: 1.12;
+  scale: 1.05;
+}
+.motion-on .escena-completa .escena-media img {
+  scale: 1;
 }
 
 

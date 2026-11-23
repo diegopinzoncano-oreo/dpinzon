@@ -243,7 +243,7 @@ function iniciarAnimacionesMotion() {
     const marcasEscena = Array.from(relato.querySelectorAll('.relato-marca'));
 
     const pantallaAncha = window.matchMedia('(min-width: 980px) and (min-height: 560px)');
-    const PARALLAX_FOTO = 5;   // % máximo de desplazamiento de la foto (margen de scale 1.12)
+    const PARALLAX_FOTO = 2;   // % máximo de desplazamiento de la foto (margen de scale 1.05)
     const DERIVA_NUMERO = 5;   // vw que se adelanta el número grande
 
     let horizontal = false;
