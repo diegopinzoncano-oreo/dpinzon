@@ -1444,6 +1444,13 @@ html:not(.js) .ods-infinity path,
     object-position: var(--encuadre, 50% 50%);
   }
 }
+/* Fotos con variante vertical (<picture>): hasta 979px se usa la 4:5,
+   así que conserva el encuadre de celular */
+@media (min-width: 701px) and (max-width: 979px) {
+  .escena-media picture img {
+    object-position: var(--encuadre-movil, 50% 50%);
+  }
+}
 /* Capa oscura: más densa abajo a la izquierda, donde va el texto */
 .escena-foto::after {
   content: "";

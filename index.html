@@ -358,10 +358,15 @@
               <p class="escena-red"><span class="escena-red-logos" aria-hidden="true"><svg><use href="#red-instagram"/></svg></span>En Instagram</p>
             </div>
           </li>
-          <li class="escena" id="escena-04" style="--encuadre:50% 50%; --encuadre-movil:52% 50%;">
+          <li class="escena" id="escena-04" style="--encuadre:75% 40%; --encuadre-movil:63% 36%;">
             <div class="escena-foto video-slot">
               <div class="escena-media">
-                <img src="img/proceso/herramientas.jpg" alt="Manos que trazan un patrón con tiza sobre retazos de denim, junto a tijeras e hilos" loading="lazy" decoding="async">
+                <picture>
+                  <source type="image/webp" media="(min-width: 980px)" srcset="img/proceso/confeccion-costura-16x9.webp" width="1696" height="954">
+                  <source media="(min-width: 980px)" srcset="img/proceso/confeccion-costura-16x9.jpg" width="1696" height="954">
+                  <source type="image/webp" srcset="img/proceso/confeccion-costura-4x5.webp" width="948" height="1185">
+                  <img src="img/proceso/confeccion-costura-4x5.jpg" width="948" height="1185" alt="Manos cosiendo denim en una fileteadora del taller" loading="lazy" decoding="async">
+                </picture>
                 <!-- Video opcional: reemplaza la foto si existe video/proceso.mp4 -->
                 <video class="slot-video" src="video/proceso.mp4" data-play-on-scroll muted loop playsinline preload="metadata" aria-hidden="true"></video>
               </div>
