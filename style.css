@@ -1609,25 +1609,8 @@ html:not(.relato-horizontal) .escena-completa {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px 10px;
-  margin-top: 22px;
-}
-.escena-red-etiqueta {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-right: 4px;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  line-height: 1.3;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.72);
-}
-.escena-red-etiqueta::before {
-  content: "";
-  width: 28px;
-  height: 1px;
-  background: var(--thread);
+  gap: 8px;
+  margin-top: 20px;
 }
 .red-chip {
   display: inline-flex;
@@ -1687,10 +1670,6 @@ html:not(.relato-horizontal) .escena-completa {
   font-size: 0.78rem;
   line-height: 1;
   color: rgba(255, 255, 255, 0.7);
-}
-/* En celular la etiqueta va en su línea y las pastillas quedan alineadas */
-@media (max-width: 700px) {
-  .escena-red-etiqueta { flex-basis: 100%; }
 }
 @media (min-width: 701px) {
   .red-chip {
