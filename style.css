@@ -1228,9 +1228,19 @@ html:not(.js) .hero-slide:not(:first-child) {
   position: absolute;
   inset: -15% 0;
   z-index: 0;
+  background-image: url("img/secciones/ods12-denim-taller-16x9.jpg");
+  background-image: image-set(url("img/secciones/ods12-denim-taller-16x9.webp") type("image/webp"), url("img/secciones/ods12-denim-taller-16x9.jpg") type("image/jpeg"));
   background-size: cover;
-  background-position: center;
+  background-position: 50% 45%;
   will-change: transform;
+}
+/* En celular la franja es más alta que ancha: foto vertical 4:5 */
+@media (max-width: 700px) {
+  .ods-bg {
+    background-image: url("img/secciones/ods12-denim-taller-4x5.jpg");
+    background-image: image-set(url("img/secciones/ods12-denim-taller-4x5.webp") type("image/webp"), url("img/secciones/ods12-denim-taller-4x5.jpg") type("image/jpeg"));
+    background-position: 50% 50%;
+  }
 }
 /* Capa azul oscura encima de la foto para que el texto se lea */
 .ods-bg::after {
@@ -1593,32 +1603,106 @@ html:not(.relato-horizontal) .escena-completa {
   line-height: 1.4;
   color: rgba(255, 255, 255, 0.9);
 }
+/* Redes donde se cuenta cada escena (estrategia transmedia): pastillas
+   de vidrio oscuro con el logo de cada plataforma, enlazadas al perfil */
 .escena-red {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: 8px 10px;
   margin-top: 22px;
+}
+.escena-red-etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: 4px;
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   line-height: 1.3;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.66);
+  color: rgba(255, 255, 255, 0.72);
 }
-.escena-red::before {
+.escena-red-etiqueta::before {
   content: "";
   width: 28px;
   height: 1px;
   background: var(--thread);
 }
-.escena-red-logos {
-  display: flex;
-  gap: 7px;
-}
-.escena-red-logos svg {
-  width: 15px;
-  height: 15px;
+.red-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 5px 14px 5px 5px;
   color: #fff;
+  text-decoration: none;
+  background: rgba(10, 16, 30, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
+  transition: border-color .25s ease, background .25s ease;
+}
+.red-chip:hover,
+.red-chip:focus-visible {
+  border-color: var(--thread);
+  background: rgba(10, 16, 30, 0.75);
+}
+/* Logo sobre el color de marca, como en la sección de redes */
+.red-chip-logo {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+.red-chip-logo svg {
+  width: 60%;
+  height: 60%;
+  color: #fff;
+}
+.red-chip-ig {
+  background: radial-gradient(circle at 30% 107%, #FDF497 0%, #FDF497 5%, #FD5949 45%, #D6249F 60%, #285AEB 90%);
+}
+.red-chip-tt {
+  background: #000;
+}
+.red-chip-tt svg {
+  width: 72%;
+  height: 72%;
+}
+.red-chip-web {
+  background: var(--denim);
+}
+.red-chip-nombre {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1;
+}
+.red-chip-usuario {
+  font-size: 0.78rem;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.7);
+}
+/* En celular la etiqueta va en su línea y las pastillas quedan alineadas */
+@media (max-width: 700px) {
+  .escena-red-etiqueta { flex-basis: 100%; }
+}
+@media (min-width: 701px) {
+  .red-chip {
+    gap: 10px;
+    padding: 5px 16px 5px 5px;
+  }
+  .red-chip-logo {
+    width: 32px;
+    height: 32px;
+  }
+  .red-chip-nombre { font-size: 0.98rem; }
+  .red-chip-usuario { font-size: 0.82rem; }
 }
 
 /* Escena 06: flecha circular alrededor del número y regreso al 01 */
@@ -2448,15 +2532,15 @@ body.modal-open {
   flex: none;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   color: #fff;
-  border-radius: 14px;
+  border-radius: 16px;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 .social-logo svg {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
 }
 .social-logo-ig {
   background: radial-gradient(circle at 30% 107%, #FDF497 0%, #FDF497 5%, #FD5949 45%, #D6249F 60%, #285AEB 90%);
@@ -2465,8 +2549,8 @@ body.modal-open {
   background: #000;
 }
 .social-logo-tt svg {
-  width: 28px;
-  height: 28px;
+  width: 34px;
+  height: 34px;
 }
 .social-link-card > span:not(.social-logo) {
   flex: 1;
