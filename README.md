@@ -38,7 +38,7 @@ se usan las transiciones de CSS.
 │   ├── fondo-problematica.jpg Fondo de la sección Problemática
 │   ├── inicio/           Fotos del carrusel del inicio (residuos textiles y modelos)
 │   ├── secciones/        Franja del ODS 12
-│   ├── proceso/          Escenas 03 y 04 del relato, en 16:9 (tablet y computador) y 4:5 (celular), JPG y WebP; patronaje-tira-denim y confeccion-fileteadora quedan de reserva
+│   ├── proceso/          Escenas 02, 03 y 04 del relato, en 16:9 (tablet y computador) y 4:5 (celular), JPG y WebP; clasificacion-manos-prenda, clasificacion-mesa-denim, patronaje-tira-denim y confeccion-fileteadora quedan de reserva
 │   ├── merch/            Productos
 │   ├── equipo/           Integrantes y foto grupal
 │   ├── mascota/          Mascota del proyecto (WebP y PNG de respaldo)

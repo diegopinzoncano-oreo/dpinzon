@@ -1485,8 +1485,8 @@ html:not(.relato-horizontal) .escena-completa {
     font-size: clamp(3.4rem, 15vw, 5rem);
   }
 }
-/* Escena 03: la mano queda abajo a la izquierda, así que el texto va a la
-   derecha (y debajo de la foto en celular) para no taparla */
+/* Escenas 02 y 03: la persona o la mano quedan a la izquierda, así que el
+   texto va a la derecha (y debajo de la foto en celular) para no taparlas */
 @media (min-width: 701px) {
   .escena-texto-derecha .escena-texto,
   .relato-horizontal .escena-texto-derecha .escena-texto {
