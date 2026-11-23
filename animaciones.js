@@ -227,7 +227,8 @@ function iniciarAnimacionesMotion() {
      Computador: la escena queda fija (position: sticky) y el scroll
      vertical desplaza la pista en horizontal. La altura de .relato es
      el recorrido más una pantalla, así que cada píxel bajado mueve la
-     pista un píxel. Celular: escenas apiladas con parallax vertical.
+     pista un píxel. Celular: escenas apiladas. Las fotos no se amplían
+     ni se desplazan para que se vean completas.
      La aparición de cada escena la maneja script.js (sección 4).
      ============================================================== */
 
@@ -243,7 +244,6 @@ function iniciarAnimacionesMotion() {
     const marcasEscena = Array.from(relato.querySelectorAll('.relato-marca'));
 
     const pantallaAncha = window.matchMedia('(min-width: 980px) and (min-height: 560px)');
-    const PARALLAX_FOTO = 2;   // % máximo de desplazamiento de la foto (margen de scale 1.05)
     const DERIVA_NUMERO = 5;   // vw que se adelanta el número grande
 
     let horizontal = false;
@@ -285,8 +285,7 @@ function iniciarAnimacionesMotion() {
           masCercana = indice;
         }
         if (Math.abs(distancia) > 1.4) return;
-        // La foto avanza más lento que la pista y el número un poco más rápido
-        escena.style.setProperty('--foto-x', (limitar(-distancia, -1, 1) * PARALLAX_FOTO).toFixed(2) + '%');
+        // El número se adelanta un poco a la pista; la foto no se mueve ni se amplía
         escena.style.setProperty('--num-x', (distancia * DERIVA_NUMERO).toFixed(2) + 'vw');
       });
 
@@ -322,8 +321,6 @@ function iniciarAnimacionesMotion() {
       escenaActual = -1;
       marcasEscena.forEach(function (marca) { marca.removeAttribute('aria-current'); });
       escenas.forEach(function (escena) {
-        escena.style.removeProperty('--foto-x');
-        escena.style.removeProperty('--foto-y');
         escena.style.removeProperty('--num-x');
       });
     }
@@ -347,17 +344,6 @@ function iniciarAnimacionesMotion() {
     // Un solo cálculo por cuadro, sincronizado con el scroll
     scroll(function () {
       if (horizontal) pintarRecorrido();
-    });
-
-    // Celular y tablet: parallax vertical de cada foto
-    escenas.forEach(function (escena) {
-      scroll(function (progreso) {
-        if (horizontal) return;
-        escena.style.setProperty('--foto-y', ((progreso - 0.5) * 2 * PARALLAX_FOTO).toFixed(2) + '%');
-      }, {
-        target: escena,
-        offset: ['start end', 'end start']
-      });
     });
 
     // Teclado: al enfocar algo dentro de una escena, la página baja

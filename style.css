@@ -1409,9 +1409,11 @@ html:not(.js) .ods-infinity path,
   padding: 0;
   list-style: none;
 }
+/* El marco sigue la proporción de las fotos (4:5 en celular, 16:9 desde
+   tablet) para que se recorten lo mínimo */
 .escena {
   position: relative;
-  height: clamp(480px, 80svh, 860px);
+  aspect-ratio: 4 / 5;
   overflow: hidden;
   isolation: isolate;
   background: var(--denim-noche-2);
@@ -1427,7 +1429,6 @@ html:not(.js) .ods-infinity path,
 }
 .escena-media {
   overflow: visible;
-  transform-origin: var(--encuadre-movil, 50% 50%); /* el zoom de aparición se centra en el encuadre */
 }
 .escena-media img,
 .escena-media video {
@@ -1437,30 +1438,21 @@ html:not(.js) .ods-infinity path,
   height: 100%;
   object-fit: cover;
   object-position: var(--encuadre-movil, 50% 50%);
-  translate: var(--foto-x, 0) var(--foto-y, 0);
 }
 @media (min-width: 701px) {
-  .escena-media {
-    transform-origin: var(--encuadre, 50% 50%);
+  .escena {
+    aspect-ratio: 16 / 9;
+    min-height: 460px;
+    max-height: max(460px, 92svh);
   }
   .escena-media img,
   .escena-media video {
     object-position: var(--encuadre, 50% 50%);
   }
 }
-/* Fotos con variante vertical (<picture>): hasta 979px se usa la 4:5,
-   así que conserva el encuadre de celular */
-@media (min-width: 701px) and (max-width: 979px) {
-  .escena-media picture img {
-    object-position: var(--encuadre-movil, 50% 50%);
-  }
-}
-/* Escena 06 (foto grupal): sin ampliación ni parallax, para que se vean
-   completas las cinco personas. Con las escenas apiladas la escena toma
-   la proporción de la foto; en celular el texto pasa debajo de ella. */
-.escena-completa .escena-media img {
-  translate: none;
-}
+/* Escena 06 (foto grupal): para que se vean completas las cinco personas,
+   con las escenas apiladas la escena toma la proporción de la foto; en
+   celular el texto pasa debajo de ella. */
 html:not(.relato-horizontal) .escena-completa {
   height: auto;
   aspect-ratio: 2000 / 1316;
@@ -1491,6 +1483,65 @@ html:not(.relato-horizontal) .escena-completa {
     top: calc(100vw * 1316 / 2000 + 34px);
     right: 26px;
     font-size: clamp(3.4rem, 15vw, 5rem);
+  }
+}
+/* Escena 03: la mano queda abajo a la izquierda, así que el texto va a la
+   derecha (y debajo de la foto en celular) para no taparla */
+@media (min-width: 701px) {
+  .escena-texto-derecha .escena-texto,
+  .relato-horizontal .escena-texto-derecha .escena-texto {
+    left: auto;
+    max-width: 56%;
+    text-align: right;
+  }
+  /* Título algo menor para que no llegue a la tiza */
+  .escena-texto-derecha .escena-titulo,
+  .relato-horizontal .escena-texto-derecha .escena-titulo {
+    font-size: clamp(2.4rem, 5.4vw, 6.2rem);
+  }
+  .escena-texto-derecha .escena-frase {
+    margin-left: auto;
+  }
+  .escena-texto-derecha .escena-red {
+    justify-content: flex-end;
+  }
+  .escena-texto-derecha .escena-foto::after {
+    background:
+      radial-gradient(ellipse 70% 75% at 100% 100%, rgba(8, 12, 22, 0.9) 0%, rgba(8, 12, 22, 0.55) 45%, rgba(8, 12, 22, 0) 100%),
+      linear-gradient(to bottom, rgba(8, 12, 22, 0.35) 0%, rgba(8, 12, 22, 0) 24%);
+  }
+}
+@media (max-width: 700px) {
+  html:not(.relato-horizontal) .escena-texto-derecha {
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: auto;
+  }
+  html:not(.relato-horizontal) .escena-texto-derecha .escena-foto {
+    position: relative;
+    flex: none;
+    aspect-ratio: 4 / 5;
+  }
+  html:not(.relato-horizontal) .escena-texto-derecha .escena-foto::after {
+    background:
+      linear-gradient(to top, var(--denim-noche-2) 0%, rgba(11, 17, 30, 0) 12%),
+      linear-gradient(to bottom, rgba(8, 12, 22, 0.4) 0%, rgba(8, 12, 22, 0) 24%);
+  }
+  html:not(.relato-horizontal) .escena-texto-derecha .escena-texto {
+    position: relative;
+    inset: auto;
+    margin-top: -1px; /* cubre la línea de medio píxel bajo la foto */
+    padding: 19px 22px 34px;
+    background: var(--denim-noche-2);
+  }
+}
+/* Escena 04: el número baja a la esquina inferior derecha (sobre la tela)
+   para no cruzar los nudillos en la foto horizontal */
+@media (min-width: 701px) {
+  .escena-num-inferior .escena-num,
+  .relato-horizontal .escena-num-inferior .escena-num {
+    top: auto;
+    bottom: 6vh;
   }
 }
 
@@ -1757,10 +1808,14 @@ html:not(.relato-horizontal) .escena-completa {
   display: flex;
   gap: 3vw;
 }
+/* Marco 16:9 tan grande como quepa (máximo 80vw), centrado en la altura
+   libre entre el menú y la barra */
 .relato-horizontal .escena {
   flex: none;
-  width: 80vw;
-  height: 100%;
+  align-self: center;
+  width: min(80vw, calc((100vh - var(--header-h) - 86px) * 16 / 9));
+  min-height: 0;
+  max-height: none;
   border-radius: var(--radius-s);
 }
 .relato-horizontal .escena-num {
@@ -3097,16 +3152,6 @@ footer {
 .js .escena.in-view .escena-foto {
   clip-path: inset(0 0 0 0);
 }
-.js .escena-media {
-  transform: scale(1.04);
-  transition: transform 2.2s var(--ease-out);
-}
-.js .escena-completa .escena-media {
-  transform: none;
-}
-.js .escena.in-view .escena-media {
-  transform: none;
-}
 .js .escena-num {
   opacity: 0;
   transition: opacity 1.4s ease .3s;
@@ -3186,7 +3231,6 @@ footer {
   .js .escena-foto {
     clip-path: none !important;
   }
-  .js .escena-media,
   .js .escena-num,
   .js .escena .t-letra,
   .js .escena .escena-frase,
@@ -3264,16 +3308,6 @@ footer {
   scale: 1.1;
 }
 .motion-on .merch-photo .m-parallax[src$="esfero.jpg"] {
-  scale: 1;
-}
-/* Relato: fotos del proceso un 5% más grandes, lo justo para el
-   parallax de animaciones.js (--foto-x en el recorrido horizontal,
-   --foto-y con las escenas apiladas; máximo 2%). */
-.motion-on .escena-media img,
-.motion-on .escena-media video {
-  scale: 1.05;
-}
-.motion-on .escena-completa .escena-media img {
   scale: 1;
 }
 
