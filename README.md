@@ -35,9 +35,9 @@ se usan las transiciones de CSS.
 ├── img/
 │   ├── logo-upstyle.png       Logo circular (favicon y pie de página)
 │   ├── logo/             Imagotipo del menú con contorno blanco (WebP y PNG)
-│   ├── fondo-problematica.jpg Fondo de la sección Problemática
+│   ├── fondo-problematica.jpg Foto de la escena 01 (Convocatoria) del relato del proceso
 │   ├── inicio/           Fotos del carrusel del inicio (residuos textiles y modelos)
-│   ├── secciones/        Fondo de la franja del ODS 12 (denim en la mesa del taller), 16:9 y 4:5, JPG y WebP
+│   ├── secciones/        Fondos de sección en JPG y WebP: franja del ODS 12 (denim en la mesa del taller, 16:9 y 4:5) y Problemática (textura de tejido azul, horizontal y vertical)
 │   ├── proceso/          Escenas 02, 03 y 04 del relato, en 16:9 (tablet y computador) y 4:5 (celular), JPG y WebP; clasificacion-manos-prenda, clasificacion-mesa-denim, patronaje-tira-denim y confeccion-fileteadora quedan de reserva
 │   ├── merch/            Productos
 │   ├── equipo/           Integrantes y foto grupal
@@ -50,7 +50,7 @@ se usan las transiciones de CSS.
 ## Secciones
 
 1. Inicio: carrusel de fotos que avanza solo (se pausa con el mouse encima). Cuenta primero el problema y al final la solución: montaña de ropa, desierto de ropa desechada, campo de ropa hasta el horizonte y los modelos de Up Style. Cada foto es un bloque `hero-slide` en `index.html`; para agregar o quitar una foto basta con agregar o quitar ese bloque, con su encuadre (`--encuadre` y `--encuadre-movil`) y su texto alternativo. Las fotos de residuos textiles son imágenes de referencia del desierto de Atacama (Chile), de uso académico, con crédito en el pie de página
-2. Problemática: cifras de residuos textiles en el mundo, Colombia, Bogotá y Chía
+2. Problemática: cifras de residuos textiles en el mundo, Colombia, Bogotá y Chía, sobre fondo oscuro con la textura de tejido azul (foto real del taller; versión vertical en celular)
 3. ODS 12
 4. Proceso y por qué el denim: relato visual "Del desecho a la calle" en 6 escenas con foto a sangre (convocatoria, clasificación, patronaje, confección, el bolso y comunidad), cada una con una frase corta y pastillas con el logo y el usuario de la red donde se cuenta (Instagram, TikTok o la web), enlazadas al perfil o a la sección. En computador la escena queda fija y, al bajar, la pista avanza en horizontal con contador y barra de progreso; las seis marcas de la barra llevan directo a cada escena. En tablet y celular, sin Motion o con movimiento reducido las escenas se apilan. El marco de cada escena sigue la proporción de la foto (16:9 en computador y tablet, 4:5 en celular) y las fotos no se amplían ni se desplazan, para que se vean completas. El enlace "Saltar el relato" (junto a la barra en computador; arriba a la derecha y fijo bajo el menú mientras dura el relato en celular) baja hasta "¿Por qué el denim?" (`#por-que-el-denim`), sin animación si se pide movimiento reducido. La escena 04 muestra `video/proceso.mp4` en lugar de la foto si el archivo existe. La infografía detallada del proceso se publica en redes
 5. Merch

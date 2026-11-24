@@ -950,24 +950,46 @@ html:not(.js) .hero-slide:not(:first-child) {
    == 6. PROBLEMÁTICA
    ================================================================ */
 
-/* Foto de fondo muy suave */
+/* Sección oscura sobre textura de tejido azul: los colores de texto se
+   redefinen aquí para que todos los componentes queden en tono claro */
+#problematica {
+  --ink: #F5F2EA;
+  --ink-soft: #D6DCE7;
+  --ink-faint: #B7C0CF;
+  --denim: #A9C3EC;          /* azul claro: cifras, íconos y barras */
+  --tan-text: var(--thread); /* etiqueta superior en dorado */
+  --line: rgba(255, 255, 255, 0.16);
+  --card: rgba(255, 255, 255, 0.08);
+  color: var(--ink);
+  background: var(--denim-noche);
+}
+
+/* Foto de fondo: horizontal en computador y tableta, vertical en celular */
 .section-bg-photo {
   position: absolute;
   inset: 0;
   z-index: 0;
+  background-image: url("img/secciones/problematica-tejido-horizontal.jpg");
+  background-image: image-set(url("img/secciones/problematica-tejido-horizontal.webp") type("image/webp"), url("img/secciones/problematica-tejido-horizontal.jpg") type("image/jpeg"));
   background-size: cover;
-  background-position: center;
-  opacity: 0.55;
+  background-position: 42% 50%;
 }
+@media (max-width: 700px) {
+  .section-bg-photo {
+    background-image: url("img/secciones/problematica-tejido-vertical.jpg");
+    background-image: image-set(url("img/secciones/problematica-tejido-vertical.webp") type("image/webp"), url("img/secciones/problematica-tejido-vertical.jpg") type("image/jpeg"));
+    background-position: 50% 50%;
+  }
+}
+/* Capa azul noche: más densa arriba y en los bordes, donde está el texto
+   y donde la foto deja ver el fondo claro del estudio */
 .section-bg-photo::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg,
-    var(--bg) 0%,
-    color-mix(in srgb, var(--bg) 82%, transparent) 22%,
-    color-mix(in srgb, var(--bg) 78%, transparent) 55%,
-    var(--bg) 100%);
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 50%, rgba(17, 26, 44, 0) 0%, rgba(17, 26, 44, 0.55) 100%),
+    linear-gradient(180deg, rgba(17, 26, 44, 0.9) 0%, rgba(17, 26, 44, 0.72) 30%, rgba(17, 26, 44, 0.72) 70%, rgba(17, 26, 44, 0.92) 100%);
 }
 
 /* Las 3 cifras mundiales */
@@ -1050,7 +1072,7 @@ html:not(.js) .hero-slide:not(:first-child) {
   color: var(--ink);
 }
 .tab-btn.active {
-  color: #fff;
+  color: var(--denim-deep);
 }
 /* Píldora azul que se desliza detrás del botón activo */
 .tab-indicator {
@@ -1060,7 +1082,7 @@ html:not(.js) .hero-slide:not(:first-child) {
   bottom: 5px;
   left: 0;
   width: 0;
-  background: var(--denim);
+  background: var(--ink);
   border-radius: 100px;
   transition: transform .45s var(--ease-out), width .45s var(--ease-out);
 }
