@@ -65,14 +65,6 @@
   font-style: normal;
   font-display: swap;
 }
-/* Matcha Mint no incluye tildes ni ñ: solo para el nombre de marca */
-@font-face {
-  font-family: "Matcha Mint";
-  src: url("fonts/matcha-mint.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
 
 :root {
   /* Fondos */
@@ -117,7 +109,6 @@
   --font-display: "Fredoka", "Poppins", system-ui, sans-serif;           /* títulos (600) y subtítulos (500) */
   --font-body: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif; /* textos (400) */
   --font-script: "The August", "Brush Script MT", cursive;              /* acento caligráfico */
-  --font-logo: "Matcha Mint", "Fredoka", system-ui, sans-serif;         /* solo "Up Style" */
 
   /* Curva de las animaciones: arranca rápido y frena suave */
   --ease-out: cubic-bezier(.16, .84, .44, 1);
@@ -1475,43 +1466,40 @@ html:not(.js) .ods-infinity path,
     object-position: var(--encuadre, 50% 50%);
   }
 }
-/* Escena 06 (foto grupal): para que se vean completas las cinco personas,
-   con las escenas apiladas la escena toma la proporción de la foto; en
-   celular el texto pasa debajo de ella. */
-html:not(.relato-horizontal) .escena-completa {
-  height: auto;
-  aspect-ratio: 2000 / 1316;
-  max-height: max(480px, 92svh);
-}
+/* Escena 06: en celular la foto queda arriba y el texto, el número y
+   el enlace pasan debajo para no tapar las caras de los modelos */
 @media (max-width: 700px) {
-  html:not(.relato-horizontal) .escena-completa {
+  html:not(.relato-horizontal) .escena-texto-debajo {
     display: flex;
     flex-direction: column;
     aspect-ratio: auto;
-    max-height: none;
   }
-  html:not(.relato-horizontal) .escena-completa .escena-foto {
+  html:not(.relato-horizontal) .escena-texto-debajo .escena-foto {
     position: relative;
     flex: none;
-    aspect-ratio: 2000 / 1316;
+    aspect-ratio: 4 / 5;
   }
-  /* La foto se funde con el fondo del texto y deja las caras sin sombra */
-  html:not(.relato-horizontal) .escena-completa .escena-foto::after {
-    background: linear-gradient(to top, var(--denim-noche-2) 0%, rgba(11, 17, 30, 0.55) 20%, rgba(11, 17, 30, 0) 48%);
+  html:not(.relato-horizontal) .escena-texto-debajo .escena-foto::after {
+    background:
+      linear-gradient(to top, var(--denim-noche-2) 0%, rgba(11, 17, 30, 0) 14%),
+      linear-gradient(to bottom, rgba(8, 12, 22, 0.4) 0%, rgba(8, 12, 22, 0) 24%);
   }
-  html:not(.relato-horizontal) .escena-completa .escena-texto {
+  html:not(.relato-horizontal) .escena-texto-debajo .escena-texto {
     position: relative;
     inset: auto;
+    margin-top: -1px; /* cubre la línea de medio píxel bajo la foto */
     padding: 26px 22px 34px;
+    background: var(--denim-noche-2);
   }
-  html:not(.relato-horizontal) .escena-completa .escena-num-ciclo {
-    top: calc(100vw * 1316 / 2000 + 34px);
+  html:not(.relato-horizontal) .escena-texto-debajo .escena-num-ciclo {
+    z-index: 1;
+    top: calc(100vw * 5 / 4 + 34px);
     right: 26px;
     font-size: clamp(3.4rem, 15vw, 5rem);
   }
 }
-/* Escenas 02 y 03: la persona o la mano quedan a la izquierda, así que el
-   texto va a la derecha (y debajo de la foto en celular) para no taparlas */
+/* Escenas 02, 03 y 05: la persona o la mano quedan a la izquierda o abajo,
+   así que el texto va a la derecha (y debajo de la foto en celular) para no taparlas */
 @media (min-width: 701px) {
   .escena-texto-derecha .escena-texto,
   .relato-horizontal .escena-texto-derecha .escena-texto {
@@ -1776,15 +1764,6 @@ html:not(.relato-horizontal) .escena-completa {
     left: var(--margen-escena);
   }
 }
-/* Escena 05 en tablet: la foto vertical deja la cara de la modelo bajo
-   el número, así que este baja a la esquina inferior */
-@media (min-width: 701px) and (max-width: 979px) {
-  html:not(.relato-horizontal) .escena-num-abajo .escena-num {
-    top: auto;
-    bottom: 14%;
-  }
-}
-
 /* Control del relato. Con las escenas apiladas solo se ve "Saltar el
    relato", fijo bajo el menú mientras dura el relato; el contador, la
    barra y las marcas de escena son del recorrido horizontal. */
@@ -3063,24 +3042,16 @@ footer {
 .foot-brand {
   display: flex;
   align-items: center;
-  gap: 12px;
 }
-.foot-brand .brand-badge {
-  width: 40px;
-  height: 40px;
-  flex: none;
-  border-radius: 50%;
-  box-shadow: 0 0 0 3px #fff, 0 10px 24px -8px rgba(15, 20, 35, 0.55); /* aro blanco */
-}
-.foot-brand .brand-name {
-  font-family: var(--font-logo);
-  font-size: 1.4rem;
-  font-weight: 400;
-  color: #fff;
-  white-space: nowrap;
+/* Mismo imagotipo del menú, con su contorno blanco, algo mayor */
+.foot-logo img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: 56px;
 }
 @media (max-width: 560px) {
-  .foot-brand .brand-name { font-size: 1.25rem; }
+  .foot-logo img { height: 48px; }
 }
 .foot-tagline {
   max-width: 34ch;
