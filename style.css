@@ -91,6 +91,7 @@
   --denim-ink: #E9EEF7;   /* texto claro sobre azul */
   --denim-noche: #111A2C;   /* azul noche: fondo del relato del proceso */
   --denim-noche-2: #0B111E; /* azul noche profundo: escena antes de revelarse */
+  --carbon: #161513;      /* negro cálido: franja ODS 12 */
   --thread: #D9A45B;      /* dorado "hilo de costura" */
   --tan: #DDBF9B;         /* arena: letra cursiva del inicio */
   --tan-text: #74592B;    /* café dorado: etiquetas pequeñas */
@@ -950,21 +951,8 @@ html:not(.js) .hero-slide:not(:first-child) {
    == 6. PROBLEMÁTICA
    ================================================================ */
 
-/* Sección oscura sobre textura de tejido azul: los colores de texto se
-   redefinen aquí para que todos los componentes queden en tono claro */
-#problematica {
-  --ink: #F5F2EA;
-  --ink-soft: #D6DCE7;
-  --ink-faint: #B7C0CF;
-  --denim: #A9C3EC;          /* azul claro: cifras, íconos y barras */
-  --tan-text: var(--thread); /* etiqueta superior en dorado */
-  --line: rgba(255, 255, 255, 0.16);
-  --card: rgba(255, 255, 255, 0.08);
-  color: var(--ink);
-  background: var(--denim-noche);
-}
-
-/* Foto de fondo: horizontal en computador y tableta, vertical en celular */
+/* Foto de fondo bajo un velo beige: horizontal en computador y tableta,
+   vertical en celular */
 .section-bg-photo {
   position: absolute;
   inset: 0;
@@ -973,6 +961,7 @@ html:not(.js) .hero-slide:not(:first-child) {
   background-image: image-set(url("img/secciones/problematica-tejido-horizontal.webp") type("image/webp"), url("img/secciones/problematica-tejido-horizontal.jpg") type("image/jpeg"));
   background-size: cover;
   background-position: 42% 50%;
+  opacity: 0.55;
 }
 @media (max-width: 700px) {
   .section-bg-photo {
@@ -981,15 +970,15 @@ html:not(.js) .hero-slide:not(:first-child) {
     background-position: 50% 50%;
   }
 }
-/* Capa azul noche: más densa arriba y en los bordes, donde está el texto
-   y donde la foto deja ver el fondo claro del estudio */
 .section-bg-photo::after {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 80% 70% at 50% 50%, rgba(17, 26, 44, 0) 0%, rgba(17, 26, 44, 0.55) 100%),
-    linear-gradient(180deg, rgba(17, 26, 44, 0.9) 0%, rgba(17, 26, 44, 0.72) 30%, rgba(17, 26, 44, 0.72) 70%, rgba(17, 26, 44, 0.92) 100%);
+  background: linear-gradient(180deg,
+    var(--bg) 0%,
+    color-mix(in srgb, var(--bg) 82%, transparent) 22%,
+    color-mix(in srgb, var(--bg) 78%, transparent) 55%,
+    var(--bg) 100%);
 }
 
 /* Las 3 cifras mundiales */
@@ -1072,7 +1061,7 @@ html:not(.js) .hero-slide:not(:first-child) {
   color: var(--ink);
 }
 .tab-btn.active {
-  color: var(--denim-deep);
+  color: #fff;
 }
 /* Píldora azul que se desliza detrás del botón activo */
 .tab-indicator {
@@ -1082,7 +1071,7 @@ html:not(.js) .hero-slide:not(:first-child) {
   bottom: 5px;
   left: 0;
   width: 0;
-  background: var(--ink);
+  background: var(--denim);
   border-radius: 100px;
   transition: transform .45s var(--ease-out), width .45s var(--ease-out);
 }
@@ -1240,7 +1229,7 @@ html:not(.js) .hero-slide:not(:first-child) {
   overflow: hidden;
   padding: 140px 0;
   color: #fff;
-  background: var(--denim-deep);
+  background: var(--carbon);
 }
 @media (max-width: 700px) {
   .ods-band { padding: 90px 0; }
@@ -1264,12 +1253,15 @@ html:not(.js) .hero-slide:not(:first-child) {
     background-position: 50% 50%;
   }
 }
-/* Capa azul oscura encima de la foto para que el texto se lea */
+/* Capa carbón neutra encima de la foto: el azul queda solo en la tela */
 .ods-bg::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(100deg, rgba(20, 28, 46, 0.94) 0%, rgba(20, 28, 46, 0.82) 45%, rgba(20, 28, 46, 0.55) 100%);
+  background: linear-gradient(100deg,
+    color-mix(in srgb, var(--carbon) 92%, transparent) 0%,
+    color-mix(in srgb, var(--carbon) 78%, transparent) 45%,
+    color-mix(in srgb, var(--carbon) 45%, transparent) 100%);
 }
 .ods-grid {
   display: grid;
@@ -1396,6 +1388,7 @@ html:not(.js) .ods-infinity path,
    mientras se baja; la altura de .relato marca la duración del recorrido. */
 .proceso {
   padding-top: 0;
+  padding-bottom: 0;        /* la franja del denim cierra la sección */
 }
 .relato {
   position: relative;
@@ -2021,17 +2014,52 @@ html:not(.relato-horizontal) .escena-completa {
   border-bottom-color: var(--thread);
 }
 
-/* ¿Por qué el denim? Destino de "Saltar el relato": el id va en el
-   contenedor porque el encabezado se desplaza al aparecer y movería el
-   punto de llegada. Queda a 24px bajo el menú. */
-.denim-head {
-  margin-top: 100px;
-}
-#por-que-el-denim {
-  scroll-margin-top: 24px;
+/* ¿Por qué el denim? Franja con foto de tela real bajo el velo beige de
+   la página y tarjetas claras de vidrio. Es el destino de "Saltar el relato": el id va en la franja y no
+   en el encabezado, que se desplaza al aparecer y movería el punto de
+   llegada. Queda justo bajo el menú. */
+.denim-band {
+  position: relative;
+  overflow: hidden;
+  padding: 110px 0 120px;
+  background: var(--bg);
+  scroll-margin-top: 0;
 }
 @media (max-width: 700px) {
-  .denim-head { margin-top: 72px; }
+  .denim-band { padding: 76px 0 84px; }
+}
+.denim-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("img/proceso/patronaje-tira-denim-16x9.jpg");
+  background-image: image-set(url("img/proceso/patronaje-tira-denim-16x9.webp") type("image/webp"), url("img/proceso/patronaje-tira-denim-16x9.jpg") type("image/jpeg"));
+  background-size: cover;
+  background-position: 50% 55%;
+}
+/* En celular la franja es más alta que ancha: foto vertical 4:5 */
+@media (max-width: 700px) {
+  .denim-bg {
+    background-image: url("img/proceso/patronaje-tira-denim-4x5.jpg");
+    background-image: image-set(url("img/proceso/patronaje-tira-denim-4x5.webp") type("image/webp"), url("img/proceso/patronaje-tira-denim-4x5.jpg") type("image/jpeg"));
+    background-position: 50% 50%;
+  }
+}
+/* Velo beige: denso arriba, donde va el título, y más suave abajo para
+   que la tela se vea entre las tarjetas */
+.denim-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--bg) 94%, transparent) 0%,
+    color-mix(in srgb, var(--bg) 82%, transparent) 28%,
+    color-mix(in srgb, var(--bg) 45%, transparent) 58%,
+    color-mix(in srgb, var(--bg) 25%, transparent) 100%);
+}
+.denim-band > .wrap {
+  position: relative;
+  z-index: 1;
 }
 .identity-grid {
   display: grid;
@@ -2045,13 +2073,17 @@ html:not(.relato-horizontal) .escena-completa {
 .identity-card {
   position: relative;
   padding: 26px 24px 28px;
-  background: var(--card);
+  background: color-mix(in srgb, var(--card) 90%, transparent);
+  border: 1px solid color-mix(in srgb, var(--card) 60%, transparent);
   border-radius: var(--radius-m);
+  box-shadow: 0 18px 40px -26px rgba(15, 23, 38, 0.6);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(14px) saturate(1.2);
   transition: transform .35s var(--ease-out), box-shadow .35s ease;
 }
 .identity-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 22px 40px -24px rgba(31, 45, 72, 0.45);
+  box-shadow: 0 26px 48px -24px rgba(15, 23, 38, 0.7);
 }
 .identity-card .idx {
   display: flex;
